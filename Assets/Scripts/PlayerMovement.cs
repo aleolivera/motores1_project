@@ -1,5 +1,6 @@
 using System;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
@@ -25,10 +26,9 @@ public class PlayerMovement : MonoBehaviour {
     [SerializeField] private float _gravity = -9.8f;
     [SerializeField] private float _jumpForce = 5f;
 
-    [Header("Debug")]
+    [Header("Debug Player States")]
     [SerializeField] private float _speed;
     [SerializeField] private float _verticalVelocity;
-    [SerializeField] private float _rotation;
     [SerializeField] private bool _grounded;
 
     void Awake() {
@@ -60,27 +60,40 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     void Update() {
+        //Ground check and gravity
         GroundCheck();
         ApplyGravity();
 
+        //Apply player movement
         HandleMovement();
         HandleRotation();
         HandleJump();
         HandleSprint();
+        HandleAttack();
+        HandleInteract();
+
+        //Debug gizmos
+        DrawDebugLines();
     }
 
     public void HandleSprint() {
-        if (_input.Sprint) { 
-            _speed = _sprintSpeed; 
-        } 
-        else { 
-            _speed = _normalSpeed; 
-        }
+        if (_input.Sprint)  { _speed = _sprintSpeed; } 
+        else                { _speed = _normalSpeed; }
     }
 
     public void HandleJump() {
         if(_grounded && _input.Jump) {
             _verticalVelocity = Mathf.Sqrt(Mathf.Abs( -2f * _gravity * _jumpForce));
+        }
+    }
+    public void HandleAttack() {
+        if(_input.Attack) {
+            Debug.LogWarning("Attack not implemented");
+        }
+    }
+    public void HandleInteract() {
+        if(_input.Interact) {
+            Debug.LogWarning("Interact not implemented");
         }
     }
 
@@ -107,6 +120,7 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     public void ApplyGravity() {
+        //Aplica gravedad al player
         if(_grounded && _verticalVelocity < 0) {
             _verticalVelocity = -2f;
         }
@@ -121,8 +135,19 @@ public class PlayerMovement : MonoBehaviour {
                                 _groundLayer);
     }
 
+    private void DrawDebugLines() {
+        Vector3 from = (_orientation.position + _orientation.up);
+        Vector3 to = from + _orientation.forward * 10f;
+
+        Debug.DrawLine(from, to, Color.green);
+    }
+
+
     private void OnDrawGizmos() {
+        //Dibuja la esfera que checkea el contacto con el suelo
         Gizmos.color = (_grounded) ? Color.green : Color.red;
         Gizmos.DrawSphere(_groundCheck.position, _groundDistance);
     }
+
+    
 }

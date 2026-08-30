@@ -9,24 +9,36 @@ public class PlayerInputListener : MonoBehaviour {
     public Vector2 Rotation { get; private set; }
     public Vector2 Look { get; private set; }
     public bool Sprint { get; private set; }
+    public bool Attack { get; private set; }
+    public bool Interact { get; private set; }
 
     void Start() {
-        input = GetComponent<PlayerInput>();
+        input = GetComponent<PlayerInput> ();
         if(input == null) {
             Debug.LogError("PlayerInputHandler: PlayerInput not found.");
         }
     }
 
-    public void OnMovement(InputAction.CallbackContext ctx) {
+    public void OnMovement (InputAction.CallbackContext ctx) {
         MoveTo = ctx.ReadValue<Vector2>();
     }
     public void OnJump(InputAction.CallbackContext ctx) {
-        if(ctx.performed)       { Jump = true; } 
-        else if(ctx.canceled)   { Jump = false; }
+        if (ctx.performed)       { Jump = true; } 
+        else if (ctx.canceled)   { Jump = false; }
     }
 
     public void OnSprint(InputAction.CallbackContext ctx) {
-        if(ctx.performed)       { Sprint = true; } 
-        else if(ctx.canceled)   { Sprint = false; }
+        if (ctx.performed)       { Sprint = true; } 
+        else if (ctx.canceled)   { Sprint = false; }
+    }
+
+    public void OnAttack(InputAction.CallbackContext ctx) {
+        if (ctx.performed)       { Attack = true; }
+        else if (ctx.canceled)   { Attack = false; }
+    }
+
+    public void OnInteract(InputAction.CallbackContext ctx) {
+        if (ctx.performed)      { Interact = true; } 
+        else if (ctx.canceled)  { Interact = false; }
     }
 }
