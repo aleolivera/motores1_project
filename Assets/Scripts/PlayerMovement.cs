@@ -69,7 +69,6 @@ public class PlayerMovement : MonoBehaviour {
         HandleRotation();
         HandleJump();
         HandleSprint();
-        HandleAttack();
         HandleInteract();
 
         //Debug gizmos
@@ -86,11 +85,7 @@ public class PlayerMovement : MonoBehaviour {
             _verticalVelocity = Mathf.Sqrt(Mathf.Abs( -2f * _gravity * _jumpForce));
         }
     }
-    public void HandleAttack() {
-        if(_input.Attack) {
-            Debug.LogWarning("Attack not implemented");
-        }
-    }
+    
     public void HandleInteract() {
         if(_input.Interact) {
             Debug.LogWarning("Interact not implemented");
@@ -148,6 +143,4 @@ public class PlayerMovement : MonoBehaviour {
         Gizmos.color = (_grounded) ? Color.green : Color.red;
         Gizmos.DrawSphere(_groundCheck.position, _groundDistance);
     }
-
-    
 }

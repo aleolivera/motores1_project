@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(PlayerInput))]
 public class PlayerInputListener : MonoBehaviour {
-    private PlayerInput input;
+    
     public Vector2 MoveTo { get; private set; }
     public bool Jump { get; private set; }
     public Vector2 Rotation { get; private set; }
@@ -11,13 +11,6 @@ public class PlayerInputListener : MonoBehaviour {
     public bool Sprint { get; private set; }
     public bool Attack { get; private set; }
     public bool Interact { get; private set; }
-
-    void Start() {
-        input = GetComponent<PlayerInput> ();
-        if(input == null) {
-            Debug.LogError("PlayerInputHandler: PlayerInput not found.");
-        }
-    }
 
     public void OnMovement (InputAction.CallbackContext ctx) {
         MoveTo = ctx.ReadValue<Vector2>();
