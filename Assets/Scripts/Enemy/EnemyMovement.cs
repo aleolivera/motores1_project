@@ -21,7 +21,8 @@ public class EnemyMovement : MonoBehaviour {
     [SerializeField] private float _alertDistance = 8f;
     [SerializeField] private LayerMask _detectionLayers;
     [SerializeField] private LayerMask _playerLayer;
-    [SerializeField] private Transform _visionLine;
+    //[SerializeField] private Transform _visionLine;
+    [SerializeField] private List<Transform> _visionLines = new List<Transform>(9);
 
     [Header("Time")]
     [SerializeField] private float _patrolTime = 2f;
@@ -63,8 +64,9 @@ public class EnemyMovement : MonoBehaviour {
             _targetPosition = _patrolLocations[_indexLocation].position;
         }
 
-        if(_visionLine == null) 
-            Debug.Log("EnemyMovement: Vision line is missing.");
+        if(_visionLines.Count == 0) 
+            Debug.Log("EnemyMovement: Vision lines is empty.");
+
         if(_controller== null)
             Debug.Log("EnemyMovement: Character Controller not found.");
     }
@@ -84,7 +86,23 @@ public class EnemyMovement : MonoBehaviour {
         
     }
     private Vector3 CheckVisionLine() {
+        bool hasHit = false;
         RaycastHit hit;
+        foreach(Transform line in _visionLines) {
+            hasHit = Physics.Raycast(
+                                    line.position,
+                                    line.forward,
+                                    out hit,
+                                    _checkDistance,
+                                    _detectionLayers);
+            if(hasHit) {
+                int playerLayerHit = (_playerLayer.value & (1 << hit.collider.gameObject.layer));
+                if(playerLayerHit != 0) 
+                    return hit.transform.position; 
+            } 
+        }
+        return Vector3.zero;
+        /*
         bool hasHit = Physics.Raycast(
                                     _visionLine.position, 
                                     _visionLine.forward, 
@@ -99,6 +117,7 @@ public class EnemyMovement : MonoBehaviour {
         } else {
             return Vector3.zero;
         }
+        */
     }
 
     private void PatrolBehaviour() {
@@ -197,6 +216,7 @@ public class EnemyMovement : MonoBehaviour {
 
         _controller.Move(moveTo.normalized * _speed * Time.deltaTime);
         RotateTo(moveTo);
+        //transform.LookAt(moveTo * _rotationSpeed * Time.deltaTime);
     }
 
     private void RotateTo(Quaternion targetRotation) {
@@ -298,9 +318,16 @@ public class EnemyMovement : MonoBehaviour {
             case EnemyStatus.OnAlert:
                 Gizmos.color = Color.red;       break;
         }
+
+        foreach(Transform line in _visionLines) {
+            Gizmos.DrawLine(
+                        line.position,
+                        line.position + (line.forward * _checkDistance));
+        }
+        /*
         Vector3 from = _visionLine.position;
         Vector3 to = from + _visionLine.forward * _checkDistance;
-
         Gizmos.DrawLine(from, to);
+        */
     }
 }

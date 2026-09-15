@@ -6,6 +6,10 @@ public class PlayerAttack : MonoBehaviour {
     [Header("Attack")]
     [SerializeField] private int _damage = 10;
     [SerializeField] private int _normalDamage = 10;
+    [SerializeField] private float _attackCooldown = 2f;
+    [SerializeField] private float _cooldownCounter;
+
+    PlayerInputListener _input;
     
     /*
     [Header("Components")]
@@ -19,17 +23,25 @@ public class PlayerAttack : MonoBehaviour {
         if(_animator == null)
             _animator = GetComponentInParent<Animator>();
         */
-    }
-    void Start() {
         _damage = _normalDamage;
+        _cooldownCounter = _attackCooldown;
+    }
+    void Start() { 
+        _input = GetComponent<PlayerInputListener>();
+        if(_input == null) {
+            Debug.LogWarning("PlayerAttack: PlayerInputListener not found");
+        }
     }
 
     // Update is called once per frame
     void Update() {
-        handleAttack();
+        if(CanAttack()) {
+            handleAttack();
+        }
     }
 
     public void handleAttack() {
+
         /*
         if(_input.Attack) {
             _animator.SetBool("attack", true);
@@ -39,6 +51,14 @@ public class PlayerAttack : MonoBehaviour {
             _animator.SetBool("attack", true);
         }
         */
+    }
+
+    private bool CanAttack() {
+        if(_cooldownCounter < _attackCooldown) {
+            _cooldownCounter += Time.deltaTime;
+            return false;
+        }
+        return true;
     }
 
     

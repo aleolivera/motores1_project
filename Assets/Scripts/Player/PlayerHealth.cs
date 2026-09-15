@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour {
     [Header("Health")]
-    [SerializeField] private int _maxHealth = 300;
-    [SerializeField] private int _health = 300;
+    [SerializeField] private int _maxHealth = 30;
+    [SerializeField] private int _health;
 
     public int Health { 
         get         { return _health; } 
@@ -12,7 +12,7 @@ public class PlayerHealth : MonoBehaviour {
     }
 
     void Awake() {
-        
+        _health = _maxHealth;
     }
     void Start() {
         _health = _maxHealth;
