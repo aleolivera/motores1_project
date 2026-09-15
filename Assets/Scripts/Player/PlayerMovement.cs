@@ -93,6 +93,23 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     public void HandleRotation() {
+        if(_input.MoveTo == Vector2.up || _input.MoveTo == Vector2.down) {
+            return;
+        }
+
+        Vector3 inputRotation =
+                (_orientation.forward * _input.MoveTo.y) +
+                (_orientation.right * _input.MoveTo.x);
+
+        if(inputRotation != Vector3.zero) {
+            transform.forward = Vector3.Slerp(
+                                        transform.forward,
+                                        inputRotation.normalized,
+                                        _rotationSpeed * Time.deltaTime);
+        }
+
+
+        /*
         Vector3 inputDirection =
                 (_orientation.forward * _input.MoveTo.y) +
                 (_orientation.right * _input.MoveTo.x);
@@ -103,6 +120,7 @@ public class PlayerMovement : MonoBehaviour {
                                         inputDirection.normalized,
                                         _rotationSpeed * Time.deltaTime);
         }
+        */
     }
 
     public void HandleMovement() {
@@ -142,5 +160,10 @@ public class PlayerMovement : MonoBehaviour {
         //Dibuja la esfera que checkea el contacto con el suelo
         Gizmos.color = (_grounded) ? Color.green : Color.red;
         Gizmos.DrawSphere(_groundCheck.position, _groundDistance);
+
+        Vector3 from = _orientation.position;
+        Vector3 to = from + _orientation.forward * 10f;
+        Gizmos.color = Color.green;
+        Gizmos.DrawLine(from, to);
     }
 }
