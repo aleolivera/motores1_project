@@ -846,6 +846,8 @@ GameObject:
   - component: {fileID: 504603364}
   - component: {fileID: 504603370}
   - component: {fileID: 504603369}
+  - component: {fileID: 504603371}
+  - component: {fileID: 504603372}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -888,16 +890,13 @@ MonoBehaviour:
   _sprintSpeed: 6
   _rotationSpeed: 2
   _orientation: {fileID: 1244322324}
-  _groundCheck: {fileID: 2124125092}
-  _groundDistance: 0.4
-  _groundLayer:
-    serializedVersion: 2
-    m_Bits: 64
   _gravity: -9.8
-  _jumpForce: 2
+  _jumpForce: 1
   _speed: 5
   _verticalVelocity: 0
-  _grounded: 0
+  _jumping: 0
+  _jumpingCooldown: 2
+  _jumpingCooldownCounter: 0
 --- !u!114 &504603366
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1082,8 +1081,8 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 2
-  m_Radius: 0.5
+  m_Height: 1.91
+  m_Radius: 0.2
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
@@ -1115,6 +1114,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAttack
   _damage: 10
   _normalDamage: 10
+  _attackCooldown: 2
+  _cooldownCounter: 0
 --- !u!114 &504603370
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1127,8 +1128,49 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4e47ab4602d76445bfd7cf41ee48459, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
-  _maxHealth: 300
-  _health: 300
+  _maxHealth: 100
+  _health: 100
+--- !u!114 &504603371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 504603362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ced752fc63f7c7041ad624fd76326396, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GroundDetection
+  _groundCheck: {fileID: 2124125092}
+  _groundDistance: 0.4
+  _groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  _grounded: 0
+--- !u!136 &504603372
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 504603362}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.32
+  m_Height: 2.11
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &516249106
 GameObject:
   m_ObjectHideFlags: 0
@@ -1265,6 +1307,9 @@ GameObject:
   - component: {fileID: 793330959}
   - component: {fileID: 793330958}
   - component: {fileID: 793330960}
+  - component: {fileID: 793330962}
+  - component: {fileID: 793330961}
+  - component: {fileID: 793330963}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -1356,12 +1401,97 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 2
-  m_Radius: 0.54
+  m_Height: 1.9
+  m_Radius: 0.24
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &793330961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 793330957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0116880dab98d047bf774df1c166ab9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyIA
+  _normalSpeed: 2
+  _maxSpeed: 4
+  _rotationSpeed: 3
+  _patrolLocations:
+  - {fileID: 292859744}
+  - {fileID: 1911601471}
+  - {fileID: 1895249455}
+  _checkDistance: 12
+  _alertDistance: 5
+  _detectionLayers:
+    serializedVersion: 2
+    m_Bits: 384
+  _playerLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  _visionLines:
+  - {fileID: 303489017}
+  - {fileID: 1173824298}
+  - {fileID: 740904996}
+  - {fileID: 516249107}
+  - {fileID: 1154438518}
+  - {fileID: 549007823}
+  - {fileID: 143084339}
+  - {fileID: 835548070}
+  - {fileID: 1074037471}
+  _patrolTime: 3
+  _checkTime: 5
+  _alertTime: 5
+  _disableTime: 5
+  _status: 0
+  _timeCounter: 0
+  _speed: 2
+  _targetPosition: {x: 0, y: 0, z: 0}
+  _patrolPosition: {x: 0, y: 0, z: 0}
+  _patrolRotation: {x: 0, y: 0, z: 0, w: 0}
+  _indexLocation: 0
+--- !u!114 &793330962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 793330957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d65883b83e9cc03448a24b8d77dbc4c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
+  _maxHealth: 30
+  _health: 0
+--- !u!136 &793330963
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 793330957}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.36
+  m_Height: 2.11
+  m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!4 &805067393 stripped
 Transform:

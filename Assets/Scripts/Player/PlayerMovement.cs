@@ -5,9 +5,11 @@ using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(PlayerInputListener))]
+[RequireComponent(typeof(GroundDetection))]
 public class PlayerMovement : MonoBehaviour {
     private PlayerInputListener _input;
     private CharacterController _controller;
+    private GroundDetection _groundCheck;
 
     [Header("Move speed")]
     [SerializeField] private float _normalSpeed = 5f;
@@ -16,11 +18,12 @@ public class PlayerMovement : MonoBehaviour {
     [Header("Rotation")]
     [SerializeField] private float _rotationSpeed = 5f;
     [SerializeField] private Transform _orientation;
-
+    /*
     [Header("Ground detection")]
     [SerializeField] private Transform _groundCheck;
     [SerializeField] private float _groundDistance = 0.4f;
     [SerializeField] private LayerMask _groundLayer;
+    */
 
     [Header("Jump and Gravity")]
     [SerializeField] private float _gravity = -9.8f;
@@ -29,39 +32,42 @@ public class PlayerMovement : MonoBehaviour {
     [Header("Debug Player States")]
     [SerializeField] private float _speed;
     [SerializeField] private float _verticalVelocity;
-    [SerializeField] private bool _grounded;
+    [SerializeField] private bool _jumping;
+    [SerializeField] private float _jumpingCooldown = 2f;
+    [SerializeField] private float _jumpingCooldownCounter = 0f;
 
     void Awake() {
+        _speed = _normalSpeed;
+        _jumping = false;
+        _jumpingCooldownCounter = _jumpingCooldown;
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
+    private void Start() {
         _input = GetComponent<PlayerInputListener>();
+        _controller = GetComponent<CharacterController>();
+        _orientation = GetComponent<Transform>();
+        _groundCheck = GetComponent<GroundDetection>();
+        
         if(_input == null ) {
             Debug.LogError("PlayerMovement: PlayerInputHandler not found.");
         }
-
-        _controller = GetComponent<CharacterController>();
         if(_controller == null) {
             Debug.LogError("PlayerMovement: CharacterController not found.");
         }
-
-        _orientation = GetComponent<Transform>();
         if(_orientation == null) {
             Debug.LogError("PlayerMovement: Orientation Obj not found.");
         }
-
-        _groundCheck = GetComponent<Transform>();
         if(_groundCheck == null) {
             Debug.LogError("PlayerMovement: Ground Check Obj not found.");
         }
     }
 
-    private void Start() {
-        _speed = _normalSpeed;
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-    }
-
     void Update() {
         //Ground check and gravity
-        GroundCheck();
+        //GroundCheck();
         ApplyGravity();
 
         //Apply player movement
@@ -70,19 +76,23 @@ public class PlayerMovement : MonoBehaviour {
         HandleJump();
         HandleSprint();
         HandleInteract();
-
-        //Debug gizmos
-        DrawDebugLines();
+        
+        JumpingCooldown();
     }
 
     public void HandleSprint() {
-        if (_input.Sprint)  { _speed = _sprintSpeed; } 
-        else                { _speed = _normalSpeed; }
+        if (_input.Sprint && _groundCheck.IsGrounded)  { 
+            _speed = _sprintSpeed; 
+        } 
+        else { 
+            _speed = _normalSpeed; 
+        }
     }
 
     public void HandleJump() {
-        if(_grounded && _input.Jump) {
+        if(_groundCheck.IsGrounded && _input.Jump) {
             _verticalVelocity = Mathf.Sqrt(Mathf.Abs( -2f * _gravity * _jumpForce));
+            _jumpingCooldownCounter = 0f;
         }
     }
     
@@ -107,20 +117,6 @@ public class PlayerMovement : MonoBehaviour {
                                         inputRotation.normalized,
                                         _rotationSpeed * Time.deltaTime);
         }
-
-
-        /*
-        Vector3 inputDirection =
-                (_orientation.forward * _input.MoveTo.y) +
-                (_orientation.right * _input.MoveTo.x);
-        
-        if(inputDirection != Vector3.zero) {
-            transform.forward = Vector3.Slerp(
-                                        transform.forward,
-                                        inputDirection.normalized,
-                                        _rotationSpeed * Time.deltaTime);
-        }
-        */
     }
 
     public void HandleMovement() {
@@ -133,34 +129,23 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     public void ApplyGravity() {
-        //Aplica gravedad al player
-        if(_grounded && _verticalVelocity < 0) {
+        if(_groundCheck.IsGrounded && _verticalVelocity < 0) {
             _verticalVelocity = -2f;
         }
 
         _verticalVelocity += _gravity * Time.deltaTime;
     }
 
-    public void GroundCheck() {
-        _grounded = Physics.CheckSphere(
-                                _groundCheck.position,
-                                _groundDistance,
-                                _groundLayer);
+    private void JumpingCooldown() {
+        if(_jumpingCooldownCounter < _jumpingCooldown) {
+            _jumpingCooldownCounter += Time.deltaTime;
+            _jumping = false;
+        } else {
+            _jumping = true;
+        }
     }
-
-    private void DrawDebugLines() {
-        Vector3 from = (_orientation.position + _orientation.up);
-        Vector3 to = from + _orientation.forward * 10f;
-
-        Debug.DrawLine(from, to, Color.green);
-    }
-
 
     private void OnDrawGizmos() {
-        //Dibuja la esfera que checkea el contacto con el suelo
-        Gizmos.color = (_grounded) ? Color.green : Color.red;
-        Gizmos.DrawSphere(_groundCheck.position, _groundDistance);
-
         Vector3 from = _orientation.position;
         Vector3 to = from + _orientation.forward * 10f;
         Gizmos.color = Color.green;

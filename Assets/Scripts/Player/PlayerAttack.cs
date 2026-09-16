@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(PlayerInputListener))]
+[RequireComponent(typeof(GroundDetection))]
 public class PlayerAttack : MonoBehaviour {
     [Header("Attack")]
     [SerializeField] private int _damage = 10;
@@ -10,56 +11,95 @@ public class PlayerAttack : MonoBehaviour {
     [SerializeField] private float _cooldownCounter;
 
     PlayerInputListener _input;
-    
-    /*
-    [Header("Components")]
-    [SerializeField] private PlayerInputListener _input;
-    [SerializeField] private AudioClip _attackSound;
-    [SerializeField] private Animator _animator;
-    */
+    GroundDetection _groundCheck;
 
     private void Awake() {
-        /*
-        if(_animator == null)
-            _animator = GetComponentInParent<Animator>();
-        */
         _damage = _normalDamage;
         _cooldownCounter = _attackCooldown;
     }
+
     void Start() { 
         _input = GetComponent<PlayerInputListener>();
         if(_input == null) {
             Debug.LogWarning("PlayerAttack: PlayerInputListener not found");
         }
+
+        _groundCheck = GetComponent<GroundDetection>();
+        if(_groundCheck == null) {
+            Debug.LogWarning("PlayerAttack: Ground check not found");
+        }
     }
 
-    // Update is called once per frame
     void Update() {
+        AttackCooldown();
+    }
+
+    public void HandleAttack(EnemyHealth enemy) {
         if(CanAttack()) {
-            handleAttack();
+            enemy.DealDamage(_damage);
+            _cooldownCounter = 0f;
         }
     }
 
-    public void handleAttack() {
-
-        /*
-        if(_input.Attack) {
-            _animator.SetBool("attack", true);
-            //TODO: Reproducir audio clip
-        } 
-        else {
-            _animator.SetBool("attack", true);
-        }
-        */
+    public void KnockOutEnemy(EnemyHealth enemy) {
+        enemy.KnockOut();
     }
 
-    private bool CanAttack() {
+    private void AttackCooldown() {
         if(_cooldownCounter < _attackCooldown) {
             _cooldownCounter += Time.deltaTime;
-            return false;
         }
-        return true;
+    }
+    private bool CanAttack() {
+        return (_cooldownCounter >= _attackCooldown
+                && _groundCheck.IsGrounded);
     }
 
-    
+    private void OnCollisionStay(Collision collition) {
+        Debug.Log("PlayerAttack: " + collition.gameObject.tag);
+
+        if(collition.gameObject.tag.Equals("Enemy")) {
+            EnemyHealth enemy = collition.gameObject.GetComponent<EnemyHealth>();
+            if(enemy == null) {
+                Debug.LogWarning("EnemyMovement is null");
+                return;
+            }
+
+            if(enemy.Status == EnemyStatus.OnAlert) {
+                HandleAttack(enemy);
+            } else {
+                KnockOutEnemy(enemy);
+            }
+        }
+    }
+    private void OnTriggerEnter(Collider collider) {
+
+        if(collider.gameObject.tag.Equals("Enemy")) {
+            EnemyHealth enemy = collider.gameObject.GetComponent<EnemyHealth>();
+            if(enemy == null) {
+                Debug.LogWarning("EnemyMovement is null");
+                return;
+            }
+
+            if(enemy.Status == EnemyStatus.OnAlert) {
+                HandleAttack(enemy);
+            } else {
+                KnockOutEnemy(enemy);
+            }
+        }
+    }
+
+    private void OnTriggerStay(Collider collider) {
+        if(collider.gameObject.tag.Equals("Enemy")) {
+            EnemyHealth enemy = collider.gameObject.GetComponent<EnemyHealth>();
+            if(enemy == null) {
+                Debug.LogWarning("EnemyMovement is null");
+                return;
+            }
+
+            if(enemy.Status == EnemyStatus.OnAlert) {
+                HandleAttack(enemy);
+            } 
+        }
+    }
 }
