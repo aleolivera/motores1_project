@@ -11,6 +11,8 @@ public class EnemyIA : MonoBehaviour {
 
     [Header("Rotation")]
     [SerializeField] private float _rotationSpeed = 7f;
+    [SerializeField] private float _patrolRotationSpeed = 3f;
+    [SerializeField] private float _alertRotationSpeed = 10f;
 
     [Header("Patrol")]
     [SerializeField] private List<Transform> _patrolLocations;
@@ -55,6 +57,7 @@ public class EnemyIA : MonoBehaviour {
         _speed = _normalSpeed;
         _timeCounter = _patrolTime;
         _patrolPosition = transform.position;
+        _rotationSpeed = _patrolRotationSpeed;
     }
 
     void Start() {
@@ -67,6 +70,7 @@ public class EnemyIA : MonoBehaviour {
         } else {
             _targetPosition = _patrolLocations[_indexLocation].position;
         }
+
 
         if(_visionLines.Count == 0)
             Debug.Log("EnemyMovement: Vision lines is empty.");
@@ -91,6 +95,7 @@ public class EnemyIA : MonoBehaviour {
         //DrawVisionLine();
 
     }
+
     private Vector3 CheckVisionLine() {
         bool hasHit = false;
         RaycastHit hit;
@@ -154,7 +159,7 @@ public class EnemyIA : MonoBehaviour {
             Debug.Log("Nothing to report, On patrol...");
 
             ChangeToStatus(EnemyStatus.OnPatrol);
-            _targetPosition = _patrolPosition;
+            TargetNextPatrolLocation();
             return;
         }
     }
@@ -166,17 +171,17 @@ public class EnemyIA : MonoBehaviour {
             _timeCounter = 0f;
         }
 
-        if(Vector3.Distance(_targetPosition, transform.position) > 1f) {
+        if(Vector3.Distance(_targetPosition, transform.position) > 0.5f) {
             MoveToTarget();
         }
 
         if(_timeCounter < _alertTime) {
             _timeCounter += Time.deltaTime;
         } else {
-            Debug.Log("Player escaped!, On patrol... ");
+            Debug.Log("Player escaped!... Back to patrol");
 
             ChangeToStatus(EnemyStatus.OnPatrol);
-            _targetPosition = _patrolPosition;
+            TargetNextPatrolLocation();
             return;
         }
 
@@ -186,11 +191,11 @@ public class EnemyIA : MonoBehaviour {
         if(_timeCounter < _disableTime) {
             _timeCounter += Time.deltaTime;
         } else {
-            Debug.Log("Waking up... On patrol");
+            Debug.Log("Waking up... Back to patrol");
 
             ChangeToStatus(EnemyStatus.OnPatrol);
-            _health.RestoreFullHealth();
-            _targetPosition = _patrolPosition;
+            _health.RestoreHealth(_health.MaxHealth);
+            TargetNextPatrolLocation();
         }
     }
 
@@ -223,26 +228,37 @@ public class EnemyIA : MonoBehaviour {
     }
 
     private void OnTriggerEnter(Collider other) {
-        if(other.gameObject.tag.Equals("PatrolLocation") && _status == EnemyStatus.OnPatrol) {
-            PatrolLocation location = other.gameObject.GetComponent<PatrolLocation>();
+        if(other.gameObject.tag.Equals("PatrolLocation")) {
+            if(_status == EnemyStatus.OnPatrol) {
+                PatrolLocation location = other.gameObject.GetComponent<PatrolLocation>();
 
-            _patrolTime = location.PatrolTime;
-            _timeCounter = 0f;
+                _patrolTime = location.PatrolTime;
+                _timeCounter = 0f;
 
-            _patrolPosition = _targetPosition;
-            _patrolRotation = location.transform.rotation;
-
-            if(++_indexLocation >= _patrolLocations.Count) {
-                _indexLocation = 0;
+                _patrolPosition = location.transform.position;
+                _patrolRotation = location.transform.rotation;
+                
+                TargetNextPatrolLocation();
+            } 
+            /*
+            else if(_targetPosition.Equals(_patrolPosition)) {
+                Debug.Log("Iguales");
+                TargetNextPatrolLocation();
             }
-
-            _targetPosition = _patrolLocations[_indexLocation].position;
+            */
         }
+    }
+
+    private void TargetNextPatrolLocation() {
+        if(++_indexLocation >= _patrolLocations.Count) {
+            _indexLocation = 0;
+        }
+        //Debug.Log("From: "+ _targetPosition +" To: " + _patrolLocations[_indexLocation].position+" i: "+ _indexLocation);
+        _targetPosition = _patrolLocations[_indexLocation].position;
     }
 
     private void OnCollisionEnter(Collision collision) {
         if(collision.gameObject.tag.Equals("Player")) {
-            Debug.Log("Player collition: " + _status);
             switch(_status) {
                 case EnemyStatus.OnPatrol:
                     ChangeToStatus(EnemyStatus.CheckingOut);
@@ -251,13 +267,6 @@ public class EnemyIA : MonoBehaviour {
                 case EnemyStatus.CheckingOut:
                     ChangeToStatus(EnemyStatus.OnAlert);
                     break;
-
-                case EnemyStatus.OnAlert:
-                    //TODO: IMPLEMENTAR ATAQUE
-                    Debug.Log("Attack!!...");
-
-                    break;
-
                 default:
                     break;
             }
@@ -273,6 +282,7 @@ public class EnemyIA : MonoBehaviour {
             case EnemyStatus.OnPatrol:
                 _timeCounter = _patrolTime;
                 _speed = _normalSpeed;
+                _rotationSpeed = _patrolRotationSpeed;
                 _lineColor = Color.green;
                 break;
 
@@ -285,6 +295,7 @@ public class EnemyIA : MonoBehaviour {
             case EnemyStatus.OnAlert:
                 _timeCounter = 0f;
                 _speed = _maxSpeed;
+                _rotationSpeed = _alertRotationSpeed;
                 _lineColor = Color.red;
                 break;
 

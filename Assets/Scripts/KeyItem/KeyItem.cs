@@ -19,9 +19,4 @@ public class KeyItem : MonoBehaviour {
     // Update is called once per frame
     void Update() { }
 
-    private void OnTriggerEnter(Collider collider) {
-        if(collider.gameObject.tag.Equals("Player")) {
-
-        }
-    }
 }

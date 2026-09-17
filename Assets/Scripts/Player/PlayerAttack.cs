@@ -36,6 +36,7 @@ public class PlayerAttack : MonoBehaviour {
 
     public void HandleAttack(EnemyHealth enemy) {
         if(CanAttack()) {
+            Debug.Log("Enemy damaged: " + _damage);
             enemy.DealDamage(_damage);
             _cooldownCounter = 0f;
         }
@@ -43,6 +44,7 @@ public class PlayerAttack : MonoBehaviour {
 
     public void KnockOutEnemy(EnemyHealth enemy) {
         enemy.KnockOut();
+        enemy.DealDamage(enemy.MaxHealth);
     }
 
     private void AttackCooldown() {
@@ -55,29 +57,12 @@ public class PlayerAttack : MonoBehaviour {
                 && _groundCheck.IsGrounded);
     }
 
-    private void OnCollisionStay(Collision collition) {
-        Debug.Log("PlayerAttack: " + collition.gameObject.tag);
-
-        if(collition.gameObject.tag.Equals("Enemy")) {
-            EnemyHealth enemy = collition.gameObject.GetComponent<EnemyHealth>();
-            if(enemy == null) {
-                Debug.LogWarning("EnemyMovement is null");
-                return;
-            }
-
-            if(enemy.Status == EnemyStatus.OnAlert) {
-                HandleAttack(enemy);
-            } else {
-                KnockOutEnemy(enemy);
-            }
-        }
-    }
     private void OnTriggerEnter(Collider collider) {
 
         if(collider.gameObject.tag.Equals("Enemy")) {
             EnemyHealth enemy = collider.gameObject.GetComponent<EnemyHealth>();
             if(enemy == null) {
-                Debug.LogWarning("EnemyMovement is null");
+                Debug.LogWarning("EnemyHealth is null");
                 return;
             }
 

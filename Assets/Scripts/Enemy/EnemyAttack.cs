@@ -30,6 +30,7 @@ public class EnemyAttack : MonoBehaviour {
     }
 
     public void HandleAttack(PlayerHealth player) {
+        Debug.Log("Player damaged: " + _damage);
         player.DealDamage(_damage);
         _cooldownCounter = 0f;
     }
@@ -43,31 +44,18 @@ public class EnemyAttack : MonoBehaviour {
         return (_cooldownCounter >= _attackCooldown);
     }
 
-    private void OnCollisionStay(Collision collition) {
-        if(collition.gameObject.tag.Equals("Player") && 
-            CanAttack() && 
-            _enemyIA.Status == EnemyStatus.OnAlert) {
-            
-            PlayerHealth health = collition.gameObject.GetComponent<PlayerHealth>();
-            if(health == null) {
-                Debug.LogWarning("Player Health is null");
-                return;
-            }
-            
-            HandleAttack(health);
-        }
-    }
-
     private void OnTriggerStay(Collider collider) {
-        if(collider.gameObject.tag.Equals("Player")) {
+        if( collider.gameObject.tag.Equals("Player") && 
+            _enemyIA.Status == EnemyStatus.OnAlert &&
+            CanAttack() ) {
+            
             PlayerHealth health = collider.gameObject.GetComponent<PlayerHealth>();
             if(health == null) {
                 Debug.LogWarning("Player Health is null");
                 return;
             }
-            if(CanAttack()) {
-                HandleAttack(health);
-            }
+            HandleAttack(health);
+            
         }
     }
 }

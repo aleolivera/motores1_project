@@ -36,6 +36,8 @@ public class PlayerMovement : MonoBehaviour {
     [SerializeField] private float _jumpingCooldown = 2f;
     [SerializeField] private float _jumpingCooldownCounter = 0f;
 
+    public bool Jumping { get { return _jumping; } private set { _jumping = value; } }
+
     void Awake() {
         _speed = _normalSpeed;
         _jumping = false;
@@ -73,7 +75,7 @@ public class PlayerMovement : MonoBehaviour {
         //Apply player movement
         HandleMovement();
         HandleRotation();
-        HandleJump();
+        //HandleJump();
         HandleSprint();
         HandleInteract();
         

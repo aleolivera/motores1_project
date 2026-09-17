@@ -8,31 +8,22 @@ public class QuestGiver : MonoBehaviour {
     [SerializeField] private int _id;
     [SerializeField] private string _name;
     [SerializeField] private List<KeyItem> _keyItems;
-    [SerializeField] private bool _questCompleted;
+    [SerializeField] private bool _questCompleted = false;
+    
     public bool IsQuestCompleted { 
         get         { return _questCompleted;  } 
         private set { _questCompleted = value; } 
     }
-
-    public List<KeyItem> Items {
+    public List<KeyItem> Items { 
         get { return _keyItems; } 
     }
-
-    void Start() {
-
+    public int Id {
+        get { return _id; } 
     }
 
-    void Update() {
-
-    }
-
-    private void OnTriggerEnter(Collider collider) {
+    private void OnTriggerStay(Collider collider) {
         if(!IsQuestCompleted && collider.gameObject.tag.Equals("Player")) {
-            PlayerInventory inventory = GetComponent<PlayerInventory>();
-            if(inventory == null) {
-                Debug.LogWarning("QuestGiver: Inventory in null");
-                return;
-            }
+            PlayerInventory inventory = collider.GetComponent<PlayerInventory>();
 
             int count = 0;
             foreach(KeyItem item in _keyItems) {
@@ -46,6 +37,7 @@ public class QuestGiver : MonoBehaviour {
                 foreach(KeyItem item in _keyItems) {
                     inventory.RemoveItem(item.Id);
                 }
+                LevelManager.Instance.QuestCompleted(Id);
             }
         }
     }
