@@ -16,19 +16,12 @@ public class EnemyIA : MonoBehaviour {
 
     [Header("Patrol")]
     [SerializeField] private List<Transform> _patrolLocations;
-
-    [Header("Vision")]
-    [SerializeField] private float _checkDistance = 16f;
-    [SerializeField] private float _alertDistance = 8f;
-    [SerializeField] private LayerMask _detectionLayers;
-    [SerializeField] private LayerMask _playerLayer;
-    [SerializeField] private List<Transform> _visionLines = new List<Transform>(9);
-
+    
     [Header("Time")]
-    [SerializeField] private float _patrolTime = 2f;
-    [SerializeField] private float _checkTime = 5f;
-    [SerializeField] private float _alertTime = 5f;
-    [SerializeField] private float _disableTime = 5f;
+    [SerializeField] private float _patrolTime = 4f;
+    [SerializeField] private float _checkTime = 6f;
+    [SerializeField] private float _alertTime = 6f;
+    [SerializeField] private float _disableTime = 20f;
 
     [Header("Debug")]
     [SerializeField] private EnemyStatus _status = EnemyStatus.OnPatrol;
@@ -41,28 +34,28 @@ public class EnemyIA : MonoBehaviour {
 
     private CharacterController _controller;
     private EnemyHealth _health;
-
-    private Color _lineColor = Color.green;
+    private VisionDetection _detection;
 
     public float PatrolTime {
         get { return _patrolTime; }
         set { _patrolTime = value; }
     }
     public EnemyStatus Status {
-        get { return _status; }
+        get         { return _status; }
         private set { _status = value; }
     }
 
     void Awake() {
-        _speed = _normalSpeed;
-        _timeCounter = _patrolTime;
+        _speed          = _normalSpeed;
+        _timeCounter    = _patrolTime;
         _patrolPosition = transform.position;
-        _rotationSpeed = _patrolRotationSpeed;
+        _rotationSpeed  = _patrolRotationSpeed;
     }
 
     void Start() {
         _controller = GetComponent<CharacterController>();
-        _health = GetComponent<EnemyHealth>();
+        _health     = GetComponent<EnemyHealth>(); 
+        _detection  = GetComponent<VisionDetection>();
 
         if(_patrolLocations.Count == 0) {
             _targetPosition = transform.position;
@@ -71,18 +64,17 @@ public class EnemyIA : MonoBehaviour {
             _targetPosition = _patrolLocations[_indexLocation].position;
         }
 
-
-        if(_visionLines.Count == 0)
-            Debug.Log("EnemyMovement: Vision lines is empty.");
-
         if(_controller == null)
             Debug.Log("EnemyMovement: Character Controller not found.");
         if(_health == null)
             Debug.Log("EnemyMovement: Enemy health not found.");
+        if(_detection == null)
+            Debug.Log("EnemyMovement: Vision detection not found.");
+
+        _detection.GizmoColor = Color.green;
     }
 
     void Update() {
-
         switch(_status) {
             case EnemyStatus.OnPatrol:      PatrolBehaviour();      break;
             case EnemyStatus.CheckingOut:   CheckingOutBehaviour(); break;
@@ -91,32 +83,10 @@ public class EnemyIA : MonoBehaviour {
 
             default: _status = EnemyStatus.OnPatrol; break;
         }
-
-        //DrawVisionLine();
-
     }
-
-    private Vector3 CheckVisionLine() {
-        bool hasHit = false;
-        RaycastHit hit;
-        foreach(Transform line in _visionLines) {
-            hasHit = Physics.Raycast(
-                                    line.position,
-                                    line.forward,
-                                    out hit,
-                                    _checkDistance,
-                                    _detectionLayers);
-            if(hasHit) {
-                int playerLayerHit = (_playerLayer.value & (1 << hit.collider.gameObject.layer));
-                if(playerLayerHit != 0)
-                    return hit.transform.position;
-            }
-        }
-        return Vector3.zero;
-    }
-
+    
     private void PatrolBehaviour() {
-        Vector3 playerPosition = CheckVisionLine();
+        Vector3 playerPosition = _detection.CheckVision();
 
         if(playerPosition != Vector3.zero) {
             _targetPosition = playerPosition;
@@ -136,12 +106,12 @@ public class EnemyIA : MonoBehaviour {
     }
 
     private void CheckingOutBehaviour() {
-        Vector3 playerPosition = CheckVisionLine();
+        Vector3 playerPosition = _detection.CheckVision();
         if(playerPosition != Vector3.zero) {
             _targetPosition = playerPosition;
             _timeCounter = 0f;
 
-            if(Vector3.Distance(transform.position, _targetPosition) < _alertDistance) {
+            if(Vector3.Distance(transform.position, _targetPosition) < _detection.AlertDistance) {
                 Debug.Log("Player Found!, On alert!!");
 
                 ChangeToStatus(EnemyStatus.OnAlert);
@@ -165,7 +135,7 @@ public class EnemyIA : MonoBehaviour {
     }
 
     private void AlertBehaviour() {
-        Vector3 playerPosition = CheckVisionLine();
+        Vector3 playerPosition = _detection.CheckVision();
         if(playerPosition != Vector3.zero) {
             _targetPosition = playerPosition;
             _timeCounter = 0f;
@@ -240,12 +210,6 @@ public class EnemyIA : MonoBehaviour {
                 
                 TargetNextPatrolLocation();
             } 
-            /*
-            else if(_targetPosition.Equals(_patrolPosition)) {
-                Debug.Log("Iguales");
-                TargetNextPatrolLocation();
-            }
-            */
         }
     }
 
@@ -253,8 +217,49 @@ public class EnemyIA : MonoBehaviour {
         if(++_indexLocation >= _patrolLocations.Count) {
             _indexLocation = 0;
         }
-        //Debug.Log("From: "+ _targetPosition +" To: " + _patrolLocations[_indexLocation].position+" i: "+ _indexLocation);
         _targetPosition = _patrolLocations[_indexLocation].position;
+    }
+
+    
+
+    private void ChangeToStatus(EnemyStatus status) {
+        _status = status;
+
+        switch(status) {
+            case EnemyStatus.OnPatrol:
+                _timeCounter = _patrolTime;
+                _speed = _normalSpeed;
+                _rotationSpeed = _patrolRotationSpeed;
+                _detection.GizmoColor = Color.green;
+                break;
+
+            case EnemyStatus.CheckingOut:
+                _timeCounter = 0f;
+                _speed = _normalSpeed;
+                _detection.GizmoColor = Color.yellow;
+                break;
+
+            case EnemyStatus.OnAlert:
+                _timeCounter = 0f;
+                _speed = _maxSpeed;
+                _rotationSpeed = _alertRotationSpeed;
+                _detection.GizmoColor = Color.red;
+                break;
+
+            case EnemyStatus.Disabled:
+                _timeCounter = 0f;
+                _speed = 0f;
+                _detection.GizmoColor = Color.white;
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    public void RespondToAlarm(Vector3 position) {
+        ChangeToStatus(EnemyStatus.OnAlert);
+        _targetPosition = position;
     }
 
     private void OnCollisionEnter(Collision collision) {
@@ -270,60 +275,7 @@ public class EnemyIA : MonoBehaviour {
                 default:
                     break;
             }
-
             _targetPosition = collision.transform.position;
-        }
-    }
-
-    private void ChangeToStatus(EnemyStatus status) {
-        _status = status;
-
-        switch(status) {
-            case EnemyStatus.OnPatrol:
-                _timeCounter = _patrolTime;
-                _speed = _normalSpeed;
-                _rotationSpeed = _patrolRotationSpeed;
-                _lineColor = Color.green;
-                break;
-
-            case EnemyStatus.CheckingOut:
-                _timeCounter = 0f;
-                _speed = _normalSpeed;
-                _lineColor = Color.yellow;
-                break;
-
-            case EnemyStatus.OnAlert:
-                _timeCounter = 0f;
-                _speed = _maxSpeed;
-                _rotationSpeed = _alertRotationSpeed;
-                _lineColor = Color.red;
-                break;
-
-            case EnemyStatus.Disabled:
-                _timeCounter = 0f;
-                _speed = 0f;
-                _lineColor = Color.white;
-                break;
-
-            default:
-                break;
-        }
-    }
-
-    private void OnDrawGizmos() {
-        switch(_status) {
-            case EnemyStatus.OnPatrol:
-                Gizmos.color = Color.green; break;
-            case EnemyStatus.CheckingOut:
-                Gizmos.color = Color.yellow; break;
-            case EnemyStatus.OnAlert:
-                Gizmos.color = Color.red; break;
-        }
-
-        foreach(Transform line in _visionLines) {
-            Gizmos.DrawLine(
-                        line.position,
-                        line.position + (line.forward * _checkDistance));
         }
     }
 }
