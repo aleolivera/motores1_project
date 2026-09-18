@@ -333,6 +333,7 @@ GameObject:
   - component: {fileID: 7746703567182652898}
   - component: {fileID: 2198249383284010081}
   - component: {fileID: 9215593158980283726}
+  - component: {fileID: 6784790715867979007}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -469,6 +470,36 @@ MonoBehaviour:
   _normalDamage: 10
   _attackCooldown: 2
   _cooldownCounter: 0
+--- !u!114 &6784790715867979007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5846170529792512845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2db70941424f62a41ae619ce38cea146, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VisionDetection
+  _checkDistance: 12
+  _alertDistance: 6
+  _detectionLayers:
+    serializedVersion: 2
+    m_Bits: 384
+  _playerLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  _visionLines:
+  - {fileID: 6858311637466862259}
+  - {fileID: 485265763095740045}
+  - {fileID: 4663710991133398115}
+  - {fileID: 1050645778394762553}
+  - {fileID: 8462141894539221158}
+  - {fileID: 9118240962076175239}
+  - {fileID: 3593001677537151250}
+  - {fileID: 4737404801184207149}
+  - {fileID: 6553505515101749505}
 --- !u!1001 &6826865669797710065
 PrefabInstance:
   m_ObjectHideFlags: 0

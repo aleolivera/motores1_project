@@ -258,8 +258,10 @@ public class EnemyIA : MonoBehaviour {
     }
 
     public void RespondToAlarm(Vector3 position) {
-        ChangeToStatus(EnemyStatus.OnAlert);
-        _targetPosition = position;
+        if(_status != EnemyStatus.Disabled) {
+            ChangeToStatus(EnemyStatus.OnAlert);
+            _targetPosition = position;
+        }
     }
 
     private void OnCollisionEnter(Collision collision) {
