@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 2322b7b24a0045740b83901b59edc7c2
+guid: dc1d99ef8712bed41994785136f05bfd
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
@@ -7,33 +7,43 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Ch28_body
-    second: {fileID: 2100000, guid: 073dabdfa99778f4fa59f9091a10e25d, type: 2}
+      name: Soldier_body1
+    second: {fileID: 2100000, guid: d8eade73def13364f9f4a17fd4891b96, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Ch28_hair
-    second: {fileID: 2100000, guid: cee6d94a51a50e246b3cd440fc223a36, type: 2}
+      name: Soldier_head6
+    second: {fileID: 2100000, guid: 1d5cef5a2038a194fbd375c1aee87289, type: 2}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
-      name: Ch28_1001_Diffuse
-    second: {fileID: 2800000, guid: c02095ec4787f3241be52ec7911f9eae, type: 3}
+      name: Soldier_Body_diffuse
+    second: {fileID: 2800000, guid: 1852a6f5efb3af54195c7cf90b08cd2b, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
-      name: Ch28_1001_Glossiness
-    second: {fileID: 2800000, guid: 0d39130b379431349a83994576ae0e2f, type: 3}
+      name: Soldier_Body_normal
+    second: {fileID: 2800000, guid: d6614952445c42f4b8ec8012c5d844e3, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
-      name: Ch28_1001_Normal
-    second: {fileID: 2800000, guid: affa36b53b4ee2246aa0ca5f3503d135, type: 3}
+      name: Soldier_Body_specular
+    second: {fileID: 2800000, guid: 8682110142f48b9448f8548ac34c19e1, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
-      name: Ch28_1001_Specular
-    second: {fileID: 2800000, guid: d567fdf7f110e1043a313ceea988cbc1, type: 3}
+      name: Soldier_head_diffuse
+    second: {fileID: 2800000, guid: b762363cbd5ef6345978edc135779b9a, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Soldier_head_normal
+    second: {fileID: 2800000, guid: 0c7ad7f706af2b04999c0d1e31864df6, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Soldier_head_specular
+    second: {fileID: 2800000, guid: 16b8731330c54d843b0b37791aa3a9cb, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0

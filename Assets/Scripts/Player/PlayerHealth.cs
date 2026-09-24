@@ -35,12 +35,19 @@ public class PlayerHealth : MonoBehaviour {
 
     public void DealDamage(int damage) {
         _health -= damage;
-        if (_health < 0) { _health = 0; }
+        if (_health <= 0) { 
+            _health = 0;
+            PlayerDead();
+        }
 
         UpdateHeathBar();
     }
 
     private void UpdateHeathBar() {
         _healthBar.SetHealth(_health, _maxHealth);
+    }
+
+    public void PlayerDead() {
+        LevelManager.RestartLevel();
     }
 }

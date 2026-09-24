@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(EnemyIA))]
@@ -18,10 +19,6 @@ public class EnemyHealth : MonoBehaviour {
     public int MaxHealth {
         get { return _maxHealth; }
         private set { _maxHealth = value; }
-    }
-
-    public EnemyStatus Status {
-        get { return _enemyIA.Status; }
     }
 
     void Awake() {
@@ -47,11 +44,18 @@ public class EnemyHealth : MonoBehaviour {
     }
 
     public void DealDamage(int damage) {
+        if(_enemyIA.DetectionState == DetectionState.OnPatrol) {
+            KnockOut();
+            UpdateHeathBar();
+            return;
+        }
+
         _health -= damage;
         if(_health <= 0) {
             _health = 0;
             KnockOut();
         }
+
         UpdateHeathBar();
     }
 

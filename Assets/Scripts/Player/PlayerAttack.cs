@@ -10,7 +10,7 @@ public class PlayerAttack : MonoBehaviour {
     [SerializeField] private float _attackCooldown = 2f;
     [SerializeField] private float _cooldownCounter;
 
-    PlayerInputListener _input;
+    PlayerMovement _movement;
     GroundDetection _groundCheck;
 
     private void Awake() {
@@ -18,10 +18,10 @@ public class PlayerAttack : MonoBehaviour {
         _cooldownCounter = _attackCooldown;
     }
 
-    void Start() { 
-        _input = GetComponent<PlayerInputListener>();
-        if(_input == null) {
-            Debug.LogWarning("PlayerAttack: PlayerInputListener not found");
+    void Start() {
+        _movement = GetComponent<PlayerMovement>();
+        if(_movement == null) {
+            Debug.LogWarning("PlayerAttack: PlayerMovement not found");
         }
 
         _groundCheck = GetComponent<GroundDetection>();
@@ -39,12 +39,9 @@ public class PlayerAttack : MonoBehaviour {
             Debug.Log("Enemy damaged: " + _damage);
             enemy.DealDamage(_damage);
             _cooldownCounter = 0f;
-        }
-    }
 
-    public void KnockOutEnemy(EnemyHealth enemy) {
-        enemy.KnockOut();
-        enemy.DealDamage(enemy.MaxHealth);
+            //_movement.State = PlayerState.Attacking;
+        }
     }
 
     private void AttackCooldown() {
@@ -57,8 +54,7 @@ public class PlayerAttack : MonoBehaviour {
                 && _groundCheck.IsGrounded);
     }
 
-    private void OnTriggerEnter(Collider collider) {
-
+    private void OnTriggerStay(Collider collider) {
         if(collider.gameObject.tag.Equals("Enemy")) {
             EnemyHealth enemy = collider.gameObject.GetComponent<EnemyHealth>();
             if(enemy == null) {
@@ -66,25 +62,11 @@ public class PlayerAttack : MonoBehaviour {
                 return;
             }
 
-            if(enemy.Status == EnemyStatus.OnAlert) {
-                HandleAttack(enemy);
-            } else {
-                KnockOutEnemy(enemy);
-            }
+            HandleAttack(enemy);
         }
     }
 
-    private void OnTriggerStay(Collider collider) {
-        if(collider.gameObject.tag.Equals("Enemy")) {
-            EnemyHealth enemy = collider.gameObject.GetComponent<EnemyHealth>();
-            if(enemy == null) {
-                Debug.LogWarning("EnemyMovement is null");
-                return;
-            }
-
-            if(enemy.Status == EnemyStatus.OnAlert) {
-                HandleAttack(enemy);
-            } 
-        }
+    public void AttackFinished() {
+        _movement.State = PlayerState.Idle;
     }
 }

@@ -10,15 +10,12 @@ public class EnemyAttack : MonoBehaviour {
     EnemyIA _enemyIA;
 
     private void Awake() {
-        /*
-        if(_animator == null)
-            _animator = GetComponentInParent<Animator>();
-        */
         _damage = _normalDamage;
         _cooldownCounter = _attackCooldown;
     }
     void Start() {
         _enemyIA = GetComponent<EnemyIA>();
+
         if(_enemyIA == null) {
             Debug.LogWarning("EnemyAttack: EnemyIA not found");
         }
@@ -30,9 +27,13 @@ public class EnemyAttack : MonoBehaviour {
     }
 
     public void HandleAttack(PlayerHealth player) {
+        /*
         Debug.Log("Player damaged: " + _damage);
         player.DealDamage(_damage);
         _cooldownCounter = 0f;
+        */
+
+        _enemyIA.MovementState = MovementState.Attacking;
     }
 
     private void AttackCooldown() {
@@ -45,8 +46,9 @@ public class EnemyAttack : MonoBehaviour {
     }
 
     private void OnTriggerStay(Collider collider) {
-        if( collider.gameObject.tag.Equals("Player") && 
-            _enemyIA.Status == EnemyStatus.OnAlert &&
+        /*
+        if( collider.CompareTag("Player") && 
+            _enemyIA.DetectionState == DetectionState.OnAlert && 
             CanAttack() ) {
             
             PlayerHealth health = collider.gameObject.GetComponent<PlayerHealth>();
@@ -54,8 +56,23 @@ public class EnemyAttack : MonoBehaviour {
                 Debug.LogWarning("Player Health is null");
                 return;
             }
+
             HandleAttack(health);
+            _enemyIA.MovementState = MovementState.Attacking;
+        }
+        */
+        if( collider.CompareTag("Player") && 
+            _enemyIA.DetectionState == DetectionState.OnAlert && 
+            CanAttack() ) {
             
+            PlayerHealth health = collider.gameObject.GetComponent<PlayerHealth>();
+            if(health == null) {
+                Debug.LogWarning("Player Health is null");
+                return;
+            }
+
+            HandleAttack(health);
+            _enemyIA.MovementState = MovementState.Attacking;
         }
     }
 }
