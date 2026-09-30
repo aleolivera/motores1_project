@@ -1,78 +1,32 @@
 using UnityEngine;
 
 public class EnemyAttack : MonoBehaviour {
-    [Header("Attack")]
+    [Header("Attack Settings")]
     [SerializeField] private int _damage = 10;
     [SerializeField] private int _normalDamage = 10;
-    [SerializeField] private float _attackCooldown = 2f;
-    [SerializeField] private float _cooldownCounter;
+    [SerializeField] private float _attackRange = 2f;
+    [SerializeField] private Rifle _weapon;
+
+    public float AttackRange { get { return _attackRange; } }
 
     EnemyIA _enemyIA;
 
     private void Awake() {
         _damage = _normalDamage;
-        _cooldownCounter = _attackCooldown;
     }
     void Start() {
         _enemyIA = GetComponent<EnemyIA>();
 
+
         if(_enemyIA == null) {
             Debug.LogWarning("EnemyAttack: EnemyIA not found");
         }
-    }
-
-    // Update is called once per frame
-    void Update() {
-        AttackCooldown();
-    }
-
-    public void HandleAttack(PlayerHealth player) {
-        /*
-        Debug.Log("Player damaged: " + _damage);
-        player.DealDamage(_damage);
-        _cooldownCounter = 0f;
-        */
-
-        _enemyIA.MovementState = MovementState.Attacking;
-    }
-
-    private void AttackCooldown() {
-        if(_cooldownCounter < _attackCooldown) {
-            _cooldownCounter += Time.deltaTime;
+        if(_weapon == null) {
+            Debug.LogWarning("EnemyAttack: Weapon not found");
         }
     }
-    private bool CanAttack() {
-        return (_cooldownCounter >= _attackCooldown);
-    }
 
-    private void OnTriggerStay(Collider collider) {
-        /*
-        if( collider.CompareTag("Player") && 
-            _enemyIA.DetectionState == DetectionState.OnAlert && 
-            CanAttack() ) {
-            
-            PlayerHealth health = collider.gameObject.GetComponent<PlayerHealth>();
-            if(health == null) {
-                Debug.LogWarning("Player Health is null");
-                return;
-            }
-
-            HandleAttack(health);
-            _enemyIA.MovementState = MovementState.Attacking;
-        }
-        */
-        if( collider.CompareTag("Player") && 
-            _enemyIA.DetectionState == DetectionState.OnAlert && 
-            CanAttack() ) {
-            
-            PlayerHealth health = collider.gameObject.GetComponent<PlayerHealth>();
-            if(health == null) {
-                Debug.LogWarning("Player Health is null");
-                return;
-            }
-
-            HandleAttack(health);
-            _enemyIA.MovementState = MovementState.Attacking;
-        }
+    public void HandleAttack () {
+        _weapon.Fire();
     }
 }

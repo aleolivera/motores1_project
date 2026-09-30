@@ -9,9 +9,12 @@ public class EnemyAnimation : MonoBehaviour {
     Animator _animator;
     EnemyIA _enemy;
 
+    EnemyAttack _attack; 
+
     void Start() {
         _animator   = GetComponent<Animator>();
         _enemy      = GetComponentInParent<EnemyIA>();
+        _attack     = GetComponentInParent<EnemyAttack>();
 
         if(_animator == null)
             Debug.LogError("EnemyAnimation: Animator not found.");
@@ -54,9 +57,19 @@ public class EnemyAnimation : MonoBehaviour {
 
     public void PlayAttack() {
         _animator.SetTrigger(ATTACK);
+
+        _animator.SetBool(WALKING, false);
+        _animator.SetBool(RUNNING, false);
     }
 
     public void PlayUnconscious() {
         _animator.SetBool(UNCONSCIOUS, true);
+
+        _animator.SetBool(WALKING, false);
+        _animator.SetBool(RUNNING, false);
+    }
+
+    public void Shoot () {
+        _attack.HandleAttack();
     }
 }

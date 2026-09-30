@@ -17,6 +17,7 @@ public class PatrolCamera : MonoBehaviour {
     [SerializeField] private int _currentRotationIndex;
     [SerializeField] private List<Quaternion> _rotations;
     [SerializeField] private Quaternion _targetRotation;
+    [SerializeField] private Transform _player;
     [SerializeField] private Vector3 _playerPosition;
     [SerializeField] private float _timeCounter;
     [SerializeField] private PatrolCameraState _state;
@@ -24,7 +25,9 @@ public class PatrolCamera : MonoBehaviour {
 
 
     SphereCollider _collider;
-    VisionDetection _detection;
+    //VisionDetection _detection;
+    EnemyVision _vision;
+
 
     private void Awake() {
         _state          = PatrolCameraState.Stopped;
@@ -32,10 +35,11 @@ public class PatrolCamera : MonoBehaviour {
         _playerPosition = Vector3.zero;
     }
     void Start() {
-        _detection  = GetComponent<VisionDetection>();
+        //_detection  = GetComponent<VisionDetection>();
+        _vision = GetComponent<EnemyVision>();
         _collider   = GetComponent<SphereCollider>();
         
-        if(_detection == null) 
+        if(_vision == null) 
             Debug.LogError("PatrolCamera: Vision detection not found");
         
         if(_collider == null) 
@@ -45,7 +49,7 @@ public class PatrolCamera : MonoBehaviour {
             Debug.LogError("PatrolCamera: Camera Object not found");
         
         PatrolCameraConfig();
-        _detection.GizmoColor = Color.green;
+        //_detection.GizmoColor = Color.green;
 
     }
     void PatrolCameraConfig() {
@@ -77,6 +81,24 @@ public class PatrolCamera : MonoBehaviour {
     }
 
     private void Stopped() {
+        float visibility = _vision.GetVisibility(out _player);
+        
+        if(_player.position != null) {
+            ChangeStateTo(PatrolCameraState.OnAlert);
+            return;
+        } else {
+            PlayerNotFound();
+        }
+
+        if(_timeCounter < _stopTime) {  
+            _timeCounter += Time.deltaTime;
+        } else {
+            ChangeToNextTargetTransform();
+            ChangeStateTo(PatrolCameraState.Rotating);
+        }
+    }
+    /*
+    private void Stopped() {
         Vector3 playerPosition = _detection.CheckVision();
         if(playerPosition != Vector3.zero) {
             ChangeStateTo(PatrolCameraState.OnAlert);
@@ -92,6 +114,24 @@ public class PatrolCamera : MonoBehaviour {
             ChangeStateTo(PatrolCameraState.Rotating);
         }
     }
+    */
+    private void Rotating() {
+        float visibility = _vision.GetVisibility(out _player);
+        if(_player != null) {
+            ChangeStateTo(PatrolCameraState.OnAlert);
+            return;
+        } else {
+            PlayerNotFound();
+        }
+
+        if(_targetRotation == _patrolCameraObj.localRotation) {
+            ChangeStateTo(PatrolCameraState.Stopped);
+            return;
+        }
+
+        RotateToTarget(true);
+    }
+    /*
     private void Rotating() {
         if(_detection.CheckVision() != Vector3.zero) {
             ChangeStateTo(PatrolCameraState.OnAlert);
@@ -107,7 +147,7 @@ public class PatrolCamera : MonoBehaviour {
 
         RotateToTarget(true);
     }
-
+    */
     void ChangeToNextTargetTransform() {
         if(++_currentRotationIndex >= _rotations.Count) {
             _currentRotationIndex = 0;
@@ -115,6 +155,25 @@ public class PatrolCamera : MonoBehaviour {
         _targetRotation = _rotations[_currentRotationIndex];
     }
 
+    private void OnAlert() {
+        float visibility = _vision.GetVisibility(out _player);
+        if (_player != null) {
+            _timeCounter = 0f;
+            _triggerAlarm = true;
+            PlayerFound(_player.position);
+        } else {
+            PlayerNotFound();
+            RotateToTarget(true);
+        }
+
+        if(_timeCounter < _alertTime) {
+            _timeCounter += Time.deltaTime;
+        } else {
+            _triggerAlarm = false;
+            ChangeStateTo(PatrolCameraState.Stopped);
+        }
+    }
+    /*
     private void OnAlert() {
         Vector3 playerPosition = _detection.CheckVision();
         if(playerPosition != Vector3.zero) {
@@ -135,7 +194,7 @@ public class PatrolCamera : MonoBehaviour {
             ChangeStateTo(PatrolCameraState.Stopped);
         }
     }
-
+    */
     private void PlayerNotFound() {
         _playerPosition = Vector3.zero;
     }
@@ -150,10 +209,10 @@ public class PatrolCamera : MonoBehaviour {
     void ChangeStateTo(PatrolCameraState state) {
         switch(state) {
             case PatrolCameraState.OnAlert: 
-                _detection.GizmoColor = Color.red;
+                //_detection.GizmoColor = Color.red;
                 break;
             default:
-                _detection.GizmoColor = Color.green;
+                //_detection.GizmoColor = Color.green;
                 break;
         }
 

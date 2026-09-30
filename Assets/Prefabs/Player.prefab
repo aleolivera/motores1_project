@@ -385,7 +385,7 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 1.91
+  m_Height: 2
   m_Radius: 0.2
   m_SlopeLimit: 45
   m_StepOffset: 0.3
@@ -411,7 +411,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.32
+  m_Radius: 0.4
   m_Height: 2.11
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
@@ -611,9 +611,10 @@ MonoBehaviour:
   _orientation: {fileID: 1495546062732636123}
   _gravity: -9.8
   _jumpForce: 1
+  _state: 0
   _speed: 5
   _verticalVelocity: 0
-  _jumping: 0
+  _canJump: 0
   _jumpingCooldown: 2
   _jumpingCooldownCounter: 0
 --- !u!114 &2841870098198088595
@@ -628,6 +629,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4e47ab4602d76445bfd7cf41ee48459, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
+  _healthBar: {fileID: 0}
   _maxHealth: 100
   _health: 100
 --- !u!114 &7321812822055302723
