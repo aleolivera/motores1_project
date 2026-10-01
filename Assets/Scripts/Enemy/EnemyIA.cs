@@ -1,5 +1,6 @@
- using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
+
 public enum DetectionState { OnPatrol, OnCaution, OnAlert, Disabled }
 public enum MovementState { Idle, Walking, Running, Attacking, Unconscious }
 
@@ -35,7 +36,6 @@ public class EnemyIA : MonoBehaviour {
     [SerializeField] private float _playerVisibility;
 
     [SerializeField] private Vector3 _targetPosition;
-    //[SerializeField] private Vector3 _patrolPosition;
     [SerializeField] private Quaternion _patrolRotation;
     [SerializeField] private int _indexLocation = 0;
 
@@ -43,7 +43,6 @@ public class EnemyIA : MonoBehaviour {
     private EnemyHealth _health;
     private EnemyAttack _attack;
     private EnemyVision _vision;
-    //private VisionDetection _detection;
 
     public float PatrolTime {
         get { return _patrolTime; }
@@ -61,18 +60,16 @@ public class EnemyIA : MonoBehaviour {
     public Vector3 PlayerPosition{ get { return _player.position; } }
 
     void Awake() {
-        _speed = _normalSpeed;
-        _timeCounter = _patrolTime;
-        //_patrolPosition = transform.position;
-        _rotationSpeed = _patrolRotationSpeed;
+        _speed          = _normalSpeed;
+        _timeCounter    = _patrolTime;
+        _rotationSpeed  = _patrolRotationSpeed;
     }
 
     void Start() {
         _controller = GetComponent<CharacterController>();
-        _health = GetComponent<EnemyHealth>();
-        _attack = GetComponent<EnemyAttack>();
-        //_detection = GetComponent<VisionDetection>();
-        _vision = GetComponent<EnemyVision>();
+        _health     = GetComponent<EnemyHealth>();
+        _attack     = GetComponent<EnemyAttack>();
+        _vision     = GetComponent<EnemyVision>();
 
         foreach (Transform t in _patrolLocations) {
             if(t == null)
@@ -94,12 +91,7 @@ public class EnemyIA : MonoBehaviour {
         
         if(_vision == null)
             Debug.Log("EnemyMovement: Enemy vision not found.");
-        /*    
-        if(_detection == null)
-            Debug.Log("EnemyMovement: Vision detection not found.");
-
-        _detection.GizmoColor = Color.green;
-        */
+       
         _movementState = MovementState.Idle;
     }
 
@@ -107,13 +99,12 @@ public class EnemyIA : MonoBehaviour {
         if(_visionCounter > 0f) {
             _visionCounter -= Time.deltaTime;
         } else {
-            _playerVisibility = _vision.GetVisibility(out _player);
-            _visionCounter = _visionTime;
+            _playerVisibility   = _vision.GetVisibility(out _player);
+            _visionCounter      = _visionTime;
         }
     }
 
     void Update() {
-        //if (_movementState == MovementState.Attacking)  return;
         VisionCheck();
         switch(_detectionState) {
             case DetectionState.OnPatrol:   PatrolBehaviour();      break;
@@ -297,6 +288,7 @@ public class EnemyIA : MonoBehaviour {
 
         ChangeToStatus(DetectionState.OnAlert);
         _targetPosition = playerPosition;
+        
     }
 
     private void OnTriggerEnter (Collider other) {
@@ -306,7 +298,6 @@ public class EnemyIA : MonoBehaviour {
             _patrolTime = location.PatrolTime;
             _timeCounter = 0f;
 
-            //_patrolPosition = location.transform.position;
             _patrolRotation = location.transform.rotation;
 
             TargetNextPatrolLocation();
@@ -332,71 +323,4 @@ public class EnemyIA : MonoBehaviour {
             _targetPosition = collision.transform.position;
         }
     }
-    /*
-    private void CheckingOutBehaviour () {
-        Vector3 playerPosition = _detection.CheckVision();
-        if (playerPosition != Vector3.zero) {
-            _targetPosition = playerPosition;
-            _timeCounter = 0f;
-
-            if (Vector3.Distance(transform.position, _targetPosition) < _detection.AlertDistance) {
-                Debug.Log("Player Found!, On alert!!");
-
-                ChangeToStatus(DetectionState.OnAlert);
-                return;
-            }
-        }
-
-        if (Vector3.Distance(_targetPosition, transform.position) > 1f) {
-            MoveToTarget();
-            _movementState = MovementState.Walking;
-        }
-
-        if (_timeCounter < _checkTime) {
-            _timeCounter += Time.deltaTime;
-            return;
-        }
-
-        Debug.Log("Nothing to report, On patrol...");
-        ChangeToStatus(DetectionState.OnPatrol);
-        TargetNextPatrolLocation();
-    }
-    */
-
-    /*
-    private void AlertBehaviour() {
-        float targetDistance;
-        Vector3 playerPosition = _detection.CheckVision();
-        if(playerPosition != Vector3.zero) {
-            _targetPosition = playerPosition;
-            _timeCounter = 0f;
-            targetDistance = Vector3.Distance(_targetPosition, transform.position);
-            
-            if (targetDistance <= _attack.AttackRange) {
-                RotateToTarget();
-                _movementState = MovementState.Attacking;
-                return;
-            }
-        }
-
-        targetDistance = Vector3.Distance(_targetPosition, transform.position);
-
-        if ( targetDistance > 0.5f) {
-            MoveToTarget();
-            _movementState = MovementState.Running;
-        } else {
-            _movementState = MovementState.Idle;
-        }
-
-        if(_timeCounter < _alertTime) {
-            _timeCounter += Time.deltaTime;
-        } else {
-            Debug.Log("Player escaped!... Back to patrol");
-
-            ChangeToStatus(DetectionState.OnPatrol);
-            TargetNextPatrolLocation();
-        }
-    }
-    */
-
 }

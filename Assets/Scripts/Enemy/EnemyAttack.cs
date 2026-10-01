@@ -1,9 +1,8 @@
+using System;
 using UnityEngine;
 
 public class EnemyAttack : MonoBehaviour {
     [Header("Attack Settings")]
-    [SerializeField] private int _damage = 10;
-    [SerializeField] private int _normalDamage = 10;
     [SerializeField] private float _attackRange = 2f;
     [SerializeField] private Rifle _weapon;
 
@@ -11,12 +10,8 @@ public class EnemyAttack : MonoBehaviour {
 
     EnemyIA _enemyIA;
 
-    private void Awake() {
-        _damage = _normalDamage;
-    }
     void Start() {
         _enemyIA = GetComponent<EnemyIA>();
-
 
         if(_enemyIA == null) {
             Debug.LogWarning("EnemyAttack: EnemyIA not found");
@@ -29,4 +24,11 @@ public class EnemyAttack : MonoBehaviour {
     public void HandleAttack () {
         _weapon.Fire();
     }
+
+    private void OnCollisionStay (Collision collision) {
+        if (collision.gameObject.CompareTag("Player")) {
+            _enemyIA.RespondToAlarm(collision.transform.position);
+        }
+    }
+
 }

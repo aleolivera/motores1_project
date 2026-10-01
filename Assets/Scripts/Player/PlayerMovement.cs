@@ -1,7 +1,5 @@
 using UnityEngine;
 
-public enum PlayerState { Idle, Sneaking, Sprinting, Attacking, Jumping, Dead }
-
 [RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(PlayerInputListener))]
 [RequireComponent(typeof(GroundDetection))]
@@ -20,7 +18,6 @@ public class PlayerMovement : MonoBehaviour {
     [SerializeField] private float _jumpForce = 5f;
 
     [Header("Debug Player States")]
-    [SerializeField] private PlayerState _state = PlayerState.Idle;
     [SerializeField] private float _speed;
     [SerializeField] private float _verticalVelocity;
     [SerializeField] private bool _canJump;
@@ -30,12 +27,6 @@ public class PlayerMovement : MonoBehaviour {
     PlayerInputListener _input;
     CharacterController _controller;
     GroundDetection _groundCheck;
-
-    public PlayerState State { 
-        get { return _state; } 
-        set { _state = value; } 
-    }
-
     void Awake() {
         _speed = _normalSpeed;
         _canJump = false;
@@ -57,7 +48,7 @@ public class PlayerMovement : MonoBehaviour {
         if(_controller == null) {
             Debug.LogError("PlayerMovement: CharacterController not found.");
         }
-        if(_orientation == null) {
+        if (_orientation == null) {
             Debug.LogError("PlayerMovement: Orientation Obj not found.");
         }
         if(_groundCheck == null) {
@@ -67,14 +58,14 @@ public class PlayerMovement : MonoBehaviour {
 
     void Update() {
         ApplyGravity();
-
-        if(_state == PlayerState.Dead || _state == PlayerState.Attacking) {
+        if( PlayerStateMachine.Instance.CurrentState == PlayerState.Dead ||
+            PlayerStateMachine.Instance.CurrentState == PlayerState.Attacking ||
+            PlayerStateMachine.Instance.CurrentState == PlayerState.Interacting ) {
             return;
         }
 
         HandleMovement();
         HandleRotation();
-        //HandleJump();
         HandleSprint();
         HandleInteract();
         
@@ -83,7 +74,7 @@ public class PlayerMovement : MonoBehaviour {
 
     public void HandleSprint() {
         if (_input.Sprint && _groundCheck.IsGrounded)  {
-            _state = PlayerState.Sprinting;
+            PlayerStateMachine.Instance.CurrentState = PlayerState.Sprinting;
             _speed = _sprintSpeed; 
         } 
         else { 
@@ -95,13 +86,13 @@ public class PlayerMovement : MonoBehaviour {
         if(_input.Jump && _canJump && _groundCheck.IsGrounded) {
             _verticalVelocity = Mathf.Sqrt(Mathf.Abs( -2f * _gravity * _jumpForce));
             _jumpingCooldownCounter = 0f;
-            _state = PlayerState.Jumping;
+            PlayerStateMachine.Instance.CurrentState = PlayerState.Jumping;
         }
     }
     
     public void HandleInteract() {
         if(_input.Interact) {
-            Debug.LogWarning("Interact not implemented");
+            PlayerStateMachine.Instance.CurrentState = PlayerState.Interacting;
         }
     }
 
@@ -122,11 +113,12 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     public void HandleMovement() {
-        if( _input.MoveTo == Vector2.zero && 
-            _state != PlayerState.Jumping && 
-            _state != PlayerState.Attacking) {
-                
-            _state = PlayerState.Idle;
+        if( _input.MoveTo == Vector2.zero &&
+            PlayerStateMachine.Instance.CurrentState != PlayerState.Jumping &&
+            PlayerStateMachine.Instance.CurrentState != PlayerState.Attacking) {
+
+            PlayerStateMachine.Instance.CurrentState = PlayerState.Idle;
+            
             return;
         }
 
@@ -135,8 +127,8 @@ public class PlayerMovement : MonoBehaviour {
 
         move.y = _verticalVelocity;
         _controller.Move(move * Time.deltaTime);
-        
-        _state = PlayerState.Sneaking;
+
+        PlayerStateMachine.Instance.CurrentState = PlayerState.Sneaking;
     }
 
     public void ApplyGravity() {

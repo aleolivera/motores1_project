@@ -45,12 +45,11 @@ public class EnemyHealth : MonoBehaviour {
 
     public void DealDamage(int damage) {
         if(_enemyIA.DetectionState == DetectionState.OnPatrol) {
-            KnockOut();
-            UpdateHeathBar();
-            return;
+            damage = _maxHealth;
         }
 
         _health -= damage;
+        
         if(_health <= 0) {
             _health = 0;
             KnockOut();

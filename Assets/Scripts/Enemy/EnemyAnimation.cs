@@ -8,7 +8,6 @@ public class EnemyAnimation : MonoBehaviour {
 
     Animator _animator;
     EnemyIA _enemy;
-
     EnemyAttack _attack; 
 
     void Start() {
