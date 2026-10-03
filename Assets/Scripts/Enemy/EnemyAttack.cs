@@ -9,7 +9,6 @@ public class EnemyAttack : MonoBehaviour {
     public float AttackRange { get { return _attackRange; } }
 
     EnemyIA _enemyIA;
-
     void Start() {
         _enemyIA = GetComponent<EnemyIA>();
 
@@ -24,11 +23,4 @@ public class EnemyAttack : MonoBehaviour {
     public void HandleAttack () {
         _weapon.Fire();
     }
-
-    private void OnCollisionStay (Collision collision) {
-        if (collision.gameObject.CompareTag("Player")) {
-            _enemyIA.RespondToAlarm(collision.transform.position);
-        }
-    }
-
 }

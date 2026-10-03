@@ -4,7 +4,6 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerInputListener))]
 [RequireComponent(typeof(GroundDetection))]
 public class PlayerAttack : MonoBehaviour {
-    
     [SerializeField] private float _attackCooldown = 2f;
     [SerializeField] private float _cooldownCounter;
     GroundDetection _groundCheck;

@@ -9,7 +9,7 @@ public class EnemyVision : MonoBehaviour
     [SerializeField] LayerMask _obstacleMask;
     
     readonly Collider[] buffer = new Collider[4];
-    public float Range { get { return _fov; } }
+    public float Range { get { return _range; } }
 
     private void Start () {
         if(_eye == null) {

@@ -47,6 +47,8 @@ public class PlayerMovement : MonoBehaviour {
         }
         if(_controller == null) {
             Debug.LogError("PlayerMovement: CharacterController not found.");
+        } else {
+            _controller.detectCollisions = false;
         }
         if (_orientation == null) {
             Debug.LogError("PlayerMovement: Orientation Obj not found.");
@@ -154,4 +156,5 @@ public class PlayerMovement : MonoBehaviour {
         Gizmos.color = Color.green;
         Gizmos.DrawLine(from, to);
     }
+
 }

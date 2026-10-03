@@ -11,6 +11,7 @@ public class EnemyHealth : MonoBehaviour {
     [SerializeField] private int _health;
 
     EnemyIA _enemyIA;
+    EnemyDetection _detection;
 
     public int Health {
         get { return _health; }
@@ -25,8 +26,9 @@ public class EnemyHealth : MonoBehaviour {
         _health = _maxHealth;
     }
     void Start() {
-        _enemyIA = GetComponent<EnemyIA>();
-        _healthBar = GetComponentInChildren<HealthBar>();
+        _enemyIA    = GetComponent<EnemyIA>();
+        _detection  = GetComponent<EnemyDetection>();
+        _healthBar  = GetComponentInChildren<HealthBar>();
 
         if(_enemyIA == null) {
             Debug.LogError("EnemyHealth: EnemyIA not found");
@@ -44,7 +46,9 @@ public class EnemyHealth : MonoBehaviour {
     }
 
     public void DealDamage(int damage) {
-        if(_enemyIA.DetectionState == DetectionState.OnPatrol) {
+        if( _detection.State != DetectionState.OnAlert && 
+            _detection.State != DetectionState.Disabled) { 
+            
             damage = _maxHealth;
         }
 

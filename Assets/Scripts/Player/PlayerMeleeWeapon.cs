@@ -22,6 +22,7 @@ public class PlayerMeleeWeapon : MonoBehaviour {
         if (other.gameObject.CompareTag("Enemy")){
             EnemyHealth enemy = other.GetComponent<EnemyHealth>();
             _attack.DealDamage(enemy, _damage);
+
         }
     }
 

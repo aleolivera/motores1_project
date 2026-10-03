@@ -19,7 +19,7 @@ public class PatrolCamera : MonoBehaviour {
     [SerializeField] private List<Quaternion> _rotations;
     [SerializeField] private Quaternion _targetRotation;
     [SerializeField] private Transform _player;
-    [SerializeField] private Vector3 _playerPosition;
+    //[SerializeField] private Vector3 _playerPosition;
     [SerializeField] private float _timeCounter;
     [SerializeField] private PatrolCameraState _state;
     [SerializeField] private bool _triggerAlarm = false;
@@ -32,7 +32,8 @@ public class PatrolCamera : MonoBehaviour {
     private void Awake() {
         _state          = PatrolCameraState.Stopped;
         _timeCounter    = _stopTime;
-        _playerPosition = Vector3.zero;
+        _player         = null;
+        //_playerPosition = Vector3.zero;
     }
     void Start() {
         _vision = GetComponent<EnemyVision>();
@@ -125,7 +126,8 @@ public class PatrolCamera : MonoBehaviour {
         if (_player != null) {
             _timeCounter = 0f;
             _triggerAlarm = true;
-            PlayerFound(_player.position);
+            //PlayerFound(_player.position);
+            PlayerFound(_player);
         } else {
             PlayerNotFound();
             RotateToTarget(true);
@@ -139,14 +141,21 @@ public class PatrolCamera : MonoBehaviour {
         }
     }
     private void PlayerNotFound() {
-        _playerPosition = Vector3.zero;
+        //_playerPosition = Vector3.zero;
+        _player = null;
     }
+    /*
     private void PlayerFound(Vector3 position) {
         _playerPosition = position;
     }
+    */
+    private void PlayerFound(Transform player) {
+        _player = player;
+    }
 
     private void ActivateAlarm(EnemyIA enemy) {
-        enemy.RespondToAlarm(_playerPosition);
+        //enemy.RespondToAlarm(_playerPosition);
+        enemy.RespondToAlarm(_player);
     }
 
     void ChangeStateTo(PatrolCameraState state) {

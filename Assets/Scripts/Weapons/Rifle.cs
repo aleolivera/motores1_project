@@ -6,7 +6,6 @@ public class Rifle : FireWeapon {
     [SerializeField] private float _counter;
     [SerializeField] private bool _canShoot;
 
-
     private void Awake () {
         _counter = 0f;
         _canShoot = true;
@@ -20,6 +19,7 @@ public class Rifle : FireWeapon {
             _canShoot = true;
         }
     }
+
     public override void Fire () {
         if (!_canShoot) return;
 

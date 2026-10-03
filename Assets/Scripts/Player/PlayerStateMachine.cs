@@ -1,7 +1,5 @@
 using System;
-using UnityEditorInternal;
 using UnityEngine;
-using UnityEngine.InputSystem.LowLevel;
 
 public enum PlayerState { Idle, Sneaking, Sprinting, Attacking, Interacting, Jumping, Dead }
 public class PlayerStateMachine : MonoBehaviour {

@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerAnimation : MonoBehaviour {
@@ -59,15 +58,22 @@ public class PlayerAnimation : MonoBehaviour {
     }
 
     public void PlayAttack () {
+        _animator.SetBool(IS_SNEAKING, false);
+        _animator.SetBool(IS_SPRINTING, false);
+
         _animator.SetTrigger(TRG_ATTACK);
-        PlayerStateMachine.Instance.CurrentState = PlayerState.Idle;
     }
     public void PlayInteract () {
+        _animator.SetBool(IS_SNEAKING, false);
+        _animator.SetBool(IS_SPRINTING, false);
+
         _animator.SetTrigger(TRG_GATHER);
-        PlayerStateMachine.Instance.CurrentState = PlayerState.Idle;
     }
 
     public void PlayDeath() {
+        _animator.SetBool(IS_SNEAKING, false);
+        _animator.SetBool(IS_SPRINTING, false);
+
         _animator.SetTrigger(TRG_DEATH);
     }
 
@@ -77,5 +83,9 @@ public class PlayerAnimation : MonoBehaviour {
         } else {
             _attack.EnableMeleeWeaponCollider(true);
         }
+    }
+
+    public void PlayerStateToIdle() {
+        PlayerStateMachine.Instance.CurrentState = PlayerState.Idle;
     }
 }
