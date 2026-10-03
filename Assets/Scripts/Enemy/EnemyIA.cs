@@ -33,6 +33,7 @@ public class EnemyIA : MonoBehaviour {
     private EnemyAttack _attack;
     private EnemyVision _vision;
     private EnemyDetection _detection;
+    private EnemyStateMachine _stateMachine;
     public Vector3 PlayerPosition{ get { return _player.position; } }
 
     void Awake() {
@@ -41,11 +42,12 @@ public class EnemyIA : MonoBehaviour {
     }
 
     void Start() {
-        _controller = GetComponent<CharacterController>();
-        _health     = GetComponent<EnemyHealth>();
-        _attack     = GetComponent<EnemyAttack>();
-        _vision     = GetComponent<EnemyVision>();
-        _detection  = GetComponent<EnemyDetection>();
+        _controller     = GetComponent<CharacterController>();
+        _health         = GetComponent<EnemyHealth>();
+        _attack         = GetComponent<EnemyAttack>();
+        _vision         = GetComponent<EnemyVision>();
+        _detection      = GetComponent<EnemyDetection>();
+        _stateMachine   = GetComponent<EnemyStateMachine>();
 
         foreach (Transform t in _patrolLocations) {
             if(t == null) {
@@ -115,7 +117,7 @@ public class EnemyIA : MonoBehaviour {
     }
 
     private void PatrolBehaviour () {
-        if (EnemyStateMachine.State == EnemyActionState.WakeUp) return;
+        if (_stateMachine.State == EnemyActionState.WakeUp) return;
 
         if (_player != null) {
             _targetPosition = _player.position;
@@ -132,12 +134,11 @@ public class EnemyIA : MonoBehaviour {
 
         } else {
             MoveToTarget();
-            EnemyStateMachine.State = EnemyActionState.Walking;
+            _stateMachine.State = EnemyActionState.Walking;
         }
     }
 
     private void CautionBehaviour () {
-
         if (_player != null) {
             _targetPosition = _player.position;
             _timeCounter = 0f;
@@ -151,8 +152,9 @@ public class EnemyIA : MonoBehaviour {
 
         if(Vector3.Distance(_targetPosition, transform.position) > 1f) {
             MoveToTarget();
-            EnemyStateMachine.State = EnemyActionState.Walking;
+            _stateMachine.State = EnemyActionState.Walking;
         } else {
+            _stateMachine.State = EnemyActionState.Idle;
             ChangeToStatus(DetectionState.Checking);
         }
 
@@ -174,23 +176,23 @@ public class EnemyIA : MonoBehaviour {
             RotateToTarget();
             
             if (Vector3.Distance(transform.position, _targetPosition) > _vision.Range * 0.5f 
-                && EnemyStateMachine.State != EnemyActionState.Attacking) {
+                && _stateMachine.State != EnemyActionState.Attacking) {
                 
                 MoveToTarget();
-                EnemyStateMachine.State = EnemyActionState.Running;
+                _stateMachine.State = EnemyActionState.Running;
                 return;
             }
 
-            EnemyStateMachine.State = EnemyActionState.Attacking;
+            _stateMachine.State = EnemyActionState.Attacking;
             return;
             
         } 
         //PLAYER fuera de rango de vision
         if (Vector3.Distance(_targetPosition, transform.position) > 0.3f) {
-            EnemyStateMachine.State = EnemyActionState.Running;
+            _stateMachine.State = EnemyActionState.Running;
             MoveToTarget();
         } else {
-            EnemyStateMachine.State =  EnemyActionState.Idle;
+            _stateMachine.State =  EnemyActionState.Idle;
             ChangeToStatus(DetectionState.Checking);
             return;
         }
@@ -206,12 +208,12 @@ public class EnemyIA : MonoBehaviour {
         Debug.Log("Waking up... ");
 
         _health.RestoreHealth(_health.MaxHealth);
-        EnemyStateMachine.State = EnemyActionState.WakeUp;
+        _stateMachine.State = EnemyActionState.WakeUp;
         ChangeToStatus(DetectionState.OnPatrol);
     }
 
     public void DisableEnemy () {
-        EnemyStateMachine.State = EnemyActionState.Unconscious;
+        _stateMachine.State = EnemyActionState.Unconscious;
         ChangeToStatus(DetectionState.Disabled);
     }
 
@@ -299,7 +301,7 @@ public class EnemyIA : MonoBehaviour {
     public void BackToPatrol () {
         TargetNextPatrolLocation();
         ChangeToStatus (DetectionState.OnPatrol);
-        EnemyStateMachine.State = EnemyActionState.Idle;
+        _stateMachine.State = EnemyActionState.Idle;
     }
 
     private void OnTriggerEnter (Collider other) {
@@ -313,7 +315,7 @@ public class EnemyIA : MonoBehaviour {
 
             TargetNextPatrolLocation();
 
-            EnemyStateMachine.State = EnemyActionState.Idle;
+            _stateMachine.State = EnemyActionState.Idle;
             _timeCounter = 0f;
         }
     }

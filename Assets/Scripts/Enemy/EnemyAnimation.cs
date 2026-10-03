@@ -10,30 +10,34 @@ public class EnemyAnimation : MonoBehaviour {
     Animator _animator;
     EnemyAttack _attack;
     EnemyIA _enemy;
+    EnemyStateMachine _stateMachine;
+
+    private void Awake () {
+        _animator =     GetComponent<Animator>();
+        _attack =       GetComponentInParent<EnemyAttack>();
+        _enemy =        GetComponentInParent<EnemyIA>();
+        _stateMachine = GetComponentInParent<EnemyStateMachine>();
+    }
 
     private void OnEnable () {
-        EnemyStateMachine.OnStateChangeToIdle       += PlayIdle;
-        EnemyStateMachine.OnStateChangeToWalking    += PlayWalking;
-        EnemyStateMachine.OnStateChangeToRunning    += PlayRunning;
-        EnemyStateMachine.OnStateChangeToAttacking  += PlayAttack;
-        EnemyStateMachine.OnStateChangeToUnconcious += PlayUnconscious;
-        EnemyStateMachine.OnStateChangeToWakeUp     += PlayWakeUp;
+        _stateMachine.OnStateChangeToIdle       += PlayIdle;
+        _stateMachine.OnStateChangeToWalking    += PlayWalking;
+        _stateMachine.OnStateChangeToRunning    += PlayRunning;
+        _stateMachine.OnStateChangeToAttacking  += PlayAttack;
+        _stateMachine.OnStateChangeToUnconcious += PlayUnconscious;
+        _stateMachine.OnStateChangeToWakeUp     += PlayWakeUp;
     }
     private void OnDisable () {
-        EnemyStateMachine.OnStateChangeToIdle       -= PlayIdle;
-        EnemyStateMachine.OnStateChangeToWalking    -= PlayWalking;
-        EnemyStateMachine.OnStateChangeToRunning    -= PlayRunning;
-        EnemyStateMachine.OnStateChangeToAttacking  -= PlayAttack;
-        EnemyStateMachine.OnStateChangeToUnconcious -= PlayUnconscious;
-        EnemyStateMachine.OnStateChangeToWakeUp     -= PlayWakeUp;
+        _stateMachine.OnStateChangeToIdle       -= PlayIdle;
+        _stateMachine.OnStateChangeToWalking    -= PlayWalking;
+        _stateMachine.OnStateChangeToRunning    -= PlayRunning;
+        _stateMachine.OnStateChangeToAttacking  -= PlayAttack;
+        _stateMachine.OnStateChangeToUnconcious -= PlayUnconscious;
+        _stateMachine.OnStateChangeToWakeUp     -= PlayWakeUp;
     }
 
     void Start() {
-        _animator   = GetComponent<Animator>();
-        _attack     = GetComponentInParent<EnemyAttack>();
-        _enemy      = GetComponentInParent<EnemyIA>();
-
-        if(_animator == null)
+        if (_animator == null)
             Debug.LogError("EnemyAnimation: Animator not found.");
         if(_enemy == null)
             Debug.LogError("EnemyAnimation: Enemy IA not found.");
@@ -87,7 +91,7 @@ public class EnemyAnimation : MonoBehaviour {
     }
 
     public void OnShotAnimationEnd () {
-        EnemyStateMachine.State = EnemyActionState.Idle;
+        _stateMachine.State = EnemyActionState.Idle;
     }
 
 }

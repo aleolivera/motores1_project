@@ -39,7 +39,7 @@ public class EnemyVision : MonoBehaviour
                 colliderBounds.min.y + 0.1f, 
                 colliderBounds.center.z)    // pies
         };
-
+        
         int visible = 0;
         foreach (var p in points) {
             Vector3 dir = p - _eye.position;
@@ -57,7 +57,7 @@ public class EnemyVision : MonoBehaviour
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(_eye.position, _range);
 
-        Vector3 left    = Quaternion.AngleAxis(-_fov * 0.5f, _eye.up) * _eye.forward;
+        Vector3 left    = Quaternion.AngleAxis(_fov * -0.5f, _eye.up) * _eye.forward;
         Vector3 right   = Quaternion.AngleAxis(_fov * 0.5f, _eye.up) * _eye.forward;
         
         Gizmos.DrawRay(_eye.position, left * _range);

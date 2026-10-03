@@ -5,17 +5,15 @@ using UnityEngine;
 public enum EnemyActionState { Idle, Walking, Running, Attacking, Unconscious, WakeUp }
 public class EnemyStateMachine : MonoBehaviour {
     [Header("Enemy State Debug")]
-    static private EnemyActionState _state = EnemyActionState.Idle;
-    [SerializeField] private EnemyActionState _stateDebug;
+    [SerializeField] private EnemyActionState _state = EnemyActionState.Idle;
+    public event Action OnStateChangeToIdle;
+    public event Action OnStateChangeToWalking;
+    public event Action OnStateChangeToRunning;
+    public event Action OnStateChangeToAttacking;
+    public event Action OnStateChangeToUnconcious;
+    public event Action OnStateChangeToWakeUp;
 
-    public static event Action OnStateChangeToIdle;
-    public static event Action OnStateChangeToWalking;
-    public static event Action OnStateChangeToRunning;
-    public static event Action OnStateChangeToAttacking;
-    public static event Action OnStateChangeToUnconcious;
-    public static event Action OnStateChangeToWakeUp;
-
-    public static EnemyActionState State {  
+    public EnemyActionState State {  
         get { return _state; }
         set {  
             _state = value;
@@ -30,9 +28,4 @@ public class EnemyStateMachine : MonoBehaviour {
             }
         }
     }
-
-    private void Update () {
-        _stateDebug = _state;
-    }
-
 }

@@ -43,9 +43,12 @@ GameObject:
   - component: {fileID: 3715211365094560138}
   - component: {fileID: 429160494342705076}
   - component: {fileID: 7746703567182652898}
+  - component: {fileID: 5862007577340068249}
+  - component: {fileID: 1768204941374852515}
   - component: {fileID: 2198249383284010081}
   - component: {fileID: 9215593158980283726}
   - component: {fileID: 4819630926630058680}
+  - component: {fileID: 2098855827711239285}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -89,8 +92,8 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 1.9
-  m_Radius: 0.24
+  m_Height: 1.85
+  m_Radius: 0.25
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
@@ -123,8 +126,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0116880dab98d047bf774df1c166ab9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyIA
-  _normalSpeed: 2
-  _maxSpeed: 4
+  _normalSpeed: 1
+  _maxSpeed: 2
   _rotationSpeed: 3
   _patrolRotationSpeed: 3
   _alertRotationSpeed: 10
@@ -132,21 +135,46 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  _patrolTime: 3
-  _checkTime: 5
-  _alertTime: 5
-  _disableTime: 5
-  _visionTime: 0.2
-  _detectionState: 0
   _timeCounter: 0
   _visionCounter: 0
   _speed: 2
-  _movementState: 0
   _player: {fileID: 0}
   _playerVisibility: 0
   _targetPosition: {x: 0, y: 0, z: 0}
   _patrolRotation: {x: 0, y: 0, z: 0, w: 0}
   _indexLocation: 0
+--- !u!114 &5862007577340068249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5846170529792512845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89589a238cfaa504f8e905ebe9ac7da1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyStateMachine
+  _state: 0
+--- !u!114 &1768204941374852515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5846170529792512845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bae4d7a9b10e8141b626b7136528406, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyDetection
+  _state: 0
+  _patrolTime: 4
+  _cautionTime: 6
+  _checkTime: 6
+  _alertTime: 6
+  _disableTime: 20
+  _visionTime: 0.2
 --- !u!136 &2198249383284010081
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -162,12 +190,12 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.36
-  m_Height: 2.11
+  m_Radius: 0.41
+  m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &9215593158980283726
@@ -182,8 +210,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e21b10adb0b2aa43bd1ad6c8130c3ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAttack
-  _damage: 10
-  _normalDamage: 10
   _attackRange: 6
   _weapon: {fileID: 7676165843250450296}
 --- !u!114 &4819630926630058680
@@ -199,14 +225,41 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyVision
   _eye: {fileID: 797141098530639352}
-  _range: 12
-  _fov: 49
+  _range: 10
+  _fov: 60
   _playerMask:
     serializedVersion: 2
     m_Bits: 128
   _obstacleMask:
     serializedVersion: 2
     m_Bits: 257
+--- !u!54 &2098855827711239285
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5846170529792512845}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 80
+  m_CollisionDetection: 0
 --- !u!1 &8186960831053376924
 GameObject:
   m_ObjectHideFlags: 0
@@ -232,7 +285,7 @@ Transform:
   m_GameObject: {fileID: 8186960831053376924}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.607, z: 0.081}
+  m_LocalPosition: {x: 0, y: 1.3, z: 0.081}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -348,6 +401,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4780241436259462324}
     m_Modifications:
+    - target: {fileID: 95193273196351732, guid: eb4edb00de9aa5841b04208253226445, type: 3}
+      propertyPath: cam
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 3594412788102856746, guid: eb4edb00de9aa5841b04208253226445, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0

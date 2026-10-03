@@ -20,6 +20,12 @@ public class PlayerMeleeWeapon : MonoBehaviour {
 
     private void OnTriggerEnter (Collider other) {
         if (other.gameObject.CompareTag("Enemy")){
+            EnemyStateMachine enemyState = other.GetComponent<EnemyStateMachine>();
+            if (enemyState.State == EnemyActionState.Unconscious ||
+                enemyState.State == EnemyActionState.Unconscious) {
+                return;
+            } 
+            
             EnemyHealth enemy = other.GetComponent<EnemyHealth>();
             _attack.DealDamage(enemy, _damage);
 
