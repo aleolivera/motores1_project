@@ -17,4 +17,5 @@ public class PatrolLocation : MonoBehaviour{
         _collider = GetComponent<BoxCollider>();
         _collider.isTrigger = true;
     }
+
 }

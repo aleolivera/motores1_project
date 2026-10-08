@@ -1,10 +1,13 @@
 using System;
 using UnityEngine;
 
+[RequireComponent(typeof(CapsuleCollider))]
 public class PlayerHealth : MonoBehaviour {
     [Header("Health")]
-    [SerializeField] private HealthBar _healthBar;
     [SerializeField] private int _maxHealth = 30;
+
+    public static event Action<int,int> OnHealthChange;
+    CapsuleCollider _collider;
 
     [Header("Debug")]
     [SerializeField] private int _health;
@@ -18,19 +21,19 @@ public class PlayerHealth : MonoBehaviour {
         private set { _maxHealth = value; }
     }
 
-    void Awake() {
-        _health = _maxHealth;
-    }
-    void Start() {
-        if(_healthBar == null)
-            Debug.LogError("PlayerHealth: HealthBar not found");
+    void Awake() { _health = _maxHealth; }
+
+    private void Start () {
+        _collider = GetComponent<CapsuleCollider>();
+        if (_collider != null) { InitCollider(); }
     }
 
     public void RestoreHealth(int health) {
         _health += health;
         
         if (_health > _maxHealth) { _health = _maxHealth; }
-        UpdateHeathBar();
+        
+        OnHealthChange?.Invoke(_health, _maxHealth);
     }
 
     public void DealDamage(int damage) {
@@ -40,14 +43,22 @@ public class PlayerHealth : MonoBehaviour {
             PlayerDead();
         }
 
-        UpdateHeathBar();
+        OnHealthChange?.Invoke(_health, _maxHealth);
     }
-
-    private void UpdateHeathBar() {
-        _healthBar.SetHealth(_health, _maxHealth);
-    }
-
+    
     public void PlayerDead() {
-        LevelManager.RestartLevel();
+        gameObject.layer = 0;
+        _collider.enabled = false;
+
+        PlayerStateMachine.Instance.CurrentState = PlayerState.Dead;
+    }
+
+    private void InitCollider () {
+        const int y = 1;
+        _collider.isTrigger = false;
+        _collider.center = Vector3.up;
+        _collider.radius = 0.28f;
+        _collider.height = 2.11f;
+        _collider.direction = y;
     }
 }

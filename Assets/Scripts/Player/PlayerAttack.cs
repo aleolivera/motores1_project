@@ -4,8 +4,11 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerInputListener))]
 [RequireComponent(typeof(GroundDetection))]
 public class PlayerAttack : MonoBehaviour {
+    [Header("Player Attack Settings")]
     [SerializeField] private float _attackCooldown = 2f;
     [SerializeField] private float _cooldownCounter;
+
+    [Header("Player Attack Settings")]
     GroundDetection _groundCheck;
     PlayerInputListener _input;
     PlayerMeleeWeapon _meleeWeapon;
@@ -18,6 +21,13 @@ public class PlayerAttack : MonoBehaviour {
 
     private void Awake() {
         _cooldownCounter = 0f;
+    }
+
+    private void OnEnable () {
+        PlayerMeleeWeapon.OnEnemyHit += DealDamage;
+    }
+    private void OnDisable () {
+        PlayerMeleeWeapon.OnEnemyHit -= DealDamage;
     }
 
     void Start() {
@@ -60,6 +70,6 @@ public class PlayerAttack : MonoBehaviour {
     }
 
     public void EnableMeleeWeaponCollider(bool enabled) {
-        _meleeWeapon.EnableCollider(enabled);
+        _meleeWeapon.ColliderEnable = enabled;
     }
 }

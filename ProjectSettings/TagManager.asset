@@ -9,6 +9,8 @@ TagManager:
   - HiddingSpot
   - KeyItem
   - QuestGiver
+  - QuestItem
+  - Lock
   layers:
   - Default
   - TransparentFX

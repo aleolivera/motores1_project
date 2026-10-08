@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
@@ -23,7 +24,7 @@ public class PlayerMovement : MonoBehaviour {
     [SerializeField] private bool _canJump;
     [SerializeField] private float _jumpingCooldown = 2f;
     [SerializeField] private float _jumpingCooldownCounter = 0f;
-    
+
     PlayerInputListener _input;
     CharacterController _controller;
     GroundDetection _groundCheck;
@@ -48,7 +49,7 @@ public class PlayerMovement : MonoBehaviour {
         if(_controller == null) {
             Debug.LogError("PlayerMovement: CharacterController not found.");
         } else {
-            _controller.detectCollisions = false;
+            //_controller.detectCollisions = false;
         }
         if (_orientation == null) {
             Debug.LogError("PlayerMovement: Orientation Obj not found.");

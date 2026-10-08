@@ -41,6 +41,14 @@ public class EnemyIA : MonoBehaviour {
         _rotationSpeed  = _patrolRotationSpeed;
     }
 
+    private void OnEnable () {
+        PlayerStateMachine.OnStateChangedToDead += BackToPatrol;
+    }
+
+    private void OnDisable () {
+        PlayerStateMachine.OnStateChangedToDead -= BackToPatrol;
+    }
+
     void Start() {
         _controller     = GetComponent<CharacterController>();
         _health         = GetComponent<EnemyHealth>();
@@ -89,6 +97,7 @@ public class EnemyIA : MonoBehaviour {
     }
 
     void Update() {
+         
         VisionCheck();
         switch (_detection.State) {
             case DetectionState.OnPatrol:   PatrolBehaviour();      break;
@@ -299,6 +308,7 @@ public class EnemyIA : MonoBehaviour {
     }
 
     public void BackToPatrol () {
+        _player = null;
         TargetNextPatrolLocation();
         ChangeToStatus (DetectionState.OnPatrol);
         _stateMachine.State = EnemyActionState.Idle;
@@ -310,7 +320,6 @@ public class EnemyIA : MonoBehaviour {
             
             PatrolLocation location = other.gameObject.GetComponent<PatrolLocation>();
             _detection.PatrolTime   = location.PatrolTime;
-            //_patrolTime             = location.PatrolTime;
             _patrolRotation         = location.transform.rotation;
 
             TargetNextPatrolLocation();

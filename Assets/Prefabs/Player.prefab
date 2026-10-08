@@ -336,6 +336,7 @@ GameObject:
   - component: {fileID: 9162665232232359459}
   - component: {fileID: 5397796899843582830}
   - component: {fileID: 4462930353992794914}
+  - component: {fileID: 7260855099881700768}
   - component: {fileID: 7779205084335973637}
   - component: {fileID: 2841870098198088595}
   - component: {fileID: 7321812822055302723}
@@ -356,7 +357,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7225486683726162045}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.9984443, z: -0, w: 0.055757746}
+  m_LocalRotation: {x: 0, y: -0.9984442, z: 0, w: 0.055760626}
   m_LocalPosition: {x: 10.05, y: 0, z: 18.58}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -407,11 +408,11 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.4
+  m_Radius: 0.28
   m_Height: 2.11
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
@@ -593,6 +594,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a96a357179be82e45aa91babcea09e42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInputListener
+--- !u!114 &7260855099881700768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7225486683726162045}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca02b3c17a58a934bbc193b5b375b34e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerStateMachine
+  _state: 0
 --- !u!114 &7779205084335973637
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -605,13 +619,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f216320245bd3f4c9f52b3b90c38253, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
-  _normalSpeed: 3
-  _sprintSpeed: 6
+  _normalSpeed: 2
+  _sprintSpeed: 4
   _rotationSpeed: 2
   _orientation: {fileID: 1495546062732636123}
   _gravity: -9.8
   _jumpForce: 1
-  _state: 0
   _speed: 5
   _verticalVelocity: 0
   _canJump: 0
@@ -629,7 +642,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4e47ab4602d76445bfd7cf41ee48459, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
-  _healthBar: {fileID: 0}
   _maxHealth: 100
   _health: 100
 --- !u!114 &7321812822055302723
@@ -644,8 +656,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e4cd0b1ff3469643ae885b4a4ccc3ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAttack
-  _damage: 10
-  _normalDamage: 10
   _attackCooldown: 2
   _cooldownCounter: 0
 --- !u!114 &3970543085048487109
@@ -730,11 +740,84 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ch28_nonPBR
       objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 2322b7b24a0045740b83901b59edc7c2, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: f088317449f97e44891de8a019cedaf7, type: 2}
+    - target: {fileID: 5866666021909216657, guid: 2322b7b24a0045740b83901b59edc7c2, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 2322b7b24a0045740b83901b59edc7c2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7785812388017236732}
+    - targetCorrespondingSourceObject: {fileID: 8958617573753903199, guid: 2322b7b24a0045740b83901b59edc7c2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5965326656084105784}
+    - targetCorrespondingSourceObject: {fileID: 8958617573753903199, guid: 2322b7b24a0045740b83901b59edc7c2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8868145322759856955}
   m_SourcePrefab: {fileID: 100100000, guid: 2322b7b24a0045740b83901b59edc7c2, type: 3}
+--- !u!1 &423688199713863865 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8958617573753903199, guid: 2322b7b24a0045740b83901b59edc7c2, type: 3}
+  m_PrefabInstance: {fileID: 8769169400387625190}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &5965326656084105784
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 423688199713863865}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.25, y: 0.46, z: 0.25}
+  m_Center: {x: 0, y: 0.16, z: 0}
+--- !u!114 &8868145322759856955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 423688199713863865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f23d7c2c080b6614bb64c37c05fa9c3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerMeleeWeapon
+  _damage: 10
+--- !u!1 &8463161769594543543 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 2322b7b24a0045740b83901b59edc7c2, type: 3}
+  m_PrefabInstance: {fileID: 8769169400387625190}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7785812388017236732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8463161769594543543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 464c802fb3469f94ba57f8fffca208d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimation
 --- !u!4 &9095266179184396045 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2322b7b24a0045740b83901b59edc7c2, type: 3}

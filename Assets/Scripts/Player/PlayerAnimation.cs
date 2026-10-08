@@ -9,6 +9,7 @@ public class PlayerAnimation : MonoBehaviour {
 
     private Animator _animator;
     private PlayerAttack _attack;
+    private PlayerInventory _inventory;
 
     private void OnEnable () {
         PlayerStateMachine.OnStateChangedToAttack       += PlayAttack;
@@ -18,7 +19,7 @@ public class PlayerAnimation : MonoBehaviour {
         PlayerStateMachine.OnStateChangedToSprinting    += PlaySprinting;
         PlayerStateMachine.OnStateChangedToSneaking     += PlaySneaking;
     }
-    private void OnDisable() {
+    private void OnDisable () {
         PlayerStateMachine.OnStateChangedToAttack       -= PlayAttack;
         PlayerStateMachine.OnStateChangedToDead         -= PlayDeath;
         PlayerStateMachine.OnStateChangedToIdle         -= PlayIdle;
@@ -30,12 +31,15 @@ public class PlayerAnimation : MonoBehaviour {
     void Start () {
         _animator   = GetComponent<Animator>();
         _attack     = GetComponentInParent<PlayerAttack>();
-        
-        if(_animator == null) 
+        _inventory = GetComponentInParent<PlayerInventory>();
+
+        if (_animator == null)
             Debug.LogWarning("Player Animation: Animator not found");
-        if (_attack == null) 
+        if (_attack == null)
             Debug.LogWarning("Player Animation: Player Attack not found");
-        
+        if (_inventory == null)
+            Debug.LogWarning("Player Animation: Player Inventory not found");
+
     }
 
     public void PlayIdle () {
@@ -70,14 +74,14 @@ public class PlayerAnimation : MonoBehaviour {
         _animator.SetTrigger(TRG_GATHER);
     }
 
-    public void PlayDeath() {
+    public void PlayDeath () {
         _animator.SetBool(IS_SNEAKING, false);
         _animator.SetBool(IS_SPRINTING, false);
 
         _animator.SetTrigger(TRG_DEATH);
     }
 
-    public void EnableWeaponTrigger(int enabled) {
+    public void EnableWeaponTrigger (int enabled) {
         if (enabled == 0) {
             _attack.EnableMeleeWeaponCollider(false);
         } else {
@@ -85,7 +89,20 @@ public class PlayerAnimation : MonoBehaviour {
         }
     }
 
-    public void PlayerStateToIdle() {
+    public void PlayerStateToIdle () {
         PlayerStateMachine.Instance.CurrentState = PlayerState.Idle;
     }
+
+    public void DeathAnimationEnd () {
+        LevelManager.RestartLevel();
+    }
+
+    public void EnableInteractTrigger (int enabled) {
+        if (enabled == 0) {
+            _inventory.EnableInteractCollider(false);
+        } else {
+            _inventory.EnableInteractCollider(true);
+        }
+    }
+
 }
