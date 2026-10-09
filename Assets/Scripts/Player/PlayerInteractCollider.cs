@@ -7,6 +7,7 @@ public class PlayerInteractCollider : MonoBehaviour {
     public static event Action<QuestGiver> OnQuestItemRetrieve;
     public static event Action<KeyItem> OnKeyItemCollected;
     public static event Action<Lock> OnKeyItemRetrieve;
+    public static event Action<HealthItem> OnHealthItemCollected;
 
     BoxCollider _collider;
     
@@ -20,7 +21,36 @@ public class PlayerInteractCollider : MonoBehaviour {
         _collider.enabled = false;
         _collider.isTrigger = true;
     }
-    
+
+    private void OnTriggerEnter (Collider collider) {
+        Debug.Log("Collider  tag: " + collider.tag);
+
+        if (collider.gameObject.CompareTag("KeyItem")) {
+            _collider.enabled = false;
+            HandleTriggerKeyItem(collider.GetComponent<KeyItem>());
+        }
+
+        if (collider.gameObject.CompareTag("QuestItem")) {
+            _collider.enabled = false;
+            HandleTriggerQuestItem(collider.GetComponent<QuestItem>());
+        }
+
+        if (collider.gameObject.CompareTag("QuestGiver")) {
+            _collider.enabled = false;
+            HandleTriggerQuestGiver(collider.GetComponent<QuestGiver>());
+        }
+
+        if (collider.gameObject.CompareTag("Lock")) {
+            _collider.enabled = false;
+            HandleTriggerLock(collider.GetComponent<Lock>());
+        }
+
+        if (collider.gameObject.CompareTag("Health")) {
+            _collider.enabled = false;
+            HandleTriggerHealth(collider.GetComponent<HealthItem>());
+        }
+    }
+
     private void HandleTriggerKeyItem(KeyItem item) {
         if (item == null) {
             Debug.LogWarning("PlayerInteractCollider: KeyItem is null");
@@ -57,26 +87,13 @@ public class PlayerInteractCollider : MonoBehaviour {
         OnKeyItemRetrieve?.Invoke(loc);
     }
 
-    private void OnTriggerEnter (Collider collider) {
-        if (collider.gameObject.CompareTag("KeyItem")) {
-            _collider.enabled = false;
-            HandleTriggerKeyItem(collider.GetComponent<KeyItem>());
+    private void HandleTriggerHealth (HealthItem item) {
+        if (item == null) {
+            Debug.LogWarning("PlayerInteractCollider: Health Item is null");
+            return;
         }
 
-        if (collider.gameObject.CompareTag("QuestItem")) {
-            _collider.enabled = false;
-            HandleTriggerQuestItem(collider.GetComponent<QuestItem>());
-        }
-
-        if (collider.gameObject.CompareTag("QuestGiver")) {
-            _collider.enabled = false;
-            HandleTriggerQuestGiver(collider.GetComponent<QuestGiver>());
-        }
-
-        if (collider.gameObject.CompareTag("Lock")) {
-            _collider.enabled = false;
-            HandleTriggerLock(collider.GetComponent<Lock>());
-        }
-
+        OnHealthItemCollected?.Invoke(item);
+        item.Destroy();
     }
 }

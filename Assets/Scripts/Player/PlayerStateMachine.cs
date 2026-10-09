@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Windows;
 
 public enum PlayerState { Idle, Sneaking, Sprinting, Attacking, Interacting, Jumping, Dead }
 public class PlayerStateMachine : MonoBehaviour {
@@ -25,7 +26,7 @@ public class PlayerStateMachine : MonoBehaviour {
 
     public PlayerState CurrentState {
         get { return _state; }
-        set { 
+        set {
             _state = value;
             switch (_state) { 
                 case PlayerState.Idle:          OnStateChangedToIdle?.Invoke();         break;

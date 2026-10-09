@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public enum GameState { InProgress, GameOver }
+public enum GameState { InProgress, GameOver, OnPause }
 public class GameManager : MonoBehaviour {
     private static GameManager _instance;
     private static GameState _state = GameState.InProgress;
@@ -42,6 +42,9 @@ public class GameManager : MonoBehaviour {
         State = GameState.GameOver;
     }
     private void GameInProgress () {
+        State = GameState.InProgress;
+    }
+    private void GameOnPause() {
         State = GameState.InProgress;
     }
 

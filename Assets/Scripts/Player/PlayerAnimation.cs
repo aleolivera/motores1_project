@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Windows;
 
 public class PlayerAnimation : MonoBehaviour {
     private const string IS_SNEAKING    = "IsSneaking";
@@ -62,6 +63,7 @@ public class PlayerAnimation : MonoBehaviour {
     }
 
     public void PlayAttack () {
+        Debug.Log("Player Animation");
         _animator.SetBool(IS_SNEAKING, false);
         _animator.SetBool(IS_SPRINTING, false);
 

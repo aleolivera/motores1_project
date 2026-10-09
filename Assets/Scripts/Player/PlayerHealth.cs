@@ -22,21 +22,37 @@ public class PlayerHealth : MonoBehaviour {
     }
 
     void Awake() { _health = _maxHealth; }
+    
+    private void OnEnable () {
+        PlayerInteractCollider.OnHealthItemCollected += HandleHealthItemCollected;
+    }
+
+    private void OnDisable () {
+        PlayerInteractCollider.OnHealthItemCollected -= HandleHealthItemCollected;
+    }
 
     private void Start () {
         _collider = GetComponent<CapsuleCollider>();
         if (_collider != null) { InitCollider(); }
     }
 
+    private void HandleHealthItemCollected (HealthItem item) {
+        if (item == null) return;
+        RestoreHealth(item.Health);
+    }
+
     public void RestoreHealth(int health) {
-        _health += health;
+        if (health < 0) return; 
         
+        _health += health;
         if (_health > _maxHealth) { _health = _maxHealth; }
         
         OnHealthChange?.Invoke(_health, _maxHealth);
     }
 
     public void DealDamage(int damage) {
+        if (damage < 0) return;
+        
         _health -= damage;
         if (_health <= 0) { 
             _health = 0;

@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::QuestItem
   _id: 0
-  _name: 
+  _name: Row
 --- !u!65 &2525642377145600887
 BoxCollider:
   m_ObjectHideFlags: 0
