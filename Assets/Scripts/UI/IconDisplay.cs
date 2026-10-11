@@ -18,7 +18,7 @@ public class IconDisplay : MonoBehaviour {
     }
 
     public void ChangeIcon (int index, Color color) {
-        if (index < 0 || index >= _sprites.Count) return;
+        if (index < 0 || _sprites.Count < 1 || index >= _sprites.Count) return;
 
         _image.sprite = _sprites[index];
         _image.color = color;

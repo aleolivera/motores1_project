@@ -91,7 +91,6 @@ public class EnemyIA : MonoBehaviour {
 
         _targetPosition = _patrolLocations[_indexLocation].position;
         _timeCounter    = _detection.PatrolTime;
-        _iconDisplay.ChangeIcon(0, Color.green);
     }
 
     void VisionCheck () {

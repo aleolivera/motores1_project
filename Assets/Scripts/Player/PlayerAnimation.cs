@@ -63,7 +63,6 @@ public class PlayerAnimation : MonoBehaviour {
     }
 
     public void PlayAttack () {
-        Debug.Log("Player Animation");
         _animator.SetBool(IS_SNEAKING, false);
         _animator.SetBool(IS_SPRINTING, false);
 

@@ -139,6 +139,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1098943700976460640}
+  - component: {fileID: 4566011157887839278}
+  - component: {fileID: 37788791405058550}
   m_Layer: 0
   m_Name: UI_Worldspace
   m_TagString: Untagged
@@ -163,6 +165,42 @@ Transform:
   - {fileID: 1581171231704537452}
   m_Father: {fileID: 3936235334733161064}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &4566011157887839278
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3353235253304615254}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &37788791405058550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3353235253304615254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 190ea555bdbe9b4459a16d0601e96d04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldspaceUI
+  _UIElements:
+  - {fileID: 3503575637137652601}
+  - {fileID: 1115913103220172995}
 --- !u!1 &5995219194423415157
 GameObject:
   m_ObjectHideFlags: 0
@@ -326,6 +364,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f0adb9aaf4cb62645bba4f8261b80e1e, type: 3}
+--- !u!1 &3503575637137652601 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4157361623062833457, guid: f0adb9aaf4cb62645bba4f8261b80e1e, type: 3}
+  m_PrefabInstance: {fileID: 661704944831500872}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7518110255568982932 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7024322762049323484, guid: f0adb9aaf4cb62645bba4f8261b80e1e, type: 3}
@@ -396,6 +439,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 676bd56c7070c414e807c05e7d6eab1b, type: 3}
+--- !u!1 &1115913103220172995 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5219639299538407383, guid: 676bd56c7070c414e807c05e7d6eab1b, type: 3}
+  m_PrefabInstance: {fileID: 5121550759464511252}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1581171231704537452 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5972359816945041016, guid: 676bd56c7070c414e807c05e7d6eab1b, type: 3}
