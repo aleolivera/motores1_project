@@ -11,6 +11,7 @@ TagManager:
   - QuestGiver
   - QuestItem
   - Lock
+  - Health
   layers:
   - Default
   - TransparentFX

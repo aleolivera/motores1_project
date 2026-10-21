@@ -23,7 +23,6 @@ public class EnemyIA : MonoBehaviour {
     [SerializeField] private float _speed = 2f;
     [SerializeField] private Transform _player;
     [SerializeField] private float _playerVisibility;
-
     [SerializeField] private Vector3 _targetPosition;
     [SerializeField] private Quaternion _patrolRotation;
     [SerializeField] private int _indexLocation = 0;
@@ -34,6 +33,8 @@ public class EnemyIA : MonoBehaviour {
     private EnemyVision _vision;
     private EnemyDetection _detection;
     private EnemyStateMachine _stateMachine;
+    private IconDisplay _iconDisplay;
+
     public Vector3 PlayerPosition{ get { return _player.position; } }
 
     void Awake() {
@@ -56,6 +57,7 @@ public class EnemyIA : MonoBehaviour {
         _vision         = GetComponent<EnemyVision>();
         _detection      = GetComponent<EnemyDetection>();
         _stateMachine   = GetComponent<EnemyStateMachine>();
+        _iconDisplay    = GetComponentInChildren<IconDisplay>();
 
         foreach (Transform t in _patrolLocations) {
             if(t == null) {
@@ -82,7 +84,11 @@ public class EnemyIA : MonoBehaviour {
         if(_detection == null) {
             Debug.Log("EnemyMovement: Enemy detection not found.");
         }
-        
+        if(_iconDisplay == null) {
+            Debug.Log("EnemyMovement: Icon Display not found.");
+        }
+
+
         _targetPosition = _patrolLocations[_indexLocation].position;
         _timeCounter    = _detection.PatrolTime;
     }
@@ -172,7 +178,6 @@ public class EnemyIA : MonoBehaviour {
             return;
         }
 
-        Debug.Log("Nothing to report, On patrol...");
         TargetNextPatrolLocation();
         ChangeToStatus(DetectionState.OnPatrol);
     }
@@ -214,8 +219,6 @@ public class EnemyIA : MonoBehaviour {
             return;
         } 
         
-        Debug.Log("Waking up... ");
-
         _health.RestoreHealth(_health.MaxHealth);
         _stateMachine.State = EnemyActionState.WakeUp;
         ChangeToStatus(DetectionState.OnPatrol);
@@ -266,31 +269,35 @@ public class EnemyIA : MonoBehaviour {
 
         switch (status) {
             case DetectionState.OnPatrol:
-                Debug.Log("On patrol!...");
                 _timeCounter = _detection.PatrolTime;
                 _speed = _normalSpeed;
                 _rotationSpeed = _patrolRotationSpeed;
+                _iconDisplay.ChangeIcon(0, Color.green);
                 break;
 
             case DetectionState.OnCaution:
                 _timeCounter = 0f;
                 _speed = _normalSpeed;
+                _iconDisplay.ChangeIcon(1, Color.yellow);
                 break;
 
             case DetectionState.Checking:
                 _timeCounter = 0f;
                 _speed = 0f;
+                _iconDisplay.ChangeIcon(1, Color.yellow);
                 break;
 
             case DetectionState.OnAlert:
                 _timeCounter = 0f;
                 _speed = _maxSpeed;
                 _rotationSpeed = _alertRotationSpeed;
+                _iconDisplay.ChangeIcon(2, Color.red);
                 break;
 
             case DetectionState.Disabled:
                 _timeCounter = 0f;
                 _speed = 0f;
+                _iconDisplay.ChangeIcon(3, Color.white);
                 break;
 
             default:

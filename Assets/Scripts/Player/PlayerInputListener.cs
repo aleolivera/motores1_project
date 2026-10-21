@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Windows;
 
 [RequireComponent(typeof(PlayerInput))]
 public class PlayerInputListener : MonoBehaviour {
@@ -26,8 +27,8 @@ public class PlayerInputListener : MonoBehaviour {
     }
 
     public void OnAttack(InputAction.CallbackContext ctx) {
-        if (ctx.performed)       { Attack = true; }
-        else if (ctx.canceled)   { Attack = false; }
+        if (ctx.performed)      { Attack = true; }
+        else if (ctx.canceled)  { Attack = false; }
     }
 
     public void OnInteract(InputAction.CallbackContext ctx) {
