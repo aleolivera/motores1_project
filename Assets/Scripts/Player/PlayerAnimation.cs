@@ -11,6 +11,7 @@ public class PlayerAnimation : MonoBehaviour {
     private Animator _animator;
     private PlayerAttack _attack;
     private PlayerInventory _inventory;
+    private SFXPlayer _sound;
 
     private void OnEnable () {
         PlayerStateMachine.OnStateChangedToAttack       += PlayAttack;
@@ -32,7 +33,8 @@ public class PlayerAnimation : MonoBehaviour {
     void Start () {
         _animator   = GetComponent<Animator>();
         _attack     = GetComponentInParent<PlayerAttack>();
-        _inventory = GetComponentInParent<PlayerInventory>();
+        _inventory  = GetComponentInParent<PlayerInventory>();
+        _sound      = GetComponentInParent<SFXPlayer>();
 
         if (_animator == null)
             Debug.LogWarning("Player Animation: Animator not found");
@@ -40,6 +42,8 @@ public class PlayerAnimation : MonoBehaviour {
             Debug.LogWarning("Player Animation: Player Attack not found");
         if (_inventory == null)
             Debug.LogWarning("Player Animation: Player Inventory not found");
+        if (_sound == null)
+            Debug.LogWarning("Player Animation: SFX Player not found");
 
     }
 
@@ -83,27 +87,19 @@ public class PlayerAnimation : MonoBehaviour {
     }
 
     public void EnableWeaponTrigger (int enabled) {
-        if (enabled == 0) {
-            _attack.EnableMeleeWeaponCollider(false);
-        } else {
-            _attack.EnableMeleeWeaponCollider(true);
-        }
+        if (enabled == 0)   _attack.EnableMeleeWeaponCollider(false);
+        else                _attack.EnableMeleeWeaponCollider(true);
     }
 
-    public void PlayerStateToIdle () {
-        PlayerStateMachine.Instance.CurrentState = PlayerState.Idle;
-    }
-
-    public void DeathAnimationEnd () {
-        LevelManager.RestartLevel();
-    }
+    public void PlayerStateToIdle () => PlayerStateMachine.Instance.CurrentState = PlayerState.Idle;
+    public void DeathAnimationEnd () => LevelManager.RestartLevel();
+    
 
     public void EnableInteractTrigger (int enabled) {
-        if (enabled == 0) {
-            _inventory.EnableInteractCollider(false);
-        } else {
-            _inventory.EnableInteractCollider(true);
-        }
+        if (enabled == 0)   _inventory.EnableInteractCollider(false);
+         else               _inventory.EnableInteractCollider(true);
     }
 
+    public void PlayGrassStepSfx() => _sound.PlaySound(0, 1f);
+    public void PlayPunchSfx() => _sound.PlaySound(4, 1f);
 }

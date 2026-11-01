@@ -62,11 +62,7 @@ public class EnemyHealth : MonoBehaviour {
         UpdateHeathBar();
     }
 
-    public void KnockOut() {
-        _enemyIA.DisableEnemy();
-    }
-
-    private void UpdateHeathBar() {
-        _healthBar.SetHealth(_health, _maxHealth);
-    }
+    public void KnockOut() => _enemyIA.DisableEnemy();
+    private void UpdateHeathBar() => _healthBar.SetHealth(_health, _maxHealth);
+    
 }

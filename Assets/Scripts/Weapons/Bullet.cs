@@ -10,10 +10,16 @@ public class Bullet : MonoBehaviour , IProjectile{
     [SerializeField] private int _damage = 20;
     private float _lifeTime = 2f;
     Rigidbody _rigidBody;
+    SFXPlayer _sfxPlayer;
+
 
     private void Awake () {
         _counter    = _lifeTime;
         _rigidBody  = GetComponent<Rigidbody>();
+        _sfxPlayer = GetComponent<SFXPlayer>();
+        if (_sfxPlayer == null) {
+            Debug.LogError("Bullet: SFXPlayer not found");
+        }
     }
 
     private void OnEnable () {
@@ -36,17 +42,16 @@ public class Bullet : MonoBehaviour , IProjectile{
             PlayerHealth player = collider.gameObject.GetComponent<PlayerHealth>();
             if (player == null) return;
 
+            PlayBulletImpactSfx();
+            player.PlayDamageSfx();
             player.DealDamage(_damage);
             DestroyProjectile();
         }
     }
-    public void SetStartPosition(Vector3 position) {
-        transform.position = position;
-    }
-
-    public void SetStartRotation(Quaternion rotation) {
-        transform.rotation = rotation;
-    }
+    public void SetStartPosition(Vector3 position) => transform.position = position;
+    
+    public void SetStartRotation(Quaternion rotation) => transform.rotation = rotation;
+    
 
     public void Launch(float speed) {
         Vector3 target = transform.forward;
@@ -64,4 +69,7 @@ public class Bullet : MonoBehaviour , IProjectile{
         Reset();
         BulletPool.Instance.ReturnObject(gameObject);
     }
+
+    private void PlayBulletImpactSfx () => _sfxPlayer.PlaySound(0, 1f);
+    
 }

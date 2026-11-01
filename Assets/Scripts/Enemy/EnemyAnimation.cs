@@ -11,12 +11,14 @@ public class EnemyAnimation : MonoBehaviour {
     EnemyAttack _attack;
     EnemyIA _enemy;
     EnemyStateMachine _stateMachine;
+    SFXPlayer _sfxPlayer;
 
     private void Awake () {
-        _animator =     GetComponent<Animator>();
-        _attack =       GetComponentInParent<EnemyAttack>();
-        _enemy =        GetComponentInParent<EnemyIA>();
-        _stateMachine = GetComponentInParent<EnemyStateMachine>();
+        _animator       = GetComponent<Animator>();
+        _attack         = GetComponentInParent<EnemyAttack>();
+        _enemy          = GetComponentInParent<EnemyIA>();
+        _stateMachine   = GetComponentInParent<EnemyStateMachine>();
+        _sfxPlayer      = GetComponentInParent<SFXPlayer>();
     }
 
     private void OnEnable () {
@@ -41,6 +43,8 @@ public class EnemyAnimation : MonoBehaviour {
             Debug.LogError("EnemyAnimation: Animator not found.");
         if(_enemy == null)
             Debug.LogError("EnemyAnimation: Enemy IA not found.");
+        if(_sfxPlayer == null)
+            Debug.LogError("EnemyAnimation: SFXPlayer not found.");
     }
 
     public void PlayIdle() {
@@ -82,16 +86,12 @@ public class EnemyAnimation : MonoBehaviour {
         _animator.SetBool(IS_RUNNING, false);
     }
 
-    public void Shoot () {
-        _attack.HandleAttack();
-    }
-
-    public void BackToPatrol () {
-        _enemy.BackToPatrol();
-    }
-
-    public void OnShotAnimationEnd () {
-        _stateMachine.State = EnemyActionState.Idle;
-    }
+    public void Shoot () => _attack.HandleAttack();
+    
+    public void BackToPatrol () => _enemy.BackToPatrol();
+    
+    public void OnShotAnimationEnd () => _stateMachine.State = EnemyActionState.Idle;
+    
+    public void PlayGrassStepSfx () => _sfxPlayer.PlaySound(0,1f);
 
 }

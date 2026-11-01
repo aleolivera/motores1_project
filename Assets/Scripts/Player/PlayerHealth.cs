@@ -8,6 +8,7 @@ public class PlayerHealth : MonoBehaviour {
 
     public static event Action<int,int> OnHealthChange;
     CapsuleCollider _collider;
+    SFXPlayer _sfxPlayer;
 
     [Header("Debug")]
     [SerializeField] private int _health;
@@ -34,6 +35,11 @@ public class PlayerHealth : MonoBehaviour {
     private void Start () {
         _collider = GetComponent<CapsuleCollider>();
         if (_collider != null) { InitCollider(); }
+
+        _sfxPlayer = GetComponent<SFXPlayer>();
+        if (_sfxPlayer == null) {
+            Debug.LogError("PlayerHealth: SFXPlayer not found");
+        }
     }
 
     private void HandleHealthItemCollected (HealthItem item) {
@@ -66,6 +72,7 @@ public class PlayerHealth : MonoBehaviour {
         gameObject.layer = 0;
         _collider.enabled = false;
 
+        PlayDeadSfx();
         PlayerStateMachine.Instance.CurrentState = PlayerState.Dead;
     }
 
@@ -77,4 +84,8 @@ public class PlayerHealth : MonoBehaviour {
         _collider.height = 2.11f;
         _collider.direction = y;
     }
+
+    public void PlayDamageSfx () => _sfxPlayer.PlaySound(1);
+    public void PlayDeadSfx () => _sfxPlayer.PlaySound(2);
+    
 }

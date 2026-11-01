@@ -17,4 +17,5 @@ public abstract class Pool <T>: MonoBehaviour, IPoolable<T> {
     protected abstract void InitiatePool ();
     public abstract T GetObject ();
     public abstract void ReturnObject (T obj);
+    public abstract void ReturnObject (T obj, float time);
 }

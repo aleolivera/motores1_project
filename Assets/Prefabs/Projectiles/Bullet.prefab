@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8450212769692625906}
   - component: {fileID: 5918058786681722626}
   - component: {fileID: 2373396876664729654}
+  - component: {fileID: 3491229881309659635}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Untagged
@@ -97,6 +98,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   _counter: 0
   _damage: 20
+--- !u!114 &3491229881309659635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1233482282558429212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 470fc955492624c4083f7c8060004b14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SFXPlayer
+  _clips:
+  - {fileID: 8300000, guid: 221d21af50844644395ad78a31560c03, type: 3}
 --- !u!1 &3151900654237810048
 GameObject:
   m_ObjectHideFlags: 0

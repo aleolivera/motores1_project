@@ -205,6 +205,7 @@ GameObject:
   - component: {fileID: 3023784814479478617}
   - component: {fileID: 7599301115492420475}
   - component: {fileID: 1652710010932191420}
+  - component: {fileID: 829302794231713381}
   m_Layer: 0
   m_Name: Lock
   m_TagString: Lock
@@ -294,6 +295,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &829302794231713381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6815263420277537831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 470fc955492624c4083f7c8060004b14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SFXPlayer
+  _clips:
+  - {fileID: 8300000, guid: dd438f2f7b323ee47ac09ed5f0ba1c47, type: 3}
 --- !u!1001 &1723503323761960898
 PrefabInstance:
   m_ObjectHideFlags: 0

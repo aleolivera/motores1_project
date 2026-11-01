@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6233101267288152542}
   - component: {fileID: 7515345981716353641}
   - component: {fileID: 5608509409017784208}
+  - component: {fileID: 1196766533362534640}
   m_Layer: 0
   m_Name: KeyItem
   m_TagString: KeyItem
@@ -98,6 +99,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!114 &1196766533362534640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2153733010543464901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 470fc955492624c4083f7c8060004b14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SFXPlayer
+  _clips:
+  - {fileID: 8300000, guid: 90fe100a28dd4704bbd418078e181f4d, type: 3}
 --- !u!1 &4144218593784704884
 GameObject:
   m_ObjectHideFlags: 0

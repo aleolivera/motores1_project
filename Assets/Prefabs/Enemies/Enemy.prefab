@@ -82,6 +82,7 @@ GameObject:
   - component: {fileID: 4819630926630058680}
   - component: {fileID: 2198249383284010081}
   - component: {fileID: 2098855827711239285}
+  - component: {fileID: 2949614740235078726}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -144,7 +145,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d65883b83e9cc03448a24b8d77dbc4c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
-  _healthBar: {fileID: 0}
+  _healthBar: {fileID: 1810662539512637818}
   _maxHealth: 30
   _health: 0
 --- !u!114 &7746703567182652898
@@ -293,6 +294,25 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!114 &2949614740235078726
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5846170529792512845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 470fc955492624c4083f7c8060004b14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SFXPlayer
+  _clips:
+  - {fileID: 8300000, guid: 4191da3b0422ace44b77d3b948aa39d2, type: 3}
+  - {fileID: 8300000, guid: c85fb10c4aa2bd0439cd80bc4b352729, type: 3}
+  - {fileID: 8300000, guid: 4f880f87b315d0941ac8a64b465bab40, type: 3}
+  - {fileID: 8300000, guid: 07766a3cae00e7445b1ae588fa6549fa, type: 3}
+  - {fileID: 8300000, guid: 8b43f85a0135a9842939a143eceda6a0, type: 3}
+  - {fileID: 8300000, guid: f05c939fca132d9408767ccc531cd71e, type: 3}
 --- !u!1 &8186960831053376924
 GameObject:
   m_ObjectHideFlags: 0
@@ -608,6 +628,17 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1964487344125735356}
   m_SourcePrefab: {fileID: 100100000, guid: eb4edb00de9aa5841b04208253226445, type: 3}
+--- !u!114 &1810662539512637818 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5160322342821028235, guid: eb4edb00de9aa5841b04208253226445, type: 3}
+  m_PrefabInstance: {fileID: 6826865669797710065}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4252349533026895811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab6bdd2cf5c666145af48c119f5da40c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HealthBar
 --- !u!1 &4252349533026895811 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7331446187926998834, guid: eb4edb00de9aa5841b04208253226445, type: 3}
@@ -692,6 +723,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ccbb361d3cdc5fd4aaca27d4bf4a76e9, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7676165843250450296}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ccbb361d3cdc5fd4aaca27d4bf4a76e9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1434814940618231598}
   m_SourcePrefab: {fileID: 100100000, guid: ccbb361d3cdc5fd4aaca27d4bf4a76e9, type: 3}
 --- !u!4 &7211519298092622293 stripped
 Transform:
@@ -720,3 +754,17 @@ MonoBehaviour:
   _launchVelocity: 40
   _counter: 0
   _canShoot: 0
+--- !u!114 &1434814940618231598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8025315835463547759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 470fc955492624c4083f7c8060004b14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SFXPlayer
+  _clips:
+  - {fileID: 8300000, guid: 2fa52d7b48f570644a8b0f569b4280ed, type: 3}

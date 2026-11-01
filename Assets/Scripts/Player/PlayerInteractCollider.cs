@@ -23,8 +23,6 @@ public class PlayerInteractCollider : MonoBehaviour {
     }
 
     private void OnTriggerEnter (Collider collider) {
-        Debug.Log("Collider  tag: " + collider.tag);
-
         if (collider.gameObject.CompareTag("KeyItem")) {
             _collider.enabled = false;
             HandleTriggerKeyItem(collider.GetComponent<KeyItem>());
@@ -58,6 +56,8 @@ public class PlayerInteractCollider : MonoBehaviour {
         }
 
         OnKeyItemCollected?.Invoke(item);
+        
+        item.PlayKeyItemCollectedSfx();
         item.gameObject.SetActive(false);
     }
 
@@ -68,6 +68,8 @@ public class PlayerInteractCollider : MonoBehaviour {
         }
 
         OnQuestItemCollected?.Invoke(item);
+
+        item.PlayQuestItemCollectedSfx();
         item.gameObject.SetActive(false);
     }
     private void HandleTriggerQuestGiver (QuestGiver quest) {
@@ -94,6 +96,8 @@ public class PlayerInteractCollider : MonoBehaviour {
         }
 
         OnHealthItemCollected?.Invoke(item);
+        item.PlayHealthItemCollectedSfx();
+        
         item.Destroy();
     }
 }

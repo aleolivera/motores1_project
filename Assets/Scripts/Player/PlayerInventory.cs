@@ -36,17 +36,13 @@ public class PlayerInventory : MonoBehaviour {
         }
     }
 
-    public bool HasQuestItem(int key) {
-        return _questItems.ContainsKey(key);
-    }
-    public void RemoveQuestItem(int key) {
-        Debug.Log("Remove quest item: " + key + " - " + _questItems[key].Name);
-        _questItems.Remove(key);
-    }
+    public bool HasQuestItem(int key) => _questItems.ContainsKey(key);
+    
+    public void RemoveQuestItem(int key) => _questItems.Remove(key);
+    
     public void AddQuestItem(QuestItem item) {
         if (item == null) return;
 
-        Debug.Log("Add item: " + item.Id + " - " + item.Name);
         _questItems .Add(item.Id, item);
     }
 
@@ -74,13 +70,11 @@ public class PlayerInventory : MonoBehaviour {
         return _keyItems.ContainsKey(key);
     }
     public bool RemoveKeyItem (int key) {
-        Debug.Log("Remove quest item: " + key + " - " + _keyItems[key].Name);
         return _keyItems.Remove(key);
     }
     public void AddKeyItem (KeyItem item) {
         if (item == null) return;
 
-        Debug.Log("Add quest item: " + item.Id + " - " + item.Name);
         _keyItems.Add(item.Id, item);
     }
 

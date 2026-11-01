@@ -43,10 +43,12 @@ public class EnemyVision : MonoBehaviour
         int visible = 0;
         foreach (var p in points) {
             Vector3 dir = p - _eye.position;
-            if (!Physics.Raycast(_eye.position, dir.normalized, dir.magnitude, _obstacleMask))
+            if (!Physics.Raycast(_eye.position, dir.normalized, dir.magnitude, _obstacleMask)) {
                 visible++;
+            }
         }
 
+        
         if (visible > 0) target = collider.transform;
         return visible / (float)points.Length;
     }

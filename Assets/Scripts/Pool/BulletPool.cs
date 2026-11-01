@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -45,5 +46,14 @@ public class BulletPool : Pool<GameObject> {
     override public void ReturnObject (GameObject obj) {
         obj.gameObject.SetActive(false);
         _pool.Enqueue(obj);
+    }
+
+    public override void ReturnObject (GameObject obj, float time) {
+        StartCoroutine(CountdownCoroutine(obj, time));
+    }
+
+    private IEnumerator CountdownCoroutine (GameObject obj, float time) { 
+        yield return new WaitForSeconds(time);
+        ReturnObject(obj);
     }
 }

@@ -34,6 +34,7 @@ public class EnemyIA : MonoBehaviour {
     private EnemyDetection _detection;
     private EnemyStateMachine _stateMachine;
     private IconDisplay _iconDisplay;
+    private SFXPlayer _sfxPlayer;
 
     public Vector3 PlayerPosition{ get { return _player.position; } }
 
@@ -57,6 +58,7 @@ public class EnemyIA : MonoBehaviour {
         _vision         = GetComponent<EnemyVision>();
         _detection      = GetComponent<EnemyDetection>();
         _stateMachine   = GetComponent<EnemyStateMachine>();
+        _sfxPlayer      = GetComponent<SFXPlayer>();
         _iconDisplay    = GetComponentInChildren<IconDisplay>();
 
         foreach (Transform t in _patrolLocations) {
@@ -86,6 +88,9 @@ public class EnemyIA : MonoBehaviour {
         }
         if(_iconDisplay == null) {
             Debug.Log("EnemyMovement: Icon Display not found.");
+        }
+        if(_sfxPlayer == null) {
+            Debug.Log("EnemyMovement: SFX Player not found.");
         }
 
 
@@ -225,6 +230,7 @@ public class EnemyIA : MonoBehaviour {
     }
 
     public void DisableEnemy () {
+        _sfxPlayer.PlaySound(4, 1f);
         _stateMachine.State = EnemyActionState.Unconscious;
         ChangeToStatus(DetectionState.Disabled);
     }
@@ -279,6 +285,7 @@ public class EnemyIA : MonoBehaviour {
                 _timeCounter = 0f;
                 _speed = _normalSpeed;
                 _iconDisplay.ChangeIcon(1, Color.yellow);
+                _sfxPlayer.PlaySound(1);
                 break;
 
             case DetectionState.Checking:
@@ -292,6 +299,7 @@ public class EnemyIA : MonoBehaviour {
                 _speed = _maxSpeed;
                 _rotationSpeed = _alertRotationSpeed;
                 _iconDisplay.ChangeIcon(2, Color.red);
+                _sfxPlayer.PlaySound(2);
                 break;
 
             case DetectionState.Disabled:
@@ -317,8 +325,11 @@ public class EnemyIA : MonoBehaviour {
     public void BackToPatrol () {
         _player = null;
         TargetNextPatrolLocation();
+        
         ChangeToStatus (DetectionState.OnPatrol);
         _stateMachine.State = EnemyActionState.Idle;
+        
+        _sfxPlayer.PlaySound(3);
     }
 
     private void OnTriggerEnter (Collider other) {
