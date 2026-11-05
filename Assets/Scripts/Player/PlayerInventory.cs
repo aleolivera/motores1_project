@@ -48,9 +48,12 @@ public class PlayerInventory : MonoBehaviour {
 
     public void RetrieveQuestItem (QuestGiver quest) {
         if (quest.IsQuestCompleted) return;
-
+        
+        Debug.Log("Item count: " + quest.Items.Count);
+        
         int count = 0;
         foreach (QuestItem item in quest.Items) {
+            
             if (HasQuestItem(item.Id)) {
                 count++;
             }

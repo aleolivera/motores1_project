@@ -102,7 +102,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::QuestGiver
   _id: 1
-  _name: Repair and Escape
+  _name: Repair and escape
   _description: Find the missing parts and repair the Boat.
   _questItems: []
   _questCompleted: 0
