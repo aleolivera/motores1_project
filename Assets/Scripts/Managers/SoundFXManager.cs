@@ -19,8 +19,9 @@ public class SoundFXManager : MonoBehaviour {
         _soundFXprefad.gameObject.transform.position = obj.position;
         _soundFXprefad.gameObject.transform.rotation = obj.rotation;
 
-        _soundFXprefad.volume = volume;
-        _soundFXprefad.clip   = sfxClip;
+        _soundFXprefad.spatialBlend = 1f;
+        _soundFXprefad.volume       = volume;
+        _soundFXprefad.clip         = sfxClip;
         _soundFXprefad.Play();
 
         SoundPool.Instance.ReturnObject(_soundFXprefad, _soundFXprefad.clip.length);
