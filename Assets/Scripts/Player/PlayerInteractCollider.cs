@@ -6,7 +6,7 @@ public class PlayerInteractCollider : MonoBehaviour {
     public static event Action<QuestItem> OnQuestItemCollected;
     public static event Action<QuestGiver> OnQuestItemRetrieve;
     public static event Action<KeyItem> OnKeyItemCollected;
-    public static event Action<Lock> OnKeyItemRetrieve;
+    //public static event Action<Lock> OnKeyItemRetrieve;
     public static event Action<HealthItem> OnHealthItemCollected;
 
     BoxCollider _collider;
@@ -37,12 +37,12 @@ public class PlayerInteractCollider : MonoBehaviour {
             _collider.enabled = false;
             HandleTriggerQuestGiver(collider.GetComponent<QuestGiver>());
         }
-
+        /*
         if (collider.gameObject.CompareTag("Lock")) {
             _collider.enabled = false;
             HandleTriggerLock(collider.GetComponent<Lock>());
         }
-
+        */
         if (collider.gameObject.CompareTag("Health")) {
             _collider.enabled = false;
             HandleTriggerHealth(collider.GetComponent<HealthItem>());
@@ -80,6 +80,7 @@ public class PlayerInteractCollider : MonoBehaviour {
 
         OnQuestItemRetrieve?.Invoke(quest);
     }
+    /*
     private void HandleTriggerLock(Lock loc) {
         if (loc == null) {
             Debug.LogWarning("PlayerInteractCollider: Lock is null");
@@ -88,7 +89,7 @@ public class PlayerInteractCollider : MonoBehaviour {
 
         OnKeyItemRetrieve?.Invoke(loc);
     }
-
+    */
     private void HandleTriggerHealth (HealthItem item) {
         if (item == null) {
             Debug.LogWarning("PlayerInteractCollider: Health Item is null");

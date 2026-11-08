@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -30,8 +31,8 @@ public class LevelManager : MonoBehaviour {
             Debug.LogWarning("LevelManager: Quests are empty.");
         } else {
             bool b = false;
-            foreach(QuestGiver item in _quests) {
-                if (item == null)   Debug.LogWarning("LevelManager: Quest item is null.");
+            foreach(QuestGiver quest in _quests) {
+                if (quest == null)   Debug.LogWarning("LevelManager: Quest is null.");
                 else                b = true;
             }
             if(b) OnLevelStart?.Invoke(_quests);
@@ -39,8 +40,12 @@ public class LevelManager : MonoBehaviour {
     }
 
     public void QuestCompleted(int questId) {
+        string questName = _quests.First(quest => quest.Id == questId).name;
+        
         OnQuestCompleted?.Invoke(_quests);
-        foreach(QuestGiver quest in _quests) { 
+        NotificationUI.ShowNotification("Quest Completed!: " + questName , Color.green);
+
+        foreach (QuestGiver quest in _quests) { 
             if(!quest.IsQuestCompleted) return;   
         }
         LevelCompleted();

@@ -26,7 +26,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3936235334733161064, guid: ce0710a4ebda5754e8e98b691141f84b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -5.543
+      value: -11.96
       objectReference: {fileID: 0}
     - target: {fileID: 3936235334733161064, guid: ce0710a4ebda5754e8e98b691141f84b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -65,7 +65,8 @@ PrefabInstance:
       value: Use to power Vehicles
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 1805800559000276808, guid: ce0710a4ebda5754e8e98b691141f84b, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 3936235334733161064, guid: ce0710a4ebda5754e8e98b691141f84b, type: 3}
       insertIndex: 0

@@ -4,27 +4,23 @@ using UnityEngine;
 
 public class PlayerInventory : MonoBehaviour {
     [Header("Inventory")]
-    private Dictionary<int, QuestItem> _questItems = new Dictionary<int, QuestItem>();
-    private Dictionary<int, KeyItem> _keyItems = new Dictionary<int, KeyItem>();
+    private Dictionary<int, QuestItem> _questItems  = new Dictionary<int, QuestItem>();
+    private Dictionary<int, KeyItem> _keyItems      = new Dictionary<int, KeyItem>();
 
-    public Dictionary<int,QuestItem> QuestItems { 
-        get { return _questItems; }  
-    }
-    public Dictionary<int,KeyItem> KeyItems { 
-        get { return _keyItems; }  
-    }
+    public Dictionary<int,QuestItem> QuestItems { get { return _questItems; } }
+    public Dictionary<int,KeyItem> KeyItems     { get { return _keyItems; } }
 
     PlayerInteractCollider _interactCollider;
 
     private void OnEnable () {
         PlayerInteractCollider.OnKeyItemCollected   += AddKeyItem;
-        PlayerInteractCollider.OnKeyItemRetrieve    += RetrieveKeyItem;
+        //PlayerInteractCollider.OnKeyItemRetrieve    += RetrieveKeyItem;
         PlayerInteractCollider.OnQuestItemCollected += AddQuestItem;
         PlayerInteractCollider.OnQuestItemRetrieve  += RetrieveQuestItem;
     }
     private void OnDisable () {
         PlayerInteractCollider.OnKeyItemCollected   -= AddKeyItem;
-        PlayerInteractCollider.OnKeyItemRetrieve    -= RetrieveKeyItem;
+        //PlayerInteractCollider.OnKeyItemRetrieve    -= RetrieveKeyItem;
         PlayerInteractCollider.OnQuestItemCollected -= AddQuestItem;
         PlayerInteractCollider.OnQuestItemRetrieve  -= RetrieveQuestItem;
     }
@@ -44,54 +40,47 @@ public class PlayerInventory : MonoBehaviour {
         if (item == null) return;
 
         _questItems .Add(item.Id, item);
+        NotificationUI.ShowNotification("Item Collected: " + item.Name, Color.yellow);
     }
 
     public void RetrieveQuestItem (QuestGiver quest) {
         if (quest.IsQuestCompleted) return;
         
-        Debug.Log("Item count: " + quest.Items.Count);
-        
         int count = 0;
         foreach (QuestItem item in quest.Items) {
-            
-            if (HasQuestItem(item.Id)) {
-                count++;
-            }
+            if (HasQuestItem(item.Id))  count++;
         }
         
         if (count != quest.Items.Count) return;
             
         quest.IsQuestCompleted = true;
+        
         foreach (QuestItem item in quest.Items) {
             RemoveQuestItem(item.Id);
         }
-
+        
         LevelManager.Instance.QuestCompleted(quest.Id);
     }
 
-    public bool HasKeyItem (int key) {
-        return _keyItems.ContainsKey(key);
-    }
-    public bool RemoveKeyItem (int key) {
-        return _keyItems.Remove(key);
-    }
+    public bool HasKeyItem (int key) => _keyItems.ContainsKey(key);
+    public bool RemoveKeyItem (int key) => _keyItems.Remove(key);
+    
     public void AddKeyItem (KeyItem item) {
         if (item == null) return;
 
         _keyItems.Add(item.Id, item);
+        NotificationUI.ShowNotification("Key Collected: " + item.Name, Color.yellow);
     }
 
     public void RetrieveKeyItem (Lock loc) {
-        if (loc.IsOpened) return;
+        if (loc == null || loc.IsOpened) return;
 
         int count = 0;
         foreach (KeyItem item in loc.Items) {
-            if (HasKeyItem(item.Id)) {
-                count++;
-            }
+            if (HasKeyItem(item.Id))    count++;
         }
 
-        if (count != loc.Items.Count) return;
+        if (count != loc.Items.Count)   return;
 
         loc.Open();
         foreach (KeyItem item in loc.Items) {
@@ -99,7 +88,19 @@ public class PlayerInventory : MonoBehaviour {
         }
     }
 
-    public void EnableInteractCollider (bool enabled) {
-        _interactCollider.ColliderEnable = enabled;
+    public void EnableInteractCollider (bool enabled) => _interactCollider.ColliderEnable = enabled;
+
+    /*
+    private void OnTriggerEnter (Collider other) {
+        if (other.gameObject.CompareTag("Lock") ){
+            RetrieveKeyItem(other.GetComponent<Lock>());
+        }
     }
+    */
+    private void OnControllerColliderHit (ControllerColliderHit hit) {
+        if (hit.gameObject.CompareTag("Lock")) {
+            RetrieveKeyItem(hit.gameObject.GetComponent<Lock>());
+        }
+    }
+
 }
