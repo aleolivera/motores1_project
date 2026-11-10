@@ -60,6 +60,10 @@ PrefabInstance:
       propertyPath: _description
       value: Needed to start the plane
       objectReference: {fileID: 0}
+    - target: {fileID: 8301007730175086533, guid: 1017fb99320bb7d488d743663a6f82fb, type: 3}
+      propertyPath: _titleText
+      value: Plane Key
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 4144218593784704884, guid: 1017fb99320bb7d488d743663a6f82fb, type: 3}

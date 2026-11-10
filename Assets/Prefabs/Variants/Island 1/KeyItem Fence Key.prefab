@@ -60,6 +60,10 @@ PrefabInstance:
       propertyPath: _description
       value: Opens the fence gate
       objectReference: {fileID: 0}
+    - target: {fileID: 8301007730175086533, guid: 1017fb99320bb7d488d743663a6f82fb, type: 3}
+      propertyPath: _titleText
+      value: Fence Key
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 4144218593784704884, guid: 1017fb99320bb7d488d743663a6f82fb, type: 3}
@@ -104,7 +108,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8558599444989148607, guid: ba5a1d9bcf71bac44abd90811bdfb9d2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.05
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8558599444989148607, guid: ba5a1d9bcf71bac44abd90811bdfb9d2, type: 3}
       propertyPath: m_LocalPosition.z
