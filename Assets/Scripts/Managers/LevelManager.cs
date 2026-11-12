@@ -37,6 +37,8 @@ public class LevelManager : MonoBehaviour {
             }
             if(b) OnLevelStart?.Invoke(_quests);
         }
+
+        MusicManager.Instance.PlayMusicClip(0, 0.1f);
     }
 
     public void QuestCompleted(int questId) {

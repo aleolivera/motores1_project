@@ -516,7 +516,7 @@ MonoBehaviour:
   _hintTextList:
   - Use (W) (A) (S) (D) to move the character
   - Press (E) to interact with objects
-  - Press (Right Click) to Punch Enemies
+  - Press (Left Click) to Punch Enemies
   - Press (Left Shift) to sprint
   - Hide in Bushes to escape
   - Interact with Medi-kits to heal
