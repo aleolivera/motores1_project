@@ -1707,10 +1707,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 8435320963094082504, guid: cfbc9a06c23586c48b4e906ea0bf4f99, type: 3}
-      propertyPath: '_hintTextList.Array.data[2]'
-      value: Press (Left Click) to Punch Enemies
-      objectReference: {fileID: 0}
     - target: {fileID: 8441630508469686426, guid: cfbc9a06c23586c48b4e906ea0bf4f99, type: 3}
       propertyPath: m_Name
       value: GameUI
