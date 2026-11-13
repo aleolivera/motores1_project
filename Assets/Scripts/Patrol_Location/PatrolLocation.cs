@@ -6,6 +6,9 @@ public class PatrolLocation : MonoBehaviour{
     [Header("Location Data")] 
     [SerializeField] private float _patrolTime;
 
+    [Header("Gizmo Settings")]
+    [SerializeField] private float _cubeSizes;
+
     BoxCollider _collider;
 
     public float PatrolTime { 
@@ -16,6 +19,13 @@ public class PatrolLocation : MonoBehaviour{
     {
         _collider = GetComponent<BoxCollider>();
         _collider.isTrigger = true;
+    }
+
+    private void OnDrawGizmos () {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawCube(
+            transform.position + (Vector3.up * 0.5f), 
+            new Vector3(_cubeSizes, _cubeSizes, _cubeSizes));
     }
 
 }
