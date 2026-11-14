@@ -22,14 +22,14 @@ TagManager:
   - Ground
   - Player
   - HiddingSpot
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Enemy
+  - Nature
+  - Door
+  - Item
+  - Quest
+  - Prop
+  - Structure
+  - Wall
   - 
   - 
   - 

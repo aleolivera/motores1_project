@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Key2
       objectReference: {fileID: 0}
+    - target: {fileID: 7362604080892860096, guid: 43bd5214d9b98ea46b0449a32c650291, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 8791527411904889779, guid: 43bd5214d9b98ea46b0449a32c650291, type: 3}
       propertyPath: m_LocalScale.x
       value: 5
@@ -82,21 +86,37 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 470032504816975308, guid: 1017fb99320bb7d488d743663a6f82fb, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 2153733010543464901, guid: 1017fb99320bb7d488d743663a6f82fb, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000, type: 0}
     - target: {fileID: 2153733010543464901, guid: 1017fb99320bb7d488d743663a6f82fb, type: 3}
       propertyPath: m_Name
       value: KeyItem Rusty Key
       objectReference: {fileID: 0}
+    - target: {fileID: 2153733010543464901, guid: 1017fb99320bb7d488d743663a6f82fb, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 3472572087895518588, guid: 1017fb99320bb7d488d743663a6f82fb, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 3742055315792862153, guid: 1017fb99320bb7d488d743663a6f82fb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -9.89673
+      value: -5.35
       objectReference: {fileID: 0}
     - target: {fileID: 3742055315792862153, guid: 1017fb99320bb7d488d743663a6f82fb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 1.521
       objectReference: {fileID: 0}
     - target: {fileID: 3742055315792862153, guid: 1017fb99320bb7d488d743663a6f82fb, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -10.07
+      value: 8.3
       objectReference: {fileID: 0}
     - target: {fileID: 3742055315792862153, guid: 1017fb99320bb7d488d743663a6f82fb, type: 3}
       propertyPath: m_LocalRotation.w
@@ -104,15 +124,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3742055315792862153, guid: 1017fb99320bb7d488d743663a6f82fb, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 3742055315792862153, guid: 1017fb99320bb7d488d743663a6f82fb, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 3742055315792862153, guid: 1017fb99320bb7d488d743663a6f82fb, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 3742055315792862153, guid: 1017fb99320bb7d488d743663a6f82fb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -126,6 +146,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3930054795762889426, guid: 1017fb99320bb7d488d743663a6f82fb, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 4268230682989836365, guid: 1017fb99320bb7d488d743663a6f82fb, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 4619072583236665326, guid: 1017fb99320bb7d488d743663a6f82fb, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 4837172833090239000, guid: 1017fb99320bb7d488d743663a6f82fb, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 5017131223205698860, guid: 1017fb99320bb7d488d743663a6f82fb, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 6233101267288152542, guid: 1017fb99320bb7d488d743663a6f82fb, type: 3}
       propertyPath: _name
       value: Rusty Key
@@ -134,9 +174,17 @@ PrefabInstance:
       propertyPath: _description
       value: Opens the Harbour door
       objectReference: {fileID: 0}
+    - target: {fileID: 6880306725533685758, guid: 1017fb99320bb7d488d743663a6f82fb, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 8301007730175086533, guid: 1017fb99320bb7d488d743663a6f82fb, type: 3}
       propertyPath: _titleText
       value: Rusty key
+      objectReference: {fileID: 0}
+    - target: {fileID: 8628245475088510118, guid: 1017fb99320bb7d488d743663a6f82fb, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -145,10 +193,38 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3742055315792862153, guid: 1017fb99320bb7d488d743663a6f82fb, type: 3}
       insertIndex: 0
       addedObject: {fileID: 8206633959910801540}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2153733010543464901, guid: 1017fb99320bb7d488d743663a6f82fb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 238376676995473002}
   m_SourcePrefab: {fileID: 100100000, guid: 1017fb99320bb7d488d743663a6f82fb, type: 3}
 --- !u!4 &5545480337502231315 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3742055315792862153, guid: 1017fb99320bb7d488d743663a6f82fb, type: 3}
   m_PrefabInstance: {fileID: 9159182030918500570}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &7131567951897956639 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2153733010543464901, guid: 1017fb99320bb7d488d743663a6f82fb, type: 3}
+  m_PrefabInstance: {fileID: 9159182030918500570}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &238376676995473002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7131567951897956639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.AI.Navigation::Unity.AI.Navigation.NavMeshModifier
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 1
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
