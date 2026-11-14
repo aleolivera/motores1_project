@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 8597426211170968331}
   - component: {fileID: 537837805693477328}
   - component: {fileID: 939268407423580978}
-  m_Layer: 0
+  - component: {fileID: 8447660660415945117}
+  m_Layer: 10
   m_Name: Pine_LOD1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58,6 +59,11 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -79,10 +85,32 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &8447660660415945117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4059885066898549213}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.AI.Navigation::Unity.AI.Navigation.NavMeshModifier
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 1
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &7192472676371508425
 GameObject:
   m_ObjectHideFlags: 0
@@ -94,7 +122,7 @@ GameObject:
   - component: {fileID: 3887441709643761046}
   - component: {fileID: 698512367619329367}
   - component: {fileID: 380389236358589173}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Pine_LOD0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -141,6 +169,11 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -163,9 +196,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &8334609028737295118
 GameObject:
@@ -178,7 +213,7 @@ GameObject:
   - component: {fileID: 3947689140610605037}
   - component: {fileID: 3251327282288107601}
   - component: {fileID: 2590900719705777566}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Pine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
