@@ -14,7 +14,9 @@ public class LevelManager : MonoBehaviour {
 
     public static event Action<List<QuestGiver>> OnLevelStart;
     public static event Action<List<QuestGiver>> OnQuestCompleted;
-    public static event Action OnLevelCompleted;
+
+    public float LevelTimeCounter { get; private set; }
+    public static int PlayerDeaths { get; private set; }
 
     private void Awake() {
         if (_instance != null && _instance != this) {
@@ -23,6 +25,11 @@ public class LevelManager : MonoBehaviour {
         }
         _instance = this;
     }
+
+    private void OnEnable () => PlayerStateMachine.OnStateChangedToDead += GameOver;
+    
+    private void OnDisable () => PlayerStateMachine.OnStateChangedToDead -= GameOver;
+    
 
     void Start() {
         if (_quests == null) {
@@ -39,6 +46,13 @@ public class LevelManager : MonoBehaviour {
         }
 
         MusicManager.Instance.PlayMusicClip(0, 0.1f);
+        
+        LevelTimeCounter = 0f;
+        PlayerDeaths = 0;
+    }
+
+    private void Update () {
+        LevelTimeCounter += Time.deltaTime;
     }
 
     public void QuestCompleted(int questId) {
@@ -53,17 +67,15 @@ public class LevelManager : MonoBehaviour {
         LevelCompleted();
     }
 
-    public void LevelCompleted() {
-        OnLevelCompleted?.Invoke();
+    public void LevelCompleted() =>
+        GameManager.Instance.LevelCompleted(_nextSceneName, LevelTimeCounter);
+     
 
-        if(SceneManager.GetSceneByName(_nextSceneName).IsValid()) {
-            GameManager.Instance.LoadNextLevel(_nextSceneName);
-        } else {
-            Debug.LogError("LevelManager: Scene " + _nextSceneName + " is not valid");
-        }
-    }
-
-    public static void RestartLevel() {
+    public static void RestartLevel() => 
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    
+    public static void GameOver () {
+        PlayerDeaths++;
+        GameManager.Instance.GameOver();
     }
 }

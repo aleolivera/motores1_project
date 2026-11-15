@@ -6,11 +6,11 @@ public class GameOverController : MonoBehaviour
 {
     public void Reintentar()
     {
-        SceneManager.LoadScene("Main_GameOver");
+        GameManager.Instance.LoadPreviousScene();
     }
 
     public void VolverMenu() 
     {
-        SceneManager.LoadScene("Main_Menu");
+        GameManager.Instance.LoadMainMenu();
     }
 }

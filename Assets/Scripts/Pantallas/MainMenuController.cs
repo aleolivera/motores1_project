@@ -5,19 +5,17 @@ using UnityEngine.SceneManagement;
 public class MainMenuController : MonoBehaviour
 {
     public GameObject controlsPanel;
-
+    [SerializeField] private string _playLevelName;
     public void PlayGame()
     {
-        SceneManager.LoadScene("Level_1");
+        if (_playLevelName.Equals("")) {
+            Debug.LogError("MainMenuController: Level name not found.");
+            return;
+        }
+        
+        SceneManager.LoadScene(_playLevelName);
     }
 
-    public void OpenControls()
-    {
-        controlsPanel.SetActive(true);
-    }
-
-    public void CloseControls()
-    {
-        controlsPanel.SetActive(false);
-    }
+    public void OpenControls() => controlsPanel.SetActive(true);
+    public void CloseControls() => controlsPanel.SetActive(false);
 }
