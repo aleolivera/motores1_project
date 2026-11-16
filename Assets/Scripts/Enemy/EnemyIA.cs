@@ -71,9 +71,6 @@ public class EnemyIA : MonoBehaviour {
                 _targetPosition = transform.position;
             }
         }
-        if(_agent == null) {
-            Debug.Log("EnemyMovement: NavMesh Agent not found.");
-        }
         if(_health == null) {
             Debug.Log("EnemyMovement: Enemy health not found.");
         }
@@ -92,11 +89,15 @@ public class EnemyIA : MonoBehaviour {
         if(_sfxPlayer == null) {
             Debug.Log("EnemyMovement: SFX Player not found.");
         }
-
+        if(_agent == null) {
+            Debug.Log("EnemyMovement: NavMesh Agent not found.");
+        } else {
+            _agent.speed = _speed;
+        }
 
         _targetPosition = _patrolLocations[_indexLocation].position;
         _timeCounter    = _detection.PatrolTime;
-        SetAgentSpeed();
+        //SetAgentSpeed();
     }
 
     void VisionCheck () {
@@ -123,9 +124,6 @@ public class EnemyIA : MonoBehaviour {
         }
         
     }
-
-    private void SetAgentSpeed () => _agent.speed = _speed;
-    
 
     private void CheckingBehaviour () {
         if (_player != null) {
@@ -233,21 +231,22 @@ public class EnemyIA : MonoBehaviour {
             
             if (Vector3.Distance(transform.position, _targetPosition) > _vision.Range * 0.5f 
                 && _stateMachine.State != EnemyActionState.Attacking) {
-                
+                _speed = _maxSpeed;
                 MoveToTarget();
                 _stateMachine.State = EnemyActionState.Running;
                 return;
             }
 
             _stateMachine.State = EnemyActionState.Attacking;
-            _agent.isStopped = true;
+            StopMovement();
             return;
             
         } 
         //PLAYER fuera de rango de vision
         if (Vector3.Distance(_targetPosition, transform.position) > 0.3f) {
-            _stateMachine.State = EnemyActionState.Running;
+            _speed = _maxSpeed;
             MoveToTarget();
+            _stateMachine.State = EnemyActionState.Running;
         } else {
             _stateMachine.State =  EnemyActionState.Idle;
             ChangeToStatus(DetectionState.Checking);
@@ -283,7 +282,7 @@ public class EnemyIA : MonoBehaviour {
         //_controller.Move(moveTo.normalized * _speed * Time.deltaTime);
         _agent.SetDestination(moveTo.normalized * _speed * Time.deltaTime);
         */
-        SetAgentSpeed();
+        _agent.speed = _speed;
         _agent.isStopped = false;
         _agent.SetDestination(_targetPosition);
         //RotateTo(_targetPosition);
@@ -291,8 +290,9 @@ public class EnemyIA : MonoBehaviour {
     }
 
     private void StopMovement () {
+        _speed = 0f;
+        _agent.speed = _speed;
         _agent.isStopped = true;
-        _agent.speed = 0f;
         _agent.SetDestination(transform.position);
     }
 
@@ -302,14 +302,14 @@ public class EnemyIA : MonoBehaviour {
                                             targetRotation,
                                             _rotationSpeed * Time.deltaTime);
     }
-
+    /*
     private void RotateTo (Vector3 targetLocation) {
         transform.forward = Vector3.Slerp(
                                         transform.forward,
                                         targetLocation,
                                         _rotationSpeed * Time.deltaTime);
     }
-
+    */
     private void RotateToTarget () => 
         transform.forward = _targetPosition - transform.position;
     
@@ -352,7 +352,7 @@ public class EnemyIA : MonoBehaviour {
             case DetectionState.OnCaution:
                 _timeCounter = 0f;
                 _speed = _normalSpeed;
-                SetAgentSpeed();
+                _agent.speed = _speed;
                 _agent.isStopped = false;
                 _iconDisplay.ChangeIcon(1, Color.yellow);
                 _sfxPlayer.PlaySound(1);
@@ -360,27 +360,33 @@ public class EnemyIA : MonoBehaviour {
 
             case DetectionState.Checking:
                 _timeCounter = 0f;
+                /*
                 _speed = 0f;
                 SetAgentSpeed();
                 _agent.isStopped = true;
+                */
+                StopMovement();
                 _iconDisplay.ChangeIcon(1, Color.yellow);
                 break;
 
             case DetectionState.OnAlert:
                 _timeCounter = 0f;
                 _speed = _maxSpeed;
-                SetAgentSpeed();
-                _rotationSpeed = _alertRotationSpeed;
+                _agent.speed = _speed;
                 _agent.isStopped = false;
+                _rotationSpeed = _alertRotationSpeed;
                 _iconDisplay.ChangeIcon(2, Color.red);
                 _sfxPlayer.PlaySound(2);
                 break;
 
             case DetectionState.Disabled:
                 _timeCounter = 0f;
+                /*
                 _speed = 0f;
                 SetAgentSpeed();
                 _agent.isStopped = true;
+                */
+                StopMovement();
                 _iconDisplay.ChangeIcon(3, Color.white);
                 break;
 
