@@ -44,8 +44,6 @@ public class LevelManager : MonoBehaviour {
             }
             if(b) OnLevelStart?.Invoke(_quests);
         }
-
-        //MusicManager.Instance.PlayMusicClip(0, 0.1f);
         
         LevelTimeCounter = 0f;
         PlayerDeaths = 0;
@@ -67,8 +65,9 @@ public class LevelManager : MonoBehaviour {
         LevelCompleted();
     }
 
-    public void LevelCompleted() =>
+    public void LevelCompleted () {
         GameManager.Instance.LevelCompleted(_nextSceneName, LevelTimeCounter);
+    }
      
 
     public static void RestartLevel() => 

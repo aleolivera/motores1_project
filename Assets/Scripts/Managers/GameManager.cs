@@ -10,9 +10,10 @@ public class GameManager : MonoBehaviour {
     public static GameManager Instance {  get { return _instance; } }
     public int PreviousSceneIndex {  get { return _previousSceneIndex; } }
 
-    public int PlayerDeaths { get; private set; }
+    public int PlayerDeathCount { get; private set; }
+    public int EnemyDisabledCount { get; private set; }
     public int AlertCount { get; private set; }
-    public float LevelCompletedTimeInSeconds {  get; private set; }
+    public float LevelCompletedTime {  get; private set; }
 
     public static GameState State {
         get         { return _state; }
@@ -28,15 +29,36 @@ public class GameManager : MonoBehaviour {
             return;
         }
     }
-    /*
     private void OnEnable () {
-        PlayerStateMachine.OnStateChangedToDead += GameOver;
+        EnemyDetection.OnPlayerDetected         += IncrementAlertCount;
+        EnemyDetection.OnEnemyDisabled          += IncrementEnemyDisableCount;
+        PlayerStateMachine.OnStateChangedToDead += IncrementDeathCount;
     }
     private void OnDisable () {
-        PlayerStateMachine.OnStateChangedToDead -= GameOver;
+        EnemyDetection.OnPlayerDetected         -= IncrementAlertCount;
+        EnemyDetection.OnEnemyDisabled          -= IncrementEnemyDisableCount;
+        PlayerStateMachine.OnStateChangedToDead -= IncrementDeathCount;
     }
-    */
-    public void LevelCompleted (string sceneName, float levelTime) => SceneManager.LoadScene(sceneName);
+
+    private void IncrementAlertCount () { 
+        AlertCount++;
+        Debug.Log("Alerts: "+ AlertCount + " - t: " +LevelManager.Instance.LevelTimeCounter + "ms.");
+    }
+    
+    private void IncrementDeathCount () {
+        PlayerDeathCount++;
+        Debug.Log("Deaths: " + PlayerDeathCount + " - t: " + LevelManager.Instance.LevelTimeCounter + "ms.");
+
+    }
+    private void IncrementEnemyDisableCount () {
+        EnemyDisabledCount++;
+        Debug.Log("Enemies Disabled: " + EnemyDisabledCount + " - t: " + LevelManager.Instance.LevelTimeCounter + "ms.");
+    }
+
+    public void LevelCompleted (string sceneName, float levelTime) {
+        LevelCompletedTime = levelTime;
+        SceneManager.LoadScene(sceneName);
+    } 
 
     public void GameOver () {
         State = GameState.GameOver;
@@ -63,6 +85,16 @@ public class GameManager : MonoBehaviour {
     }
 
     public void LoadPreviousScene () => SceneManager.LoadScene(_previousSceneIndex);
-    public void LoadMainMenu ()     => SceneManager.LoadScene("Main_Menu");
+    public void LoadMainMenu () {
+        ClearGameStadistics();
+        SceneManager.LoadScene("Main_Menu");
+    } 
     private void LoadGameOver ()    => SceneManager.LoadScene("Game_Over");
+
+    private void ClearGameStadistics () {
+        PlayerDeathCount = 0;
+        EnemyDisabledCount = 0;
+        AlertCount = 0;
+        LevelCompletedTime = 0f;
+    }
 }

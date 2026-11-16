@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public enum DetectionState { OnPatrol, OnPatrolLocation,OnCaution, OnAlert, Checking, Disabled }
@@ -12,8 +13,19 @@ public class EnemyDetection : MonoBehaviour {
     [SerializeField] private float _disableTime = 20f;
     [SerializeField] private float _visionTime = 0.2f;
 
+    public static event Action OnPlayerDetected;
+    public static event Action OnEnemyDisabled;
+
     public DetectionState State { 
-        get { return _state; } set { _state = value; } 
+        get { return _state; } 
+        set { 
+            _state = value;
+            switch (_state) {
+                case DetectionState.OnAlert:    OnPlayerDetected?.Invoke();     break;
+                case DetectionState.Disabled:   OnEnemyDisabled?.Invoke();      break;
+                default: break;
+            }
+        } 
     }
     public float PatrolTime { 
         get { return _patrolTime; } set { _patrolTime = value; } 
