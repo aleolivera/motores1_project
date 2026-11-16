@@ -12,6 +12,8 @@ public class MusicManager : MonoBehaviour {
         if (_instance == null) { _instance = this; } 
     }
 
+    private void Start () => PlayMusicClip(0,0.3f);
+
     public void PlayMusicClip (int clipIndex, float volume) {
         _musicObjPrefad = Instantiate(_musicObjPrefad, Vector3.zero, Quaternion.identity);
         

@@ -365,6 +365,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: QuestItem Wood
       objectReference: {fileID: 0}
+    - target: {fileID: 5786464545736762130, guid: 9803a6634fa80914e90b0ecec17eac9a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -515,13 +519,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 233071147}
     m_Modifications:
+    - target: {fileID: 2806012120694879915, guid: 114e8a5f9bb4c2a47a3453f1915be46f, type: 3}
+      propertyPath: _patrolTime
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5159318070569209700, guid: 114e8a5f9bb4c2a47a3453f1915be46f, type: 3}
       propertyPath: m_Name
       value: PatrolLocation
       objectReference: {fileID: 0}
     - target: {fileID: 7908463992432270784, guid: 114e8a5f9bb4c2a47a3453f1915be46f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -9.58
+      value: -7.11
       objectReference: {fileID: 0}
     - target: {fileID: 7908463992432270784, guid: 114e8a5f9bb4c2a47a3453f1915be46f, type: 3}
       propertyPath: m_LocalPosition.y
@@ -529,7 +537,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7908463992432270784, guid: 114e8a5f9bb4c2a47a3453f1915be46f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.43
+      value: 1.02
       objectReference: {fileID: 0}
     - target: {fileID: 7908463992432270784, guid: 114e8a5f9bb4c2a47a3453f1915be46f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -852,6 +860,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: KeyItem Rusty Key
       objectReference: {fileID: 0}
+    - target: {fileID: 7131567951897956639, guid: 11e8c894e8d2d3a4e86710c395540edd, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1019,6 +1031,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: QuestGiver Boat
       objectReference: {fileID: 0}
+    - target: {fileID: 4577398329046936059, guid: 75504bad8486f544bbf7ee5167e8ff91, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8407829757720914010, guid: 75504bad8486f544bbf7ee5167e8ff91, type: 3}
       propertyPath: '_questItems.Array.data[0]'
       value: 
@@ -1052,13 +1068,17 @@ PrefabInstance:
       propertyPath: m_Center.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 2806012120694879915, guid: 114e8a5f9bb4c2a47a3453f1915be46f, type: 3}
+      propertyPath: _patrolTime
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 5159318070569209700, guid: 114e8a5f9bb4c2a47a3453f1915be46f, type: 3}
       propertyPath: m_Name
       value: PatrolLocation (2)
       objectReference: {fileID: 0}
     - target: {fileID: 7908463992432270784, guid: 114e8a5f9bb4c2a47a3453f1915be46f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.57
+      value: -0.96
       objectReference: {fileID: 0}
     - target: {fileID: 7908463992432270784, guid: 114e8a5f9bb4c2a47a3453f1915be46f, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1066,7 +1086,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7908463992432270784, guid: 114e8a5f9bb4c2a47a3453f1915be46f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.15
+      value: -0.82
       objectReference: {fileID: 0}
     - target: {fileID: 7908463992432270784, guid: 114e8a5f9bb4c2a47a3453f1915be46f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1200,6 +1220,10 @@ PrefabInstance:
     - target: {fileID: 2329978128300598914, guid: 114e8a5f9bb4c2a47a3453f1915be46f, type: 3}
       propertyPath: m_Center.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2806012120694879915, guid: 114e8a5f9bb4c2a47a3453f1915be46f, type: 3}
+      propertyPath: _patrolTime
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5159318070569209700, guid: 114e8a5f9bb4c2a47a3453f1915be46f, type: 3}
       propertyPath: m_Name
@@ -1816,6 +1840,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Medi_Kit
       objectReference: {fileID: 0}
+    - target: {fileID: 9007202909606381348, guid: 215dcf9fa687f2342b1ef0ce90e4aa55, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1939,6 +1967,10 @@ PrefabInstance:
     - target: {fileID: 5846170529792512845, guid: 236b0e20fb6278b41ad9292c54f9e812, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7746703567182652898, guid: 236b0e20fb6278b41ad9292c54f9e812, type: 3}
+      propertyPath: _patrolLocations.Array.size
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7746703567182652898, guid: 236b0e20fb6278b41ad9292c54f9e812, type: 3}
       propertyPath: '_patrolLocations.Array.data[0]'
@@ -2235,6 +2267,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fence_Door
       objectReference: {fileID: 0}
+    - target: {fileID: 7210283661468511671, guid: 19e3eb6ad21df4b44aa78e8181ddfa89, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2292,6 +2328,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Quest_Item Fuel
       objectReference: {fileID: 0}
+    - target: {fileID: 4245959822631669147, guid: 55134f67dee796041823a11e177f3f7f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2313,6 +2353,70 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2925269637751901124, guid: ef4407886f5991d47956bfcf613801e2, type: 3}
   m_PrefabInstance: {fileID: 545808784}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2087425040
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2087425042}
+  - component: {fileID: 2087425041}
+  m_Layer: 0
+  m_Name: NavMesh Surface Pruebas
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2087425041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2087425040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.AI.Navigation::Unity.AI.Navigation.NavMeshSurface
+  m_SerializedVersion: 0
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 130551
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.1
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: a7c4421e9b160724585cbb420c96f257, type: 2}
+  m_BuildHeightMesh: 0
+--- !u!4 &2087425042
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2087425040}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.86353, y: 0, z: -5.15468}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2101398314
 GameObject:
   m_ObjectHideFlags: 0
@@ -2413,6 +2517,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: KeyItem Plane Key
       objectReference: {fileID: 0}
+    - target: {fileID: 5445140116628653622, guid: 4c77b0808c5cad54b9ffbb9f99f2dddc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7321988429974768698, guid: 4c77b0808c5cad54b9ffbb9f99f2dddc, type: 3}
       propertyPath: m_LocalPosition.x
       value: -12.03
@@ -2469,6 +2577,10 @@ PrefabInstance:
     - target: {fileID: 5084018808284155063, guid: 719789391ad208d43a71974d5eb34b8e, type: 3}
       propertyPath: m_Name
       value: Quest_Item Engine
+      objectReference: {fileID: 0}
+    - target: {fileID: 5084018808284155063, guid: 719789391ad208d43a71974d5eb34b8e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6589274221280591621, guid: 719789391ad208d43a71974d5eb34b8e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2584,6 +2696,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: KeyItem Fence Key
       objectReference: {fileID: 0}
+    - target: {fileID: 2034185034432387663, guid: 3ab8d545d6910b64aa4baca10d4595b1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3618373170308436035, guid: 3ab8d545d6910b64aa4baca10d4595b1, type: 3}
       propertyPath: m_LocalPosition.x
       value: -7.261
@@ -2680,6 +2796,10 @@ PrefabInstance:
     - target: {fileID: 8595788384662180261, guid: a9da9025ea8c1624295b2e095936eeb8, type: 3}
       propertyPath: m_Name
       value: Quest_Item Repair_parts
+      objectReference: {fileID: 0}
+    - target: {fileID: 8595788384662180261, guid: a9da9025ea8c1624295b2e095936eeb8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3016,3 +3136,4 @@ SceneRoots:
   - {fileID: 3717939666728811303}
   - {fileID: 2197888509210604996}
   - {fileID: 3888584052897214472}
+  - {fileID: 2087425042}

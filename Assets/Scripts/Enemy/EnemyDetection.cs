@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public enum DetectionState { OnPatrol, OnCaution, OnAlert, Checking, Disabled }
+public enum DetectionState { OnPatrol, OnPatrolLocation,OnCaution, OnAlert, Checking, Disabled }
 public class EnemyDetection : MonoBehaviour {
     [Header("Detection State")]
     [SerializeField] private DetectionState _state = DetectionState.OnPatrol;

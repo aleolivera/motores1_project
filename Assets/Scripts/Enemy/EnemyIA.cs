@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
-//[RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(EnemyHealth))]
 public class EnemyIA : MonoBehaviour {
@@ -29,7 +29,6 @@ public class EnemyIA : MonoBehaviour {
     [SerializeField] private Quaternion _patrolRotation;
     [SerializeField] private int _indexLocation = 0;
 
-    //private CharacterController _controller;
     private NavMeshAgent _agent;
     private EnemyHealth _health;
     private EnemyAttack _attack;
@@ -72,17 +71,9 @@ public class EnemyIA : MonoBehaviour {
                 _targetPosition = transform.position;
             }
         }
-        /*
-        if(_controller == null) {
-            Debug.Log("EnemyMovement: Character Controller not found.");
-        } else {
-            _controller.detectCollisions = false;
-        }
-        */
         if(_agent == null) {
             Debug.Log("EnemyMovement: NavMesh Agent not found.");
         }
-
         if(_health == null) {
             Debug.Log("EnemyMovement: Enemy health not found.");
         }
@@ -121,21 +112,20 @@ public class EnemyIA : MonoBehaviour {
          
         VisionCheck();
         switch (_detection.State) {
-            case DetectionState.OnPatrol:   PatrolBehaviour();      break;
-            case DetectionState.OnCaution:  CautionBehaviour();     break;
-            case DetectionState.OnAlert:    AlertBehaviour();       break;
-            case DetectionState.Disabled:   DisabledBehaviour();    break;
-            case DetectionState.Checking:   CheckingBehaviour();    break;
+            case DetectionState.OnPatrol:           PatrolBehaviour();          break;
+            case DetectionState.OnPatrolLocation:   PatrolLocationBehaviour();  break;
+            case DetectionState.OnCaution:          CautionBehaviour();         break;
+            case DetectionState.OnAlert:            AlertBehaviour();           break;
+            case DetectionState.Disabled:           DisabledBehaviour();        break;
+            case DetectionState.Checking:           CheckingBehaviour();        break;
 
-            default: _detection.State = DetectionState.OnPatrol;    break;
+            default: _detection.State = DetectionState.OnPatrol;                break;
         }
         
     }
 
-    private void SetAgentSpeed (){
-        _agent.speed = _speed;
-        //_agent.angularSpeed = _rotationSpeed;
-    }
+    private void SetAgentSpeed () => _agent.speed = _speed;
+    
 
     private void CheckingBehaviour () {
         if (_player != null) {
@@ -152,6 +142,37 @@ public class EnemyIA : MonoBehaviour {
         ChangeToStatus(DetectionState.OnPatrol);
     }
 
+    private void PatrolLocationBehaviour () {
+        if (_player != null) {
+            _targetPosition = _player.position;
+            ChangeToStatus(DetectionState.OnCaution);
+            return;
+        }
+
+        if (_timeCounter < _detection.PatrolTime) {
+            _timeCounter += Time.deltaTime;
+
+            if (transform.rotation.y != _patrolRotation.eulerAngles.y) {
+                RotateTo(_patrolRotation);
+            }
+        } else {
+            ChangeToStatus(DetectionState.OnPatrol);
+        }
+    }
+
+    private void PatrolBehaviour () {
+        if (_stateMachine.State == EnemyActionState.WakeUp) return;
+
+        if (_player != null) {
+            _targetPosition = _player.position;
+            ChangeToStatus(DetectionState.OnCaution);
+            return;
+        }
+
+        MoveToTarget();
+        _stateMachine.State = EnemyActionState.Walking;
+    }
+    /*
     private void PatrolBehaviour () {
         if (_stateMachine.State == EnemyActionState.WakeUp) return;
 
@@ -173,7 +194,7 @@ public class EnemyIA : MonoBehaviour {
             _stateMachine.State = EnemyActionState.Walking;
         }
     }
-
+    */
     private void CautionBehaviour () {
         if (_player != null) {
             _targetPosition = _player.position;
@@ -262,10 +283,17 @@ public class EnemyIA : MonoBehaviour {
         //_controller.Move(moveTo.normalized * _speed * Time.deltaTime);
         _agent.SetDestination(moveTo.normalized * _speed * Time.deltaTime);
         */
+        SetAgentSpeed();
         _agent.isStopped = false;
         _agent.SetDestination(_targetPosition);
         //RotateTo(_targetPosition);
         //RotateTo(moveTo);
+    }
+
+    private void StopMovement () {
+        _agent.isStopped = true;
+        _agent.speed = 0f;
+        _agent.SetDestination(transform.position);
     }
 
     private void RotateTo (Quaternion targetRotation) {
@@ -282,9 +310,9 @@ public class EnemyIA : MonoBehaviour {
                                         _rotationSpeed * Time.deltaTime);
     }
 
-    private void RotateToTarget () {
+    private void RotateToTarget () => 
         transform.forward = _targetPosition - transform.position;
-    }
+    
 
     private void TargetNextPatrolLocation () {
         if (++_indexLocation >= _patrolLocations.Count) {
@@ -297,6 +325,7 @@ public class EnemyIA : MonoBehaviour {
         _detection.State = status;
 
         switch (status) {
+            /*
             case DetectionState.OnPatrol:
                 _timeCounter = _detection.PatrolTime;
                 _speed = _normalSpeed;
@@ -305,7 +334,21 @@ public class EnemyIA : MonoBehaviour {
                 _rotationSpeed = _patrolRotationSpeed;
                 _iconDisplay.ChangeIcon(0, Color.green);
                 break;
-
+            */
+            case DetectionState.OnPatrol:
+                _speed = _normalSpeed;
+                _rotationSpeed = _patrolRotationSpeed;
+                _iconDisplay.ChangeIcon(0, Color.green);
+                break;
+            
+            case DetectionState.OnPatrolLocation:
+                _stateMachine.State = EnemyActionState.Idle;
+                _timeCounter = 0f;
+                StopMovement();
+                _rotationSpeed = _patrolRotationSpeed;
+                _iconDisplay.ChangeIcon(0, Color.grey);
+                break;
+            
             case DetectionState.OnCaution:
                 _timeCounter = 0f;
                 _speed = _normalSpeed;
@@ -368,16 +411,14 @@ public class EnemyIA : MonoBehaviour {
     private void OnTriggerEnter (Collider other) {
         if ( other.CompareTag("PatrolLocation") && 
              _detection.State == DetectionState.OnPatrol) {
-            
+
             PatrolLocation location = other.gameObject.GetComponent<PatrolLocation>();
             _detection.PatrolTime   = location.PatrolTime;
             _patrolRotation         = location.transform.rotation;
 
             TargetNextPatrolLocation();
-
-            _stateMachine.State = EnemyActionState.Idle;
-            _agent.isStopped = true;
-            _timeCounter = 0f;
+            
+            ChangeToStatus(DetectionState.OnPatrolLocation);
         }
     }
 
@@ -403,7 +444,9 @@ public class EnemyIA : MonoBehaviour {
         if (_agent == null || !_agent.hasPath) return;
         Vector3[] corners = _agent.path.corners;
         Gizmos.color = Color.yellow;
+        
         for(int i = 0; 0 < corners.Length -1; i++) {
+            if (i + 1 >= corners.Length) break;
             Gizmos.DrawLine(corners[i], corners[i+1]);
         }
     }
