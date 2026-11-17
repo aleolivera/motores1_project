@@ -35,4 +35,9 @@ public class PlayerInputListener : MonoBehaviour {
         if (ctx.performed)      { Interact = true; } 
         else if (ctx.canceled)  { Interact = false; }
     }
+    public void OnPause(InputAction.CallbackContext ctx) {
+        if (ctx.performed)      { GameManager.Instance.PauseGame(); } 
+    }
+
+
 }

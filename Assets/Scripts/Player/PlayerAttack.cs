@@ -51,7 +51,7 @@ public class PlayerAttack : MonoBehaviour {
     }
 
     public void HandleAttack () {
-        if (_input.Attack && CanAttack) {
+        if (_input.Attack && CanAttack && GameManager.Instance.State != GameState.OnPause) {
             PlayerStateMachine.Instance.CurrentState = PlayerState.Attacking;
             _cooldownCounter = _attackCooldown;
         }

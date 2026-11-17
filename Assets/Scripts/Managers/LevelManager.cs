@@ -12,6 +12,7 @@ public class LevelManager : MonoBehaviour {
     private static LevelManager _instance;
     public static LevelManager Instance { get { return _instance; } }
 
+    public int SceneBuildIndex { get; set; }
     public static event Action<List<QuestGiver>> OnLevelStart;
     public static event Action<List<QuestGiver>> OnQuestCompleted;
 
@@ -32,11 +33,14 @@ public class LevelManager : MonoBehaviour {
     
 
     void Start() {
-        if (_quests == null) {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        if (_quests == null)
             Debug.LogWarning("LevelManager: Quests list is null.");
-        } else if (_quests.Count == 0) {
+        else if (_quests.Count == 0)
             Debug.LogWarning("LevelManager: Quests are empty.");
-        } else {
+        else {
             bool b = false;
             foreach(QuestGiver quest in _quests) {
                 if (quest == null)   Debug.LogWarning("LevelManager: Quest is null.");
@@ -44,15 +48,14 @@ public class LevelManager : MonoBehaviour {
             }
             if(b) OnLevelStart?.Invoke(_quests);
         }
-        
-        LevelTimeCounter = 0f;
-        PlayerDeaths = 0;
+
+        SceneBuildIndex = SceneManager.GetActiveScene().buildIndex;
+        LevelTimeCounter    = 0f;
+        PlayerDeaths        = 0;
     }
 
-    private void Update () {
-        LevelTimeCounter += Time.deltaTime;
-    }
-
+    private void Update () => LevelTimeCounter += Time.deltaTime;
+    
     public void QuestCompleted(int questId) {
         string questName = _quests.First(quest => quest.Id == questId).name;
         
@@ -68,10 +71,8 @@ public class LevelManager : MonoBehaviour {
     public void LevelCompleted () {
         GameManager.Instance.LevelCompleted(_nextSceneName, LevelTimeCounter);
     }
-     
 
-    public static void RestartLevel() => 
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    public static void RestartLevel () => GameManager.Instance.RestartLevel();
     
     public static void GameOver () {
         PlayerDeaths++;

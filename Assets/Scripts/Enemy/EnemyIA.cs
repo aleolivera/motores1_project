@@ -45,16 +45,13 @@ public class EnemyIA : MonoBehaviour {
         _rotationSpeed  = _patrolRotationSpeed;
     }
 
-    private void OnEnable () {
-        PlayerStateMachine.OnStateChangedToDead += BackToPatrol;
-    }
+    private void OnEnable () => PlayerStateMachine.OnStateChangedToDead += BackToPatrol;
+    
 
-    private void OnDisable () {
-        PlayerStateMachine.OnStateChangedToDead -= BackToPatrol;
-    }
+    private void OnDisable () => PlayerStateMachine.OnStateChangedToDead -= BackToPatrol;
+    
 
     void Start() {
-        //_controller     = GetComponent<CharacterController>();
         _agent          = GetComponent<NavMeshAgent>();
         _health         = GetComponent<EnemyHealth>();
         _attack         = GetComponent<EnemyAttack>();
@@ -65,52 +62,38 @@ public class EnemyIA : MonoBehaviour {
         _iconDisplay    = GetComponentInChildren<IconDisplay>();
 
         foreach (Transform t in _patrolLocations) {
-            if(t == null) {
-                Debug.Log("EnemyMovement: Patrol location is empty.");
-            } else {
-                _targetPosition = transform.position;
-            }
+            if(t == null)   Debug.Log("EnemyMovement: Patrol location is empty.");
+            else            _targetPosition = transform.position;
+            
         }
-        if(_health == null) {
-            Debug.Log("EnemyMovement: Enemy health not found.");
-        }
-        if(_attack == null) {
-            Debug.Log("EnemyMovement: Enemy attack not found.");
-        }
-        if(_vision == null) {
-            Debug.Log("EnemyMovement: Enemy vision not found.");
-        }
-        if(_detection == null) {
-            Debug.Log("EnemyMovement: Enemy detection not found.");
-        }
-        if(_iconDisplay == null) {
-            Debug.Log("EnemyMovement: Icon Display not found.");
-        }
-        if(_sfxPlayer == null) {
-            Debug.Log("EnemyMovement: SFX Player not found.");
-        }
-        if(_agent == null) {
-            Debug.Log("EnemyMovement: NavMesh Agent not found.");
-        } else {
-            _agent.speed = _speed;
-        }
-
+        if(_health == null)         Debug.Log("EnemyMovement: Enemy health not found.");
+        
+        if(_attack == null)         Debug.Log("EnemyMovement: Enemy attack not found.");
+        
+        if(_vision == null)         Debug.Log("EnemyMovement: Enemy vision not found.");
+        
+        if(_detection == null)      Debug.Log("EnemyMovement: Enemy detection not found.");
+        
+        if(_iconDisplay == null)    Debug.Log("EnemyMovement: Icon Display not found.");
+        
+        if(_sfxPlayer == null)      Debug.Log("EnemyMovement: SFX Player not found.");
+        
+        if(_agent == null)          Debug.Log("EnemyMovement: NavMesh Agent not found.");
+        else                        _agent.speed = _speed;
+        
         _targetPosition = _patrolLocations[_indexLocation].position;
         _timeCounter    = _detection.PatrolTime;
-        //SetAgentSpeed();
     }
 
     void VisionCheck () {
-        if(_visionCounter > 0f) {
-            _visionCounter -= Time.deltaTime;
-        } else {
+        if(_visionCounter > 0f)     _visionCounter -= Time.deltaTime;
+        else {
             _playerVisibility   = _vision.GetVisibility(out _player);
             _visionCounter      = _detection.VisionTime;
         }
     }
 
     void Update() {
-         
         VisionCheck();
         switch (_detection.State) {
             case DetectionState.OnPatrol:           PatrolBehaviour();          break;
@@ -122,12 +105,11 @@ public class EnemyIA : MonoBehaviour {
 
             default: _detection.State = DetectionState.OnPatrol;                break;
         }
-        
     }
 
     private void CheckingBehaviour () {
         if (_player != null) {
-            ChangeToStatus(DetectionState.OnAlert);
+            SetDetectionState(DetectionState.OnAlert);
             return;
         }
 
@@ -137,24 +119,25 @@ public class EnemyIA : MonoBehaviour {
         }
 
         TargetNextPatrolLocation();
-        ChangeToStatus(DetectionState.OnPatrol);
+        SetDetectionState(DetectionState.OnPatrol);
     }
 
     private void PatrolLocationBehaviour () {
         if (_player != null) {
             _targetPosition = _player.position;
-            ChangeToStatus(DetectionState.OnCaution);
+            SetDetectionState(DetectionState.OnCaution);
             return;
         }
 
         if (_timeCounter < _detection.PatrolTime) {
             _timeCounter += Time.deltaTime;
 
-            if (transform.rotation.y != _patrolRotation.eulerAngles.y) {
+            if (transform.rotation.y != _patrolRotation.eulerAngles.y) 
                 RotateTo(_patrolRotation);
-            }
+            
+
         } else {
-            ChangeToStatus(DetectionState.OnPatrol);
+            SetDetectionState(DetectionState.OnPatrol);
         }
     }
 
@@ -163,36 +146,14 @@ public class EnemyIA : MonoBehaviour {
 
         if (_player != null) {
             _targetPosition = _player.position;
-            ChangeToStatus(DetectionState.OnCaution);
+            SetDetectionState(DetectionState.OnCaution);
             return;
         }
 
         MoveToTarget();
         _stateMachine.State = EnemyActionState.Walking;
     }
-    /*
-    private void PatrolBehaviour () {
-        if (_stateMachine.State == EnemyActionState.WakeUp) return;
 
-        if (_player != null) {
-            _targetPosition = _player.position;
-            ChangeToStatus(DetectionState.OnCaution);
-            return;
-        }
-
-        if (_timeCounter < _detection.PatrolTime) {
-            _timeCounter += Time.deltaTime;
-
-            if (transform.rotation.y != _patrolRotation.eulerAngles.y) {
-                RotateTo(_patrolRotation);
-            }
-
-        } else {
-            MoveToTarget();
-            _stateMachine.State = EnemyActionState.Walking;
-        }
-    }
-    */
     private void CautionBehaviour () {
         if (_player != null) {
             _targetPosition = _player.position;
@@ -200,7 +161,7 @@ public class EnemyIA : MonoBehaviour {
 
             float distanceToPlayer = Vector3.Distance(transform.position, _targetPosition);
             if (distanceToPlayer < _vision.Range * 0.5f) {
-                ChangeToStatus(DetectionState.OnAlert);
+                SetDetectionState(DetectionState.OnAlert);
                 return;
             }
         }
@@ -210,7 +171,7 @@ public class EnemyIA : MonoBehaviour {
             _stateMachine.State = EnemyActionState.Walking;
         } else {
             _stateMachine.State = EnemyActionState.Idle;
-            ChangeToStatus(DetectionState.Checking);
+            SetDetectionState(DetectionState.Checking);
         }
 
         if(_timeCounter < _detection.CautionTime) {
@@ -219,7 +180,7 @@ public class EnemyIA : MonoBehaviour {
         }
 
         TargetNextPatrolLocation();
-        ChangeToStatus(DetectionState.OnPatrol);
+        SetDetectionState(DetectionState.OnPatrol);
     }
 
     private void AlertBehaviour () {
@@ -249,7 +210,7 @@ public class EnemyIA : MonoBehaviour {
             _stateMachine.State = EnemyActionState.Running;
         } else {
             _stateMachine.State =  EnemyActionState.Idle;
-            ChangeToStatus(DetectionState.Checking);
+            SetDetectionState(DetectionState.Checking);
             return;
         }
         
@@ -263,30 +224,19 @@ public class EnemyIA : MonoBehaviour {
         
         _health.RestoreHealth(_health.MaxHealth);
         _stateMachine.State = EnemyActionState.WakeUp;
-        ChangeToStatus(DetectionState.OnPatrol);
+        SetDetectionState(DetectionState.OnPatrol);
     }
 
     public void DisableEnemy () {
         _sfxPlayer.PlaySound(4, 1f);
         _stateMachine.State = EnemyActionState.Unconscious;
-        ChangeToStatus(DetectionState.Disabled);
+        SetDetectionState(DetectionState.Disabled);
     }
 
     private void MoveToTarget () {
-        /*
-        Vector3 moveTo = new Vector3(
-                                _targetPosition.x - transform.position.x,
-                                0f,
-                                _targetPosition.z - transform.position.z);
-
-        //_controller.Move(moveTo.normalized * _speed * Time.deltaTime);
-        _agent.SetDestination(moveTo.normalized * _speed * Time.deltaTime);
-        */
         _agent.speed = _speed;
         _agent.isStopped = false;
         _agent.SetDestination(_targetPosition);
-        //RotateTo(_targetPosition);
-        //RotateTo(moveTo);
     }
 
     private void StopMovement () {
@@ -302,39 +252,22 @@ public class EnemyIA : MonoBehaviour {
                                             targetRotation,
                                             _rotationSpeed * Time.deltaTime);
     }
-    /*
-    private void RotateTo (Vector3 targetLocation) {
-        transform.forward = Vector3.Slerp(
-                                        transform.forward,
-                                        targetLocation,
-                                        _rotationSpeed * Time.deltaTime);
-    }
-    */
+
     private void RotateToTarget () => 
         transform.forward = _targetPosition - transform.position;
     
 
     private void TargetNextPatrolLocation () {
-        if (++_indexLocation >= _patrolLocations.Count) {
+        if (++_indexLocation >= _patrolLocations.Count) 
             _indexLocation = 0;
-        }
+        
         _targetPosition = _patrolLocations[_indexLocation].position;
     }
 
-    private void ChangeToStatus (DetectionState status) {
+    private void SetDetectionState (DetectionState status) {
         _detection.State = status;
 
         switch (status) {
-            /*
-            case DetectionState.OnPatrol:
-                _timeCounter = _detection.PatrolTime;
-                _speed = _normalSpeed;
-                SetAgentSpeed();
-                _agent.isStopped = false;
-                _rotationSpeed = _patrolRotationSpeed;
-                _iconDisplay.ChangeIcon(0, Color.green);
-                break;
-            */
             case DetectionState.OnPatrol:
                 _speed = _normalSpeed;
                 _rotationSpeed = _patrolRotationSpeed;
@@ -360,11 +293,6 @@ public class EnemyIA : MonoBehaviour {
 
             case DetectionState.Checking:
                 _timeCounter = 0f;
-                /*
-                _speed = 0f;
-                SetAgentSpeed();
-                _agent.isStopped = true;
-                */
                 StopMovement();
                 _iconDisplay.ChangeIcon(1, Color.yellow);
                 break;
@@ -381,11 +309,6 @@ public class EnemyIA : MonoBehaviour {
 
             case DetectionState.Disabled:
                 _timeCounter = 0f;
-                /*
-                _speed = 0f;
-                SetAgentSpeed();
-                _agent.isStopped = true;
-                */
                 StopMovement();
                 _iconDisplay.ChangeIcon(3, Color.white);
                 break;
@@ -396,19 +319,18 @@ public class EnemyIA : MonoBehaviour {
     }
 
     public void RespondToAlarm (Transform player) {
-        if (player == null || _detection.State == DetectionState.Disabled) {
-            return;
-        }
+        if (player == null || 
+            _detection.State == DetectionState.Disabled)    return;
 
         _player = player;
-        ChangeToStatus(DetectionState.OnAlert);
+        SetDetectionState(DetectionState.OnAlert);
     }
 
     public void BackToPatrol () {
         _player = null;
         TargetNextPatrolLocation();
         
-        ChangeToStatus (DetectionState.OnPatrol);
+        SetDetectionState (DetectionState.OnPatrol);
         _stateMachine.State = EnemyActionState.Idle;
         
         _sfxPlayer.PlaySound(3);
@@ -424,7 +346,7 @@ public class EnemyIA : MonoBehaviour {
 
             TargetNextPatrolLocation();
             
-            ChangeToStatus(DetectionState.OnPatrolLocation);
+            SetDetectionState(DetectionState.OnPatrolLocation);
         }
     }
 
@@ -432,11 +354,11 @@ public class EnemyIA : MonoBehaviour {
         if (collision.gameObject.CompareTag("Player")) {
             switch (_detection.State) {
                 case DetectionState.OnPatrol:
-                    ChangeToStatus(DetectionState.OnCaution);
+                    SetDetectionState(DetectionState.OnCaution);
                     break;
 
                 case DetectionState.OnCaution:
-                    ChangeToStatus(DetectionState.OnAlert);
+                    SetDetectionState(DetectionState.OnAlert);
                     break;
 
                 default:
@@ -456,5 +378,4 @@ public class EnemyIA : MonoBehaviour {
             Gizmos.DrawLine(corners[i], corners[i+1]);
         }
     }
-
 }

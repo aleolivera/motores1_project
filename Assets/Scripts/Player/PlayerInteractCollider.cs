@@ -37,12 +37,6 @@ public class PlayerInteractCollider : MonoBehaviour {
             _collider.enabled = false;
             HandleTriggerQuestGiver(collider.GetComponent<QuestGiver>());
         }
-        /*
-        if (collider.gameObject.CompareTag("Lock")) {
-            _collider.enabled = false;
-            HandleTriggerLock(collider.GetComponent<Lock>());
-        }
-        */
         if (collider.gameObject.CompareTag("Health")) {
             _collider.enabled = false;
             HandleTriggerHealth(collider.GetComponent<HealthItem>());
