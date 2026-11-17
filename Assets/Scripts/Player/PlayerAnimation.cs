@@ -92,7 +92,6 @@ public class PlayerAnimation : MonoBehaviour {
     }
 
     public void PlayerStateToIdle () => PlayerStateMachine.Instance.CurrentState = PlayerState.Idle;
-    //public void DeathAnimationEnd () => LevelManager.RestartLevel();
     public void DeathAnimationEnd () => LevelManager.GameOver();
     
 

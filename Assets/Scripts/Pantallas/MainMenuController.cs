@@ -6,6 +6,12 @@ public class MainMenuController : MonoBehaviour
 {
     public GameObject controlsPanel;
     [SerializeField] private string _playLevelName;
+
+    private void Start () {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
     public void PlayGame()
     {
         if (_playLevelName.Equals("")) {

@@ -81,8 +81,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a22170ae7273bad47969f1384f1c642c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::QuestItem
-  _id: 0
   _name: Row
+  _description: 
+  _id: 0
 --- !u!65 &2525642377145600887
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -143,7 +144,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 470fc955492624c4083f7c8060004b14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SFXPlayer
-  _clips: []
+  _clips:
+  - {fileID: 8300000, guid: 8f8d9f1b50829874f8d1132253aecc8c, type: 3}
 --- !u!1 &3353235253304615254
 GameObject:
   m_ObjectHideFlags: 0

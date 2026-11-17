@@ -1,7 +1,6 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
-[RequireComponent(typeof(EnemyIA))]
 public class EnemyHealth : MonoBehaviour {
     [Header("Health")]
     [SerializeField] private HealthBar _healthBar;
