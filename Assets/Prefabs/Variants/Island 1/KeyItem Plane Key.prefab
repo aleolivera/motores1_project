@@ -60,6 +60,10 @@ PrefabInstance:
       propertyPath: _description
       value: Needed to start the plane
       objectReference: {fileID: 0}
+    - target: {fileID: 6233101267288152542, guid: 1017fb99320bb7d488d743663a6f82fb, type: 3}
+      propertyPath: _displayImage
+      value: 
+      objectReference: {fileID: 21300000, guid: 3ae9b84b18c76b8449995401f3836cb2, type: 3}
     - target: {fileID: 8301007730175086533, guid: 1017fb99320bb7d488d743663a6f82fb, type: 3}
       propertyPath: _titleText
       value: Plane Key

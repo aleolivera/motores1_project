@@ -336,6 +336,25 @@ public class EnemyIA : MonoBehaviour {
         _sfxPlayer.PlaySound(3);
     }
 
+    public void HandleCollitionWithPlayer (Transform player) {
+        if (_stateMachine.State == EnemyActionState.Idle) return;
+        
+        switch (_detection.State) {
+            case DetectionState.OnPatrol:
+                SetDetectionState(DetectionState.OnCaution);
+                break;
+
+            case DetectionState.OnCaution:
+                SetDetectionState(DetectionState.OnAlert);
+                break;
+
+            default:
+                break;
+        }
+        _player = player;
+    }
+
+
     private void OnTriggerEnter (Collider other) {
         if ( other.CompareTag("PatrolLocation") && 
              _detection.State == DetectionState.OnPatrol) {
@@ -349,25 +368,13 @@ public class EnemyIA : MonoBehaviour {
             SetDetectionState(DetectionState.OnPatrolLocation);
         }
     }
-
+    /*
     private void OnCollisionEnter (Collision collision) {
         if (collision.gameObject.CompareTag("Player")) {
-            switch (_detection.State) {
-                case DetectionState.OnPatrol:
-                    SetDetectionState(DetectionState.OnCaution);
-                    break;
-
-                case DetectionState.OnCaution:
-                    SetDetectionState(DetectionState.OnAlert);
-                    break;
-
-                default:
-                    break;
-            }
-            _player = collision.transform;
+            
         }
     }
-
+    */
     private void OnDrawGizmosSelected () {
         if (_agent == null || !_agent.hasPath) return;
         Vector3[] corners = _agent.path.corners;

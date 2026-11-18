@@ -24,6 +24,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: 2153733010543464901, guid: 1017fb99320bb7d488d743663a6f82fb, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3472572087895518588, guid: 1017fb99320bb7d488d743663a6f82fb, type: 3}
       propertyPath: m_Layer
       value: 12
@@ -96,6 +100,10 @@ PrefabInstance:
       propertyPath: _description
       value: Opens the fence gate
       objectReference: {fileID: 0}
+    - target: {fileID: 6233101267288152542, guid: 1017fb99320bb7d488d743663a6f82fb, type: 3}
+      propertyPath: _displayImage
+      value: 
+      objectReference: {fileID: 21300000, guid: 01feae73d00c46d42bf6c9b5bfbb3e4e, type: 3}
     - target: {fileID: 6880306725533685758, guid: 1017fb99320bb7d488d743663a6f82fb, type: 3}
       propertyPath: m_Layer
       value: 12

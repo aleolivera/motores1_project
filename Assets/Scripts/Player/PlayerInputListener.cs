@@ -36,7 +36,10 @@ public class PlayerInputListener : MonoBehaviour {
         else if (ctx.canceled)  { Interact = false; }
     }
     public void OnPause(InputAction.CallbackContext ctx) {
-        if (ctx.performed)      { GameManager.Instance.PauseGame(); } 
+        if (ctx.performed)      { 
+            PlayerInventory inventory = GetComponent<PlayerInventory>();
+            GameManager.Instance.PauseGame(inventory); 
+        } 
     }
 
 

@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour {
 
     // -------------- EVENTS
     public static event Action OnGameInProgress;
-    public static event Action OnGamePaused;
+    public static event Action<PlayerInventory> OnGamePaused;
     public static event Action OnGameOver;
 
     // -------------- GAMEPLAY STADISTICS
@@ -68,10 +68,10 @@ public class GameManager : MonoBehaviour {
         OnGameInProgress?.Invoke();
     }
 
-    public void PauseGame() {
-        Time.timeScale = 0f;
+    public void PauseGame(PlayerInventory inventory) {
+        //Time.timeScale = 0f;
         State = GameState.OnPause;
-        OnGamePaused?.Invoke();
+        OnGamePaused?.Invoke(inventory);
     }
 
     public void UnpauseGame () => GameInProgress();

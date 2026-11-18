@@ -33,9 +33,10 @@ public class LevelManager : MonoBehaviour {
     
 
     void Start() {
+        /*
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-
+        */
         if (_quests == null)
             Debug.LogWarning("LevelManager: Quests list is null.");
         else if (_quests.Count == 0)

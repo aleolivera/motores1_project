@@ -32,7 +32,6 @@ public class GroundDetection : MonoBehaviour {
     }
 
     private void OnDrawGizmos() {
-        //Dibuja la esfera que checkea el contacto con el suelo
         Gizmos.color = (_grounded) ? Color.green : Color.red;
         Gizmos.DrawSphere(_groundCheck.position, _groundDistance);
     }
