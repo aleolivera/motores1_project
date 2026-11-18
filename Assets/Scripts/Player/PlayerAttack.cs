@@ -19,16 +19,13 @@ public class PlayerAttack : MonoBehaviour {
         }
     }
 
-    private void Awake() {
-        _cooldownCounter = 0f;
-    }
+    private void Awake() => _cooldownCounter = 0f;
+    
 
-    private void OnEnable () {
-        PlayerMeleeWeapon.OnEnemyHit += DealDamage;
-    }
-    private void OnDisable () {
-        PlayerMeleeWeapon.OnEnemyHit -= DealDamage;
-    }
+    private void OnEnable () => PlayerMeleeWeapon.OnEnemyHit += DealDamage;
+    
+    private void OnDisable () => PlayerMeleeWeapon.OnEnemyHit -= DealDamage;
+    
 
     void Start() {
         _groundCheck    = GetComponent<GroundDetection>();
@@ -69,7 +66,5 @@ public class PlayerAttack : MonoBehaviour {
         enemy.DealDamage(damage);
     }
 
-    public void EnableMeleeWeaponCollider(bool enabled) {
-        _meleeWeapon.ColliderEnable = enabled;
-    }
+    public void EnableMeleeWeaponCollider(bool enabled) => _meleeWeapon.ColliderEnable = enabled;
 }

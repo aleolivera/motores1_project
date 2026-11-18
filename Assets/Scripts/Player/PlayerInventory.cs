@@ -14,13 +14,11 @@ public class PlayerInventory : MonoBehaviour {
 
     private void OnEnable () {
         PlayerInteractCollider.OnKeyItemCollected   += AddKeyItem;
-        //PlayerInteractCollider.OnKeyItemRetrieve    += RetrieveKeyItem;
         PlayerInteractCollider.OnQuestItemCollected += AddQuestItem;
         PlayerInteractCollider.OnQuestItemRetrieve  += RetrieveQuestItem;
     }
     private void OnDisable () {
         PlayerInteractCollider.OnKeyItemCollected   -= AddKeyItem;
-        //PlayerInteractCollider.OnKeyItemRetrieve    -= RetrieveKeyItem;
         PlayerInteractCollider.OnQuestItemCollected -= AddQuestItem;
         PlayerInteractCollider.OnQuestItemRetrieve  -= RetrieveQuestItem;
     }
@@ -90,16 +88,13 @@ public class PlayerInventory : MonoBehaviour {
 
     public void EnableInteractCollider (bool enabled) => _interactCollider.ColliderEnable = enabled;
 
-    /*
-    private void OnTriggerEnter (Collider other) {
-        if (other.gameObject.CompareTag("Lock") ){
-            RetrieveKeyItem(other.GetComponent<Lock>());
-        }
-    }
-    */
     private void OnControllerColliderHit (ControllerColliderHit hit) {
         if (hit.gameObject.CompareTag("Lock")) {
             RetrieveKeyItem(hit.gameObject.GetComponent<Lock>());
+        }
+        if (hit.gameObject.CompareTag("Enemy")) {
+            EnemyIA enemy = hit.gameObject.GetComponent<EnemyIA>();
+            enemy.HandleCollitionWithPlayer(gameObject.transform);
         }
     }
 
