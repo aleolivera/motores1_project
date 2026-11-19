@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+public enum LevelState { InProgress, PlayingCinematic }
 public class LevelManager : MonoBehaviour {
     [Header("Quest Givers")]
     [SerializeField] private List<QuestGiver> _quests = new List<QuestGiver>();
@@ -11,7 +12,10 @@ public class LevelManager : MonoBehaviour {
 
     private static LevelManager _instance;
     public static LevelManager Instance { get { return _instance; } }
-
+    
+    private LevelState _state;
+    public LevelState State { get { return _state; } private set { _state = value; } }
+    
     public int SceneBuildIndex { get; set; }
     public static event Action<List<QuestGiver>> OnLevelStart;
     public static event Action<List<QuestGiver>> OnQuestCompleted;

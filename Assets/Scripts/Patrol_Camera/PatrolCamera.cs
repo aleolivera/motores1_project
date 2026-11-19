@@ -198,9 +198,11 @@ public class PatrolCamera : MonoBehaviour {
         if(collider.gameObject.CompareTag("Enemy") && 
             _state == PatrolCameraState.OnAlert && 
             _triggerAlarm) {
-            Debug.Log("Enemy alerted!");
             EnemyIA enemy = collider.gameObject.GetComponent<EnemyIA>();
-            ActivateAlarm(enemy);
+            
+            if(enemy.DetectionState != DetectionState.OnAlert) {
+                ActivateAlarm(enemy);
+            }
         }
     }
 

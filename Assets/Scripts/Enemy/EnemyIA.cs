@@ -39,6 +39,7 @@ public class EnemyIA : MonoBehaviour {
     private SFXPlayer _sfxPlayer;
 
     public Vector3 PlayerPosition{ get { return _player.position; } }
+    public DetectionState DetectionState { get { return _detection.State; } }
 
     void Awake() {
         _speed          = _normalSpeed;
@@ -107,20 +108,6 @@ public class EnemyIA : MonoBehaviour {
         }
     }
 
-    private void CheckingBehaviour () {
-        if (_player != null) {
-            SetDetectionState(DetectionState.OnAlert);
-            return;
-        }
-
-        if (_timeCounter < _detection.CheckTime) {
-            _timeCounter += Time.deltaTime;
-            return;
-        }
-
-        TargetNextPatrolLocation();
-        SetDetectionState(DetectionState.OnPatrol);
-    }
 
     private void PatrolLocationBehaviour () {
         if (_player != null) {
@@ -170,15 +157,15 @@ public class EnemyIA : MonoBehaviour {
             MoveToTarget();
             _stateMachine.State = EnemyActionState.Walking;
         } else {
+            _timeCounter += Time.deltaTime;
             _stateMachine.State = EnemyActionState.Idle;
             SetDetectionState(DetectionState.Checking);
         }
-
+        
         if(_timeCounter < _detection.CautionTime) {
-            _timeCounter += Time.deltaTime;
             return;
         }
-
+        
         TargetNextPatrolLocation();
         SetDetectionState(DetectionState.OnPatrol);
     }
@@ -214,6 +201,21 @@ public class EnemyIA : MonoBehaviour {
             return;
         }
         
+    }
+
+    private void CheckingBehaviour () {
+        if (_player != null) {
+            SetDetectionState(DetectionState.OnAlert);
+            return;
+        }
+
+        if (_timeCounter < _detection.CheckTime) {
+            _timeCounter += Time.deltaTime;
+            return;
+        }
+
+        TargetNextPatrolLocation();
+        SetDetectionState(DetectionState.OnPatrol);
     }
 
     private void DisabledBehaviour () {

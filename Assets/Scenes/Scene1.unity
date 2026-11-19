@@ -25476,23 +25476,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2574314913224767892, guid: ac41c4d31cc09b54d82b26c983bff367, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -37.36
+      value: -36.36
       objectReference: {fileID: 0}
     - target: {fileID: 2574314913224767892, guid: ac41c4d31cc09b54d82b26c983bff367, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.99313533
+      value: 0.99243355
       objectReference: {fileID: 0}
     - target: {fileID: 2574314913224767892, guid: ac41c4d31cc09b54d82b26c983bff367, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.11697131
+      value: 0.12249084
       objectReference: {fileID: 0}
     - target: {fileID: 2574314913224767892, guid: ac41c4d31cc09b54d82b26c983bff367, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000044277396
+      value: 0.008403304
       objectReference: {fileID: 0}
     - target: {fileID: 2574314913224767892, guid: ac41c4d31cc09b54d82b26c983bff367, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.000000005202239
+      value: -0.0010371753
       objectReference: {fileID: 0}
     - target: {fileID: 2574314913224767892, guid: ac41c4d31cc09b54d82b26c983bff367, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -25510,6 +25510,34 @@ PrefabInstance:
       propertyPath: Target.TrackingTarget
       value: 
       objectReference: {fileID: 1162250989}
+    - target: {fileID: 6758991341246733540, guid: ac41c4d31cc09b54d82b26c983bff367, type: 3}
+      propertyPath: Orbits.Top.Height
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6758991341246733540, guid: ac41c4d31cc09b54d82b26c983bff367, type: 3}
+      propertyPath: Orbits.Center.Radius
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6758991341246733540, guid: ac41c4d31cc09b54d82b26c983bff367, type: 3}
+      propertyPath: TrackerSettings.PositionDamping.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6758991341246733540, guid: ac41c4d31cc09b54d82b26c983bff367, type: 3}
+      propertyPath: TrackerSettings.PositionDamping.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6758991341246733540, guid: ac41c4d31cc09b54d82b26c983bff367, type: 3}
+      propertyPath: TrackerSettings.PositionDamping.z
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8191120256055045615, guid: ac41c4d31cc09b54d82b26c983bff367, type: 3}
+      propertyPath: Composition.ScreenPosition.x
+      value: -0.009166867
+      objectReference: {fileID: 0}
+    - target: {fileID: 8191120256055045615, guid: ac41c4d31cc09b54d82b26c983bff367, type: 3}
+      propertyPath: Composition.ScreenPosition.y
+      value: 0.308681
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -38211,23 +38239,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4362445832330630659, guid: 6c63561d8023d4a45851aa537d46a62f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -37.36
+      value: -36.36
       objectReference: {fileID: 0}
     - target: {fileID: 4362445832330630659, guid: 6c63561d8023d4a45851aa537d46a62f, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.99313533
+      value: 0.99243355
       objectReference: {fileID: 0}
     - target: {fileID: 4362445832330630659, guid: 6c63561d8023d4a45851aa537d46a62f, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.11697131
+      value: 0.12249084
       objectReference: {fileID: 0}
     - target: {fileID: 4362445832330630659, guid: 6c63561d8023d4a45851aa537d46a62f, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000044278917
+      value: 0.008403304
       objectReference: {fileID: 0}
     - target: {fileID: 4362445832330630659, guid: 6c63561d8023d4a45851aa537d46a62f, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.0000000052151634
+      value: -0.0010371755
       objectReference: {fileID: 0}
     - target: {fileID: 4362445832330630659, guid: 6c63561d8023d4a45851aa537d46a62f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
