@@ -211,7 +211,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyVision
   _eye: {fileID: 797141098530639352}
   _range: 12
-  _fov: 60
+  _fov: 95
   _playerMask:
     serializedVersion: 2
     m_Bits: 128

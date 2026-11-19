@@ -73,9 +73,8 @@ public class LevelManager : MonoBehaviour {
         LevelCompleted();
     }
 
-    public void LevelCompleted () {
-        GameManager.Instance.LevelCompleted(_nextSceneName, LevelTimeCounter);
-    }
+    public void LevelCompleted () => GameManager.Instance.LevelCompleted(_nextSceneName, LevelTimeCounter);
+    
 
     public static void RestartLevel () => GameManager.Instance.RestartLevel();
     

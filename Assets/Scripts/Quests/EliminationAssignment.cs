@@ -8,12 +8,15 @@ public class EliminationAssignment : Quest {
     private float _maxDisableTime = 86400f;
     private float _counter = 0f;
     private float _CheckQuestTime = 1f;
-    public List<EnemyDetection> EnemyList { get { return _enemyList; } }
+
+    private LinkedList<EnemyDetection> _enemyLinkedList = new LinkedList<EnemyDetection>();
+    public LinkedList<EnemyDetection> EnemyList { get { return _enemyLinkedList; } }
     private Transform spawnItem;
 
     private void Start () {
         foreach(var enemy in _enemyList) {
             enemy.DisableTime = _maxDisableTime;
+            _enemyLinkedList.AddLast(enemy);
         }
 
         _spawnerObj.SetActive(false);
@@ -32,11 +35,11 @@ public class EliminationAssignment : Quest {
     }
 
     void CheckEnemiesDisabled () {
-        foreach (EnemyDetection enemy in _enemyList) {
-            if (enemy != null && enemy.State == DetectionState.Disabled) {
+        foreach (EnemyDetection enemy in _enemyLinkedList) {
+            if (enemy.State == DetectionState.Disabled) {
                 spawnItem = enemy.gameObject.transform;
-                _enemyList.Remove(enemy);
-                if (_enemyList.Count < 1) break;
+                _enemyLinkedList.Remove(enemy);
+                if (EnemyList.Count < 1) break;
             }
         }
 
