@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public enum LevelState { InProgress, PlayingCinematic }
 public class LevelManager : MonoBehaviour {
     [Header("Quest Givers")]
-    [SerializeField] private List<QuestGiver> _quests = new List<QuestGiver>();
+    [SerializeField] private List<Quest> _quests = new List<Quest>();
     [SerializeField] private string _nextSceneName;
 
     private static LevelManager _instance;
@@ -17,8 +17,8 @@ public class LevelManager : MonoBehaviour {
     public LevelState State { get { return _state; } private set { _state = value; } }
     
     public int SceneBuildIndex { get; set; }
-    public static event Action<List<QuestGiver>> OnLevelStart;
-    public static event Action<List<QuestGiver>> OnQuestCompleted;
+    public static event Action<List<Quest>> OnLevelStart;
+    public static event Action<List<Quest>> OnQuestCompleted;
 
     public float LevelTimeCounter { get; private set; }
     public static int PlayerDeaths { get; private set; }
@@ -47,7 +47,7 @@ public class LevelManager : MonoBehaviour {
             Debug.LogWarning("LevelManager: Quests are empty.");
         else {
             bool b = false;
-            foreach(QuestGiver quest in _quests) {
+            foreach(Quest quest in _quests) {
                 if (quest == null)   Debug.LogWarning("LevelManager: Quest is null.");
                 else                b = true;
             }
@@ -62,12 +62,12 @@ public class LevelManager : MonoBehaviour {
     private void Update () => LevelTimeCounter += Time.deltaTime;
     
     public void QuestCompleted(int questId) {
-        string questName = _quests.First(quest => quest.Id == questId).name;
+        string questName = _quests.First(quest => quest.Id == questId).QuestName;
         
         OnQuestCompleted?.Invoke(_quests);
         NotificationUI.ShowNotification("Quest Completed!: " + questName , Color.green);
 
-        foreach (QuestGiver quest in _quests) { 
+        foreach (Quest quest in _quests) { 
             if(!quest.IsQuestCompleted) return;   
         }
         LevelCompleted();

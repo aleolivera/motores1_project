@@ -24,17 +24,20 @@ public class ObjectiveUI : MonoBehaviour {
         }
     }
 
-    private void HandleOnLevelStart (List<QuestGiver> quests) {
+    private void HandleOnLevelStart (List<Quest> quests) {
         string objective = "";
-        foreach (QuestGiver q in quests) {
-            objective += q.Description + "\n";
+        int counter = 1;
+        foreach (Quest q in quests) {
+            objective += counter + " - " + q.Description + "\n";
+            counter++;
         }
+        Debug.Log(objective);
         _txtObjectives.text = objective;
     }
 
-    private void HandleOnQuestCompleted (List<QuestGiver> quests) {
+    private void HandleOnQuestCompleted (List<Quest> quests) {
         string objective = "";
-        foreach (QuestGiver q in quests) {
+        foreach (Quest q in quests) {
             objective += q.Description + 
                         ((q.IsQuestCompleted) ? " (completed)" :  "") + 
                         "\n";
