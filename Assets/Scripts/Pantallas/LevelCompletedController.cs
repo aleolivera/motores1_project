@@ -16,7 +16,7 @@ public class LevelCompletedController : MonoBehaviour {
         SetTmpTexts();
     }
 
-    public void BackToMainMenu () => GameManager.Instance.LoadMainMenu();
+    public void HandleContinueClick () => GameManager.Instance.LoadNextScene();
 
     private void SetTmpTexts () {
         TimeSpan time = TimeSpan.FromSeconds(GameManager.Instance.LevelCompletedTime);

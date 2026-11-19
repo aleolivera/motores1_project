@@ -35,12 +35,17 @@ public class EliminationAssignment : Quest {
     }
 
     void CheckEnemiesDisabled () {
-        foreach (EnemyDetection enemy in _enemyLinkedList) {
-            if (enemy.State == DetectionState.Disabled) {
-                spawnItem = enemy.gameObject.transform;
-                _enemyLinkedList.Remove(enemy);
-                if (EnemyList.Count < 1) break;
+        LinkedListNode<EnemyDetection> node = _enemyLinkedList.First;
+
+        while (node != null) {
+            LinkedListNode<EnemyDetection> next = node.Next;
+
+            if (node.Value.State == DetectionState.Disabled) {
+                spawnItem = node.Value.transform;
+                _enemyLinkedList.Remove(node);
             }
+
+            node = next;
         }
 
         if (EnemyList.Count > 0) { return; }

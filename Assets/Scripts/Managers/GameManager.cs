@@ -26,8 +26,9 @@ public class GameManager : MonoBehaviour {
     public int EnemyDisabledCount   { get; private set; }
     public int AlertCount           { get; private set; }
     public float LevelCompletedTime {  get; private set; }
+    public string NextLevel         { get; private set; }
 
-    
+
 
     private void Awake () {
         if(_instance == null) {
@@ -51,8 +52,13 @@ public class GameManager : MonoBehaviour {
  
     public void LevelCompleted (string sceneName, float levelTime) {
         LevelCompletedTime = levelTime;
-        SceneManager.LoadScene(sceneName);
-    } 
+        NextLevel = sceneName;
+        //SceneManager.LoadScene(sceneName);
+        SceneManager.LoadScene("Level_Completed");
+    }
+
+    public void LoadNextScene () => SceneManager.LoadScene(NextLevel);
+    
 
     public void GameOver () {
         State = GameState.GameOver;
