@@ -16,7 +16,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &4000011923468858
 Transform:
@@ -100,12 +100,13 @@ GameObject:
   m_Component:
   - component: {fileID: 4000011537233398}
   - component: {fileID: 205000010040648878}
+  - component: {fileID: 6433639135791079722}
   m_Layer: 0
   m_Name: barrel-1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &4000011537233398
 Transform:
@@ -115,7 +116,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1000012512741780}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.8918906, z: -0, w: 0.45225126}
+  m_LocalRotation: {x: 0, y: 0.89189225, z: 0, w: 0.45224795}
   m_LocalPosition: {x: -2.289, y: 0, z: 2.33}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -123,7 +124,7 @@ Transform:
   - {fileID: 4000011923468858}
   - {fileID: 4000010341722732}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 126.467, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 126.224, z: 0}
 --- !u!205 &205000010040648878
 LODGroup:
   m_ObjectHideFlags: 0
@@ -147,6 +148,28 @@ LODGroup:
     renderers:
     - renderer: {fileID: 23000010885306988}
   m_Enabled: 1
+--- !u!64 &6433639135791079722
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000012512741780}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
 --- !u!1 &1000013009079608
 GameObject:
   m_ObjectHideFlags: 0
@@ -163,7 +186,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &4000010341722732
 Transform:
