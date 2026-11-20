@@ -32203,7 +32203,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5354395308632350211, guid: 107cf12a78b369541a8e811465499c9c, type: 3}
       propertyPath: _nextSceneName
-      value: Level_Completed
+      value: Scene2
       objectReference: {fileID: 0}
     - target: {fileID: 5354395308632350211, guid: 107cf12a78b369541a8e811465499c9c, type: 3}
       propertyPath: '_quests.Array.data[0]'
