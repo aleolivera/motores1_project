@@ -1,5 +1,12 @@
 fileFormatVersion: 2
 guid: 45fb3b613218da844b047d1f9349e0d6
+AssetOrigin:
+  serializedVersion: 1
+  productId: 7701
+  packageName: Ammo Box
+  packageVersion: 1
+  assetPath: Assets/AmmoBox/AmmoBox.FBX
+  uploadId: 27954
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable:
@@ -40,7 +47,7 @@ ModelImporter:
   meshes:
     lODScreenPercentages: []
     globalScale: 1
-    meshCompression: 0
+    meshCompression: 2
     addColliders: 0
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
@@ -114,10 +121,3 @@ ModelImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 7701
-  packageName: Ammo Box
-  packageVersion: 1
-  assetPath: Assets/AmmoBox/AmmoBox.FBX
-  uploadId: 27954

@@ -1,82 +1,237 @@
 fileFormatVersion: 2
 guid: 45c74169a3cfd984cae784ed5b8e937a
+AssetOrigin:
+  serializedVersion: 1
+  productId: 171071
+  packageName: Industrial Models
+  packageVersion: 1.0
+  assetPath: Assets/FreeIndustrialModels/ConcreteTubes/Models/ConcreteTubes.fbx
+  uploadId: 376068
 ModelImporter:
-  serializedVersion: 22
-  fileIDToRecycleName:
-    100000: Base
-    100002: Base1
-    100004: Base3
-    100006: //RootNode
-    100008: Holder1
-    100010: Holder2
-    100012: pipe1
-    100014: pipe2
-    100016: pipe3
-    100018: Collider
-    100020: Collider 1
-    100022: Collider 2
-    100024: Pipe1
-    100026: Pipe2
-    100028: Pipe3
-    400000: Base
-    400002: Base1
-    400004: Base3
-    400006: //RootNode
-    400008: Holder1
-    400010: Holder2
-    400012: pipe1
-    400014: pipe2
-    400016: pipe3
-    400018: Collider
-    400020: Collider 1
-    400022: Collider 2
-    400024: Pipe1
-    400026: Pipe2
-    400028: Pipe3
-    2100000: ConcreteTubes_Exterior
-    2100002: ConcreteTubes_Interior
-    2300000: Base
-    2300002: Base1
-    2300004: Base3
-    2300006: Holder1
-    2300008: Holder2
-    2300010: pipe1
-    2300012: pipe2
-    2300014: pipe3
-    2300016: Collider
-    2300018: Collider 1
-    2300020: Collider 2
-    2300022: Pipe1
-    2300024: Pipe2
-    2300026: Pipe3
-    3300000: Base
-    3300002: Base1
-    3300004: Base3
-    3300006: Holder1
-    3300008: Holder2
-    3300010: pipe1
-    3300012: pipe2
-    3300014: pipe3
-    3300016: Collider
-    3300018: Collider 1
-    3300020: Collider 2
-    3300022: Pipe1
-    3300024: Pipe2
-    3300026: Pipe3
-    4300000: pipe1
-    4300002: pipe2
-    4300004: pipe3
-    4300006: Base
-    4300008: Base1
-    4300010: Base3
-    4300012: Holder1
-    4300014: Holder2
-    4300016: Pipe1
-    4300018: Collider
-    4300020: Pipe2
-    4300022: Collider
-    4300024: Pipe3
-    4300026: Collider
+  serializedVersion: 24200
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: Base
+  - first:
+      1: 100002
+    second: Base1
+  - first:
+      1: 100004
+    second: Base3
+  - first:
+      1: 100006
+    second: //RootNode
+  - first:
+      1: 100008
+    second: Holder1
+  - first:
+      1: 100010
+    second: Holder2
+  - first:
+      1: 100012
+    second: pipe1
+  - first:
+      1: 100014
+    second: pipe2
+  - first:
+      1: 100016
+    second: pipe3
+  - first:
+      1: 100018
+    second: Collider
+  - first:
+      1: 100020
+    second: Collider 1
+  - first:
+      1: 100022
+    second: Collider 2
+  - first:
+      1: 100024
+    second: Pipe1
+  - first:
+      1: 100026
+    second: Pipe2
+  - first:
+      1: 100028
+    second: Pipe3
+  - first:
+      4: 400000
+    second: Base
+  - first:
+      4: 400002
+    second: Base1
+  - first:
+      4: 400004
+    second: Base3
+  - first:
+      4: 400006
+    second: //RootNode
+  - first:
+      4: 400008
+    second: Holder1
+  - first:
+      4: 400010
+    second: Holder2
+  - first:
+      4: 400012
+    second: pipe1
+  - first:
+      4: 400014
+    second: pipe2
+  - first:
+      4: 400016
+    second: pipe3
+  - first:
+      4: 400018
+    second: Collider
+  - first:
+      4: 400020
+    second: Collider 1
+  - first:
+      4: 400022
+    second: Collider 2
+  - first:
+      4: 400024
+    second: Pipe1
+  - first:
+      4: 400026
+    second: Pipe2
+  - first:
+      4: 400028
+    second: Pipe3
+  - first:
+      21: 2100000
+    second: ConcreteTubes_Exterior
+  - first:
+      21: 2100002
+    second: ConcreteTubes_Interior
+  - first:
+      23: 2300000
+    second: Base
+  - first:
+      23: 2300002
+    second: Base1
+  - first:
+      23: 2300004
+    second: Base3
+  - first:
+      23: 2300006
+    second: Holder1
+  - first:
+      23: 2300008
+    second: Holder2
+  - first:
+      23: 2300010
+    second: pipe1
+  - first:
+      23: 2300012
+    second: pipe2
+  - first:
+      23: 2300014
+    second: pipe3
+  - first:
+      23: 2300016
+    second: Collider
+  - first:
+      23: 2300018
+    second: Collider 1
+  - first:
+      23: 2300020
+    second: Collider 2
+  - first:
+      23: 2300022
+    second: Pipe1
+  - first:
+      23: 2300024
+    second: Pipe2
+  - first:
+      23: 2300026
+    second: Pipe3
+  - first:
+      33: 3300000
+    second: Base
+  - first:
+      33: 3300002
+    second: Base1
+  - first:
+      33: 3300004
+    second: Base3
+  - first:
+      33: 3300006
+    second: Holder1
+  - first:
+      33: 3300008
+    second: Holder2
+  - first:
+      33: 3300010
+    second: pipe1
+  - first:
+      33: 3300012
+    second: pipe2
+  - first:
+      33: 3300014
+    second: pipe3
+  - first:
+      33: 3300016
+    second: Collider
+  - first:
+      33: 3300018
+    second: Collider 1
+  - first:
+      33: 3300020
+    second: Collider 2
+  - first:
+      33: 3300022
+    second: Pipe1
+  - first:
+      33: 3300024
+    second: Pipe2
+  - first:
+      33: 3300026
+    second: Pipe3
+  - first:
+      43: 4300000
+    second: pipe1
+  - first:
+      43: 4300002
+    second: pipe2
+  - first:
+      43: 4300004
+    second: pipe3
+  - first:
+      43: 4300006
+    second: Base
+  - first:
+      43: 4300008
+    second: Base1
+  - first:
+      43: 4300010
+    second: Base3
+  - first:
+      43: 4300012
+    second: Holder1
+  - first:
+      43: 4300014
+    second: Holder2
+  - first:
+      43: 4300016
+    second: Pipe1
+  - first:
+      43: 4300018
+    second: Collider
+  - first:
+      43: 4300020
+    second: Pipe2
+  - first:
+      43: 4300022
+    second: Collider
+  - first:
+      43: 4300024
+    second: Pipe3
+  - first:
+      43: 4300026
+    second: Collider
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -89,7 +244,7 @@ ModelImporter:
       name: ConcreteTubes_Interior
     second: {fileID: 2100000, guid: c9dc501992311a548ae026990ef806cf, type: 2}
   materials:
-    importMaterials: 1
+    materialImportMode: 1
     materialName: 0
     materialSearch: 1
     materialLocation: 1
@@ -98,14 +253,14 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
     motionNodeName: 
-    rigImportErrors: 
-    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
+    importConstraints: 0
     animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
@@ -118,34 +273,54 @@ ModelImporter:
   meshes:
     lODScreenPercentages: []
     globalScale: 1
-    meshCompression: 0
+    meshCompression: 2
     addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importPhysicalCameras: 0
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
     importLights: 1
+    nodeNameCollisionStrategy: 0
+    fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
-    optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
+    bakeAxisConversion: 0
     preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    generateMeshLods: 0
+    meshLodGenerationFlags: 0
+    maximumMeshLod: -1
+    meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
+    strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
     tangentImportMode: 3
     normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 1
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
   importAnimation: 0
-  copyAvatar: 0
   humanDescription:
-    serializedVersion: 2
+    serializedVersion: 3
     human: []
     skeleton: []
     armTwist: 0.5
@@ -155,22 +330,20 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
+    globalScale: 1
     rootMotionBoneName: 
-    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 0
   humanoidOversampling: 1
+  avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  importBlendShapeDeformPercent: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 171071
-  packageName: Industrial Models
-  packageVersion: 1.0
-  assetPath: Assets/FreeIndustrialModels/ConcreteTubes/Models/ConcreteTubes.fbx
-  uploadId: 376068

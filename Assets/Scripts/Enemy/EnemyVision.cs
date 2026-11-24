@@ -3,7 +3,7 @@ using UnityEngine;
 public class EnemyVision : MonoBehaviour
 {
     [SerializeField] Transform _eye;
-    [SerializeField] float _range = 20f;
+    [SerializeField, Range(2.5f, 100f)] float _range = 20f;
     [SerializeField, Range(1, 360)] float _fov = 90f;
     [SerializeField] LayerMask _playerMask;
     [SerializeField] LayerMask _obstacleMask;

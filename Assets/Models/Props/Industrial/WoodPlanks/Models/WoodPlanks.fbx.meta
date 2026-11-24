@@ -1,34 +1,93 @@
 fileFormatVersion: 2
 guid: dc3823d88992503449e107c452552b14
+AssetOrigin:
+  serializedVersion: 1
+  productId: 171071
+  packageName: Industrial Models
+  packageVersion: 1.0
+  assetPath: Assets/FreeIndustrialModels/WoodPlanks/Models/WoodPlanks.fbx
+  uploadId: 376068
 ModelImporter:
-  serializedVersion: 22
-  fileIDToRecycleName:
-    100000: Bottom
-    100002: Fabric
-    100004: //RootNode
-    100006: Ropes
-    100008: Top
-    400000: Bottom
-    400002: Fabric
-    400004: //RootNode
-    400006: Ropes
-    400008: Top
-    2100000: Mat_Logs_Top
-    2100002: Mat_Logs_Bottom
-    2100004: Mat_Decoration
-    2300000: Bottom
-    2300002: Fabric
-    2300004: Ropes
-    2300006: Top
-    3300000: Bottom
-    3300002: Fabric
-    3300004: Ropes
-    3300006: Top
-    4300000: Top
-    4300002: Bottom
-    4300004: Ropes
-    4300006: Fabric
-    9500000: //RootNode
+  serializedVersion: 24200
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: Bottom
+  - first:
+      1: 100002
+    second: Fabric
+  - first:
+      1: 100004
+    second: //RootNode
+  - first:
+      1: 100006
+    second: Ropes
+  - first:
+      1: 100008
+    second: Top
+  - first:
+      4: 400000
+    second: Bottom
+  - first:
+      4: 400002
+    second: Fabric
+  - first:
+      4: 400004
+    second: //RootNode
+  - first:
+      4: 400006
+    second: Ropes
+  - first:
+      4: 400008
+    second: Top
+  - first:
+      21: 2100000
+    second: Mat_Logs_Top
+  - first:
+      21: 2100002
+    second: Mat_Logs_Bottom
+  - first:
+      21: 2100004
+    second: Mat_Decoration
+  - first:
+      23: 2300000
+    second: Bottom
+  - first:
+      23: 2300002
+    second: Fabric
+  - first:
+      23: 2300004
+    second: Ropes
+  - first:
+      23: 2300006
+    second: Top
+  - first:
+      33: 3300000
+    second: Bottom
+  - first:
+      33: 3300002
+    second: Fabric
+  - first:
+      33: 3300004
+    second: Ropes
+  - first:
+      33: 3300006
+    second: Top
+  - first:
+      43: 4300000
+    second: Top
+  - first:
+      43: 4300002
+    second: Bottom
+  - first:
+      43: 4300004
+    second: Ropes
+  - first:
+      43: 4300006
+    second: Fabric
+  - first:
+      95: 9500000
+    second: //RootNode
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -46,7 +105,7 @@ ModelImporter:
       name: Mat_Logs_Top
     second: {fileID: 2100000, guid: 22fed2e6e60ced74c827042b65ecddf2, type: 2}
   materials:
-    importMaterials: 1
+    materialImportMode: 1
     materialName: 0
     materialSearch: 1
     materialLocation: 1
@@ -55,14 +114,14 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
     motionNodeName: 
-    rigImportErrors: 
-    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
+    importConstraints: 0
     animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
@@ -75,34 +134,54 @@ ModelImporter:
   meshes:
     lODScreenPercentages: []
     globalScale: 1
-    meshCompression: 0
+    meshCompression: 2
     addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importPhysicalCameras: 0
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
     importLights: 1
+    nodeNameCollisionStrategy: 0
+    fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
-    optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
+    bakeAxisConversion: 0
     preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    generateMeshLods: 0
+    meshLodGenerationFlags: 0
+    maximumMeshLod: -1
+    meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
+    strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
     tangentImportMode: 3
     normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 1
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
   importAnimation: 0
-  copyAvatar: 0
   humanDescription:
-    serializedVersion: 2
+    serializedVersion: 3
     human: []
     skeleton: []
     armTwist: 0.5
@@ -112,22 +191,20 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
+    globalScale: 1
     rootMotionBoneName: 
-    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 0
   humanoidOversampling: 1
+  avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  importBlendShapeDeformPercent: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 171071
-  packageName: Industrial Models
-  packageVersion: 1.0
-  assetPath: Assets/FreeIndustrialModels/WoodPlanks/Models/WoodPlanks.fbx
-  uploadId: 376068

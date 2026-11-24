@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TreeEditor;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
@@ -176,8 +177,11 @@ public class EnemyIA : MonoBehaviour {
             _targetPosition = _player.position;
             _timeCounter = 0f;
             RotateToTarget();
+
+            float distanceToPlayer = Vector3.Distance(transform.position, _targetPosition);
             
-            if (Vector3.Distance(transform.position, _targetPosition) > _vision.Range * 0.5f 
+            //Player en rango de vision pero muy lejos para disparar
+            if ( distanceToPlayer > _vision.Range * 0.5f 
                 && _stateMachine.State != EnemyActionState.Attacking) {
                 _speed = _maxSpeed;
                 MoveToTarget();
@@ -185,6 +189,7 @@ public class EnemyIA : MonoBehaviour {
                 return;
             }
 
+            //Player en rango de tiro
             _stateMachine.State = EnemyActionState.Attacking;
             StopMovement();
             return;

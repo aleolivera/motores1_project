@@ -31,7 +31,6 @@ public class ObjectiveUI : MonoBehaviour {
             objective += counter + " - " + q.Description + "\n";
             counter++;
         }
-        Debug.Log(objective);
         _txtObjectives.text = objective;
     }
 

@@ -29,7 +29,6 @@ public class PausePanelUI : MonoBehaviour {
         if (_btnPrev == null)               Debug.LogError("PausePanelUI: Button Prev Not Found.");
 
         _panel.SetActive(false);
-        Debug.Log("Panel Start");
     }
 
     public void OpenPausePanel (PlayerInventory inventory) {
