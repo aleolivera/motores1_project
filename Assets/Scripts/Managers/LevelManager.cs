@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -18,7 +17,7 @@ public class LevelManager : MonoBehaviour {
     
     public int SceneBuildIndex { get; set; }
     public static event Action<List<Quest>> OnLevelStart;
-    public static event Action<List<Quest>> OnQuestCompleted;
+    public static event Action<List<Quest>,int> OnQuestCompleted;
 
     public float LevelTimeCounter { get; private set; }
     public static int PlayerDeaths { get; private set; }
@@ -32,15 +31,9 @@ public class LevelManager : MonoBehaviour {
     }
 
     private void OnEnable () => PlayerStateMachine.OnStateChangedToDead += GameOver;
-    
     private void OnDisable () => PlayerStateMachine.OnStateChangedToDead -= GameOver;
     
-
     void Start() {
-        /*
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-        */
         if (_quests == null)
             Debug.LogWarning("LevelManager: Quests list is null.");
         else if (_quests.Count == 0)
@@ -62,10 +55,7 @@ public class LevelManager : MonoBehaviour {
     private void Update () => LevelTimeCounter += Time.deltaTime;
     
     public void QuestCompleted(int questId) {
-        string questName = _quests.First(quest => quest.Id == questId).QuestName;
-        
-        OnQuestCompleted?.Invoke(_quests);
-        NotificationUI.ShowNotification("Quest Completed!: " + questName , Color.green);
+        OnQuestCompleted?.Invoke(_quests, questId);
 
         foreach (Quest quest in _quests) { 
             if(!quest.IsQuestCompleted) return;   
@@ -74,10 +64,7 @@ public class LevelManager : MonoBehaviour {
     }
 
     public void LevelCompleted () => GameManager.Instance.LevelCompleted(_nextSceneName, LevelTimeCounter);
-    
-
     public static void RestartLevel () => GameManager.Instance.RestartLevel();
-    
     public static void GameOver () {
         PlayerDeaths++;
         GameManager.Instance.GameOver();

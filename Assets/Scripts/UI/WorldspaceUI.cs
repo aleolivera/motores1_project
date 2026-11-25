@@ -1,11 +1,13 @@
 using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 [RequireComponent(typeof(SphereCollider))]
 public class WorldspaceUI : MonoBehaviour {
     [Header("World space UI")]
     [SerializeField] List<GameObject> _UIElements;
+    [SerializeField] float visibilityDistance = 5f;
     SphereCollider _collider;
 
     private void Start () {
@@ -16,7 +18,7 @@ public class WorldspaceUI : MonoBehaviour {
 
         _collider.enabled = true;
         _collider.isTrigger = true;
-        _collider.radius = 5f;
+        _collider.radius = visibilityDistance;
 
         EnableUIElements(false);
     }

@@ -6,7 +6,4 @@ public class QuestGiver : Quest {
     [SerializeField] private List<QuestItem> _questItems;
 
     public List<QuestItem> Items { get { return _questItems; } }
-
-    
-    
 }

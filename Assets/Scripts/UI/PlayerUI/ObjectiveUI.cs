@@ -34,7 +34,7 @@ public class ObjectiveUI : MonoBehaviour {
         _txtObjectives.text = objective;
     }
 
-    private void HandleOnQuestCompleted (List<Quest> quests) {
+    private void HandleOnQuestCompleted (List<Quest> quests, int questCompletedId) {
         string objective = "";
         foreach (Quest q in quests) {
             objective += q.Description + 

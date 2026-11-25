@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -28,10 +29,10 @@ public class Lock : MonoBehaviour {
     private void Awake () => Id = ++generatedId;
 
     private void Start () {
-        _sfxPlayer = GetComponent<SFXPlayer>();
-        _collider = GetComponent<Collider>();
+        _sfxPlayer  = GetComponent<SFXPlayer>();
+        _collider   = GetComponent<Collider>();
         _doorPrefab = GetComponentInChildren<DoorManager>();
-        _ui = GetComponentInChildren<WorldspaceUI>();
+        _ui         = GetComponentInChildren<WorldspaceUI>();
 
 
         if (_sfxPlayer == null) {
@@ -51,6 +52,5 @@ public class Lock : MonoBehaviour {
 
         _doorPrefab.Open();
         _sfxPlayer.PlaySound(0, 1f);
-        NotificationUI.ShowNotification("Lock Opened: " + _name, Color.green);
     }
 }

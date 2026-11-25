@@ -53,7 +53,6 @@ public class GameManager : MonoBehaviour {
     public void LevelCompleted (string sceneName, float levelTime) {
         LevelCompletedTime = levelTime;
         NextLevel = sceneName;
-        //SceneManager.LoadScene(sceneName);
         SceneManager.LoadScene("Level_Completed");
     }
 
@@ -75,7 +74,7 @@ public class GameManager : MonoBehaviour {
     }
 
     public void PauseGame(PlayerInventory inventory) {
-        //Time.timeScale = 0f;
+        Time.timeScale = 0f;
         State = GameState.OnPause;
         OnGamePaused?.Invoke(inventory);
     }

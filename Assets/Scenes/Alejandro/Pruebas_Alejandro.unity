@@ -545,9 +545,17 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5237431903206868283, guid: f5d296867eaae244984ada753767d4b9, type: 3}
+      propertyPath: _name
+      value: Kill all enemies
+      objectReference: {fileID: 0}
+    - target: {fileID: 5237431903206868283, guid: f5d296867eaae244984ada753767d4b9, type: 3}
       propertyPath: _spawnerObj
       value: 
       objectReference: {fileID: 1568937083}
+    - target: {fileID: 5237431903206868283, guid: f5d296867eaae244984ada753767d4b9, type: 3}
+      propertyPath: _description
+      value: Find and kill all enemies
+      objectReference: {fileID: 0}
     - target: {fileID: 5237431903206868283, guid: f5d296867eaae244984ada753767d4b9, type: 3}
       propertyPath: _enemyList.Array.size
       value: 1
@@ -562,7 +570,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7017375203461599152, guid: f5d296867eaae244984ada753767d4b9, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1969,10 +1977,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Medi_Kit
       objectReference: {fileID: 0}
-    - target: {fileID: 9007202909606381348, guid: 215dcf9fa687f2342b1ef0ce90e4aa55, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2797,6 +2801,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5479778856968334362, guid: 3ab8d545d6910b64aa4baca10d4595b1, type: 3}
+      propertyPath: m_Size.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5479778856968334362, guid: 3ab8d545d6910b64aa4baca10d4595b1, type: 3}
+      propertyPath: m_Size.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5479778856968334362, guid: 3ab8d545d6910b64aa4baca10d4595b1, type: 3}
+      propertyPath: m_Size.z
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3121,11 +3137,11 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 519604853}
-  - {fileID: 860701653}
   - {fileID: 8885245324346756481}
+  - {fileID: 1422107376}
+  - {fileID: 860701653}
   - {fileID: 275896485}
   - {fileID: 1500261497}
-  - {fileID: 1422107376}
   - {fileID: 1274092705}
   - {fileID: 1503403985}
   - {fileID: 1414412243}
@@ -3136,7 +3152,7 @@ SceneRoots:
   - {fileID: 598157898}
   - {fileID: 1446492812}
   - {fileID: 233071147}
-  - {fileID: 1698480948}
   - {fileID: 1850219793}
-  - {fileID: 2087425042}
   - {fileID: 1182001237}
+  - {fileID: 2087425042}
+  - {fileID: 1698480948}

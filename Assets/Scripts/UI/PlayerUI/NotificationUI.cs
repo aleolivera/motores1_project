@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Linq;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -15,15 +16,27 @@ public class NotificationUI : MonoBehaviour {
     [SerializeField] private float _counter = 0f;
     [SerializeField] private int _hintTextIndex = 0;
 
-    public static string Text { get; private set; }
-    public static bool ChangeText { get; private set; }
-    public static Color TextColor { get; private set; }
+    public static string Text       { get; private set; }
+    public static bool ChangeText   { get; private set; }
+    public static Color TextColor   { get; private set; }
 
 
     private void Awake () {
         Text = "";
         TextColor = Color.white;
         ChangeText = false;
+    }
+
+    private void OnEnable () {
+        LevelManager.OnQuestCompleted   += HandleOnQuestCompleted;
+        PlayerInventory.OnItemCollected += HandleOnItemCollected;
+        PlayerInventory.OnLockOpened    += HandleOnLockOpened;
+    }
+
+    private void OnDisable () {
+        LevelManager.OnQuestCompleted   -= HandleOnQuestCompleted;
+        PlayerInventory.OnItemCollected -= HandleOnItemCollected;
+        PlayerInventory.OnLockOpened    -= HandleOnLockOpened;
     }
 
     private void Start () {
@@ -45,17 +58,17 @@ public class NotificationUI : MonoBehaviour {
     private void LateUpdate () {
         if (!ChangeText) return;
 
-        _tmpNotification.text = Text;
-        _tmpNotification.color = TextColor;
+        _tmpNotification.text   = Text;
+        _tmpNotification.color  = TextColor;
         
-        ChangeText = false;
-        _counter = 0f;
+        ChangeText  = false;
+        _counter    = 0f;
     }
 
     public static void ShowNotification (string message, Color color) {
-        Text = message;
-        TextColor = color;
-        ChangeText = true;
+        Text        = message;
+        TextColor   = color;
+        ChangeText  = true;
     }
 
     public void ShowHintListText() {
@@ -64,5 +77,25 @@ public class NotificationUI : MonoBehaviour {
         if(_hintTextIndex >= _hintTextList.Count)   _hintTextIndex = 0;
     }
 
+    private void HandleOnQuestCompleted (List<Quest> quests, int questCompletedId) {
+        if (questCompletedId < 0 || quests.Count < 1) return;
 
+        string questName = quests
+                            .First(quest => quest.Id == questCompletedId)
+                            .QuestName;
+        
+        ShowNotification("Quest Completed!: " + questName , Color.green);
+    }
+
+    private void HandleOnItemCollected(Item item) {
+        if (item == null) return;
+        
+        ShowNotification("Key Collected: " + item.Name, Color.yellow);
+    }
+
+    private void HandleOnLockOpened (Lock loc) {
+        if (loc == null) return;
+
+        ShowNotification("Lock Opened: " + loc.name, Color.green);
+    }
 }

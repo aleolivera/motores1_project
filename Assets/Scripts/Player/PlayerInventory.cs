@@ -9,7 +9,8 @@ public class PlayerInventory : MonoBehaviour {
 
     public Dictionary<int,QuestItem> QuestItems { get { return _questItems; } }
     public Dictionary<int,KeyItem> KeyItems     { get { return _keyItems; } }
-
+    public static event Action<Item> OnItemCollected;
+    public static event Action<Lock> OnLockOpened;
     PlayerInteractCollider _interactCollider;
 
     private void OnEnable () {
@@ -38,7 +39,7 @@ public class PlayerInventory : MonoBehaviour {
         if (item == null) return;
 
         _questItems .Add(item.Id, item);
-        NotificationUI.ShowNotification("Item Collected: " + item.Name, Color.yellow);
+        OnItemCollected?.Invoke(item);
     }
 
     public void RetrieveQuestItem (QuestGiver quest) {
@@ -67,7 +68,7 @@ public class PlayerInventory : MonoBehaviour {
         if (item == null) return;
 
         _keyItems.Add(item.Id, item);
-        NotificationUI.ShowNotification("Key Collected: " + item.Name, Color.yellow);
+        OnItemCollected?.Invoke(item);
     }
 
     public void RetrieveKeyItem (Lock loc) {
@@ -81,6 +82,7 @@ public class PlayerInventory : MonoBehaviour {
         if (count != loc.Items.Count)   return;
 
         loc.Open();
+        OnLockOpened?.Invoke(loc);
         foreach (KeyItem item in loc.Items) {
             RemoveKeyItem(item.Id);
         }
