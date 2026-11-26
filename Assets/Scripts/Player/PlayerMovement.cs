@@ -94,9 +94,18 @@ public class PlayerMovement : MonoBehaviour {
     }
     
     public void HandleInteract() {
+        /*
         if(_input.Interact) {
             PlayerStateMachine.Instance.CurrentState = PlayerState.Interacting;
         }
+        */
+        if (!_input.Interact) return;
+
+        PlayerStateMachine.Instance.CurrentState =  !( PlayerStateMachine.Instance.CurrentState == PlayerState.Interacting ) 
+                                                    ? PlayerState.Interacting 
+                                                    : PlayerState.Idle;
+        
+        Debug.Log("Player state: " + PlayerStateMachine.Instance.CurrentState);
     }
 
     public void HandleRotation() {
