@@ -5,23 +5,31 @@ using UnityEngine.SceneManagement;
 
 public enum LevelState { InProgress, PlayingCinematic }
 public class LevelManager : MonoBehaviour {
+    private static LevelManager _instance;
+    
     [Header("Quest Givers")]
     [SerializeField] private List<Quest> _quests = new List<Quest>();
     [SerializeField] private string _nextSceneName;
 
-    private static LevelManager _instance;
-    public static LevelManager Instance { get { return _instance; } }
-    
+    [Header("Debug")]
     private LevelState _state;
-    public LevelState State { get { return _state; } private set { _state = value; } }
     
-    public int SceneBuildIndex { get; set; }
+    //PROPERTIES
+    public static LevelManager Instance { get { return _instance; } }
+    public int SceneBuildIndex      { get; set; }
+    public float LevelTimeCounter   { get; private set; }
+    public static int PlayerDeaths  { get; private set; }
+    public LevelState State { 
+        get { return _state; } 
+        private set { _state = value; } 
+    }
+    
+    //EVENTS
     public static event Action<List<Quest>> OnLevelStart;
     public static event Action<List<Quest>,int> OnQuestCompleted;
 
-    public float LevelTimeCounter { get; private set; }
-    public static int PlayerDeaths { get; private set; }
 
+    //MONOBEHAVIOUR METHODS
     private void Awake() {
         if (_instance != null && _instance != this) {
             Destroy(gameObject);
@@ -54,6 +62,7 @@ public class LevelManager : MonoBehaviour {
 
     private void Update () => LevelTimeCounter += Time.deltaTime;
     
+    //METHODS
     public void QuestCompleted(int questId) {
         OnQuestCompleted?.Invoke(_quests, questId);
 

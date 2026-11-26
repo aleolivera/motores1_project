@@ -13,6 +13,9 @@ GameObject:
   - component: {fileID: 4073907596070459334}
   - component: {fileID: 5908675248923303807}
   - component: {fileID: 7278881139913315531}
+  - component: {fileID: 2794852624598913874}
+  - component: {fileID: 4907187487001580491}
+  - component: {fileID: 5235181427112911419}
   m_Layer: 0
   m_Name: Wife
   m_TagString: Untagged
@@ -118,9 +121,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e87cb761ef38ef4ab5d491e75a69faf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WifeController
-  _speed: 4.2
   _questRef: {fileID: 0}
+  _stopDistance: 0.5
+  _sprintDistance: 3
+  _disableDistance: 6
   _playerRef: {fileID: 0}
+--- !u!114 &2794852624598913874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6426496125219620088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30d2114b0a3e7b948b1d779961737820, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WifeMovement
+  _normalSpeed: 2
+  _maxSpeed: 5
+  _speed: 0
+--- !u!114 &4907187487001580491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6426496125219620088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1595a374a8a7f7941b4593975fcd3b3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WifeStateMachine
+  _state: 0
+  _defaultState: 5
+--- !u!114 &5235181427112911419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6426496125219620088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ea0600acb709f9408fd89b8533e5fc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WifeCollision
 --- !u!1001 &1311564298220231118
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -476,6 +522,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4a5aaa4ec6fe6b041a19d5b9fe5b12fc, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7157924704340671470}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4a5aaa4ec6fe6b041a19d5b9fe5b12fc, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8677298062424243628}
   m_SourcePrefab: {fileID: 100100000, guid: 4a5aaa4ec6fe6b041a19d5b9fe5b12fc, type: 3}
 --- !u!4 &1565323829524119077 stripped
 Transform:
@@ -499,3 +548,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35073bdb8d9e347418443ce442cc317a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WifeAnimationEvents
+--- !u!114 &8677298062424243628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2230114241875895455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e66806cbec91feb4596445da7c737773, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WifeAnimation

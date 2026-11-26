@@ -1,63 +1,94 @@
 using System;
 using UnityEngine;
-using UnityEngine.AI;
-using UnityEngine.UIElements;
 
-public enum WifeMovementState { Idle, Running }
-
-[RequireComponent(typeof(SphereCollider))]
-public class WifeController : MonoBehaviour
-{
+public class WifeController : MonoBehaviour {
+    //INSPECTOR
     [Header("Wife Settings")]
-    [SerializeField] private float _speed = 2f;
     [SerializeField] private Quest _questRef;
-    public bool IsActive { get; set; }
+    [SerializeField] private float _stopDistance = 0.5f;
+    [SerializeField] private float _sprintDistance = 3f;
+    [SerializeField] private float _disableDistance = 6f;
 
     [Header("Debug")]
     [SerializeField] GameObject _playerRef;
-    NavMeshAgent _agent;
-    SphereCollider _collider;
-    Animator _animator;
+    [SerializeField] bool _isActive;
     
-    public WifeMovementState State { get; set; }
-    void Start(){
-        _agent = GetComponent<NavMeshAgent>();
-        _collider = GetComponent<SphereCollider>();
-        _animator = GetComponentInChildren<Animator>();
-        _collider.isTrigger = true;
+    // COMPONENTS
+    WifeMovement _movement;
+    WifeStateMachine _state;
+    
+    // PROPERTIES
+    public bool IsActive { 
+        get { return _isActive; } 
+        set { _isActive = value; } 
+    }
+    public Quest QuestRef { 
+        get         { return _questRef; }  
+        private set { _questRef = value; } 
+    }
+    public GameObject PlayerRef{ 
+        get { return _playerRef; }  
+        set { _playerRef = value; } 
+    }
+
+    //EVENTS
+    public static event Action OnEnableMovement;
+    public static event Action OnDisableMovement;
+
+    //METHODS
+    private void Awake () => IsActive = (QuestRef == null) ? true : false;
+
+    private void OnEnable () => 
+        WifeCollision.OnCollisionWithPlayer += HandleOnCollisionWithPlayer;
+    
+    private void OnDisable () => 
+        WifeCollision.OnCollisionWithPlayer -= HandleOnCollisionWithPlayer;
+    
+    void Start () {
+        _movement   = GetComponent<WifeMovement>();
+        _state      = GetComponent<WifeStateMachine>();
     }
     private void Update () {
-        if ( !IsActive || _playerRef == null) return;
+        if (!IsActive || _playerRef == null) return;
 
-        if(Vector3.Distance(transform.position, _playerRef.gameObject.transform.position) > 1f) {
-            State = WifeMovementState.Running;
-            MoveTowardPlayer();
+        float distanceToPlayer = Vector3.Distance(
+                                            transform.position, 
+                                            _playerRef.gameObject.transform.position);
+        
+        if (distanceToPlayer > _disableDistance) {
+            _state.CurrentState = WifeMovementState.Idle;
+            _movement.Stop();
+            DisableMovement();
             return;
         }
 
-        StopMovement();
+        if (distanceToPlayer > _sprintDistance) {
+            _state.CurrentState = WifeMovementState.Sprinting;
+            _movement.Sprint(_playerRef.transform.position);
+            return;
+        }
+
+        if (distanceToPlayer > _stopDistance) {
+            _state.CurrentState = WifeMovementState.Running;
+            _movement.Run(_playerRef.transform.position);
+            return;
+        }
+
+        _state.CurrentState = WifeMovementState.Idle;
+        _movement.Stop();
     }
-
-    void MoveTowardPlayer () {
-        _agent.isStopped = false;
-        _agent.speed = _speed;
-        _agent.SetDestination(_playerRef.transform.position);
-        _animator.SetBool("IsRunning", true);
-
+    public void DisableMovement () {
+        Debug.Log("WifeController: Disable Movement()");
+        IsActive = false;
+        _playerRef = null;
+        OnDisableMovement?.Invoke();
     }
-
-    void StopMovement () {
-        _agent.isStopped = true;
-        _agent.speed = 0f;
-        _agent.SetDestination(transform.position);
-        _animator.SetBool("IsRunning", false);
-    }
-
-    // Update is called once per frame
-    private void OnTriggerEnter (Collider other) {
-        if (other.gameObject.CompareTag("Player") && _questRef.IsQuestCompleted) {
-            _animator.SetBool("IsDisabled", false);
-            _playerRef = other.gameObject;
+    private void HandleOnCollisionWithPlayer (GameObject player) {
+        if (player == null || !(_state.CurrentState == WifeMovementState.LaidDown)) return;
+        
+        if (QuestRef == null || QuestRef.IsQuestCompleted) {
+            _playerRef  = player;
+            OnEnableMovement?.Invoke();
         }
     }
 }

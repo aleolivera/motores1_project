@@ -62,7 +62,7 @@ public class PlayerMovement : MonoBehaviour {
     void Update() {
         ApplyGravity();
         if( PlayerStateMachine.Instance.CurrentState == PlayerState.Dead ||
-            PlayerStateMachine.Instance.CurrentState == PlayerState.Attacking ||
+            PlayerStateMachine.Instance.CurrentState == PlayerState.Attacking  ||
             PlayerStateMachine.Instance.CurrentState == PlayerState.Interacting ) {
             return;
         }
@@ -101,11 +101,9 @@ public class PlayerMovement : MonoBehaviour {
         */
         if (!_input.Interact) return;
 
-        PlayerStateMachine.Instance.CurrentState =  !( PlayerStateMachine.Instance.CurrentState == PlayerState.Interacting ) 
-                                                    ? PlayerState.Interacting 
-                                                    : PlayerState.Idle;
-        
-        Debug.Log("Player state: " + PlayerStateMachine.Instance.CurrentState);
+        PlayerStateMachine.Instance.CurrentState =  ( PlayerStateMachine.Instance.CurrentState == PlayerState.Interacting ) 
+                                                    ? PlayerState.Idle
+                                                    : PlayerState.Interacting;
     }
 
     public void HandleRotation() {
